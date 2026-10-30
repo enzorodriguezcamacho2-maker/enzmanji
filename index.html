@@ -4263,9 +4263,30 @@ body.free-cam #cam #center { visibility: hidden; pointer-events: none; }
     const origGet = transport.getView;
 
     function urls(code) {
+      if (!/^(localhost|127\.|\[::1\])/.test(location.hostname)) return [location.origin + '/play'];   // en internet: solo la dirección pública
       const set = new Set((info.urls || []).map(u => u + '/play'));
       if (!/^(localhost|127\.|\[::1\])/.test(location.hostname)) set.add(location.origin + '/play');   // acceso por túnel/Internet
       return [...set];
+    }
+    function joinUrl(code) {          // dirección que codifica el QR: la pública si existe, si no la de la wifi
+      const local = /^(localhost|127\.|\[::1\])/.test(location.hostname);
+      return (local ? ((info.urls || [])[0] || location.origin) : location.origin) + '/play?room=' + code;
+    }
+    let qrLoading = null;
+    function loadQR() {
+      if (window.QRCode) return Promise.resolve();
+      if (!qrLoading) qrLoading = new Promise((res, rej) => {
+        const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+        sc.onload = res; sc.onerror = () => { qrLoading = null; rej(new Error('sin QR')); }; document.head.appendChild(sc);
+      });
+      return qrLoading;
+    }
+    function drawQR(code) {
+      if (!panel.querySelector('#np-qr')) return;
+      loadQR().then(() => {
+        const el = panel.querySelector('#np-qr'); if (!el) return;
+        el.innerHTML = ''; new QRCode(el, { text: joinUrl(code), width: 150, height: 150 });
+      }).catch(() => { const el = panel.querySelector('#np-qr'); if (el) el.remove(); });   // sin internet en la TV: queda el código escrito
     }
     function render() {
       const st = engine.getState(), inLobby = st.phase === 'lobby';
@@ -4276,9 +4297,10 @@ body.free-cam #cam #center { visibility: hidden; pointer-events: none; }
       const code = bridge.room.code, list = [...bridge.clients.values()];
       if (collapsed && !inLobby) { panel.innerHTML = '<div class="np"><span class="mini" id="np-open">🌐 Sala <b>' + code + '</b> · ' + list.filter(c => c.online !== false).length + '/' + list.length + ' móviles ▸</span></div>'; return; }
       panel.innerHTML = '<div class="np"><div>Entra desde el móvil a:</div>' + urls(code).map(u => '<div class="url">' + esc(u) + '</div>').join('') +
-        '<div style="margin-top:6px">e introduce el código:</div><div class="code">' + code + '</div>' +
+        '<div style="margin-top:6px">o escanea el QR, o introduce el código:</div><div id="np-qr" style="background:#fff;padding:8px;border-radius:10px;width:max-content;margin:6px auto"></div><div class="code">' + code + '</div>' +
         '<ul>' + (list.length ? list.map(c => '<li class="' + (c.online === false ? 'off' : '') + '">' + (c.online === false ? '📵' : '📱') + ' ' + esc(c.name) + '</li>').join('') : '<li style="opacity:.6">Aún no se ha conectado ningún móvil</li>') + '</ul>' +
         '<div class="row"><button class="g" id="np-collapse">Minimizar</button><button class="g" id="np-close">Cerrar sala</button></div></div>';
+      drawQR(code);
     }
     panel.addEventListener('click', async ev => {
       const id = ev.target.id;
