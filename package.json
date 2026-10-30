@@ -1,0 +1,11 @@
+{
+  "name": "tablero-encantado-online",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servidor de salas (sin dependencias) para probar Tablero Encantado con móviles reales",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo sin pruebas"
+  },
+  "engines": { "node": ">=18" }
+}
