@@ -22,14 +22,14 @@ const crypto = require('crypto');
 
 const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC = __dirname;                // versión plana: index.html está junto a server.js
-const MAX_BODY = 256 * 1024;             // los dibujos son lo más grande
+const MAX_BODY = 1024 * 1024;            // los dibujos y el chat con 8 móviles son lo más grande
 const MAX_ROOMS = 20;
 const ROOM_TTL = 6 * 3600 * 1000;        // sala inactiva > 6 h se borra
 const RPC_TIMEOUT = 6000;
 const OFFLINE_GRACE = 6000;              // un móvil sin stream durante 6 s cuenta como desconectado
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // sin I ni O (se confunden con 1 y 0)
-const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'spin', 'useShield', 'declineShield', 'shopDone',
-  'buy', 'playCard', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'rename']);
+// Misma lista que el juego (index.html): chat, votaciones, jungla, impostor, reacciones… (el motor de la TV valida cada acción)
+const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'spin', 'useShield', 'declineShield', 'shopDone', 'playCard', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat', 'buy']);
 
 const rooms = new Map();
 const rid = n => crypto.randomBytes(n).toString('hex');
