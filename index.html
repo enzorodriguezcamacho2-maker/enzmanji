@@ -540,6 +540,16 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 /* en el móvil: el botón de tirar, con más fuerza */
 .ph-card.turn { background: radial-gradient(circle at 50% 0%, rgba(224,176,74,.35), transparent 60%), linear-gradient(180deg, #17402f, #0a1f17); }
 </style>
+<style id="layout-v8">
+/* v8: el tablero ocupa casi toda la pantalla; el panel lateral (jugadores y crónica) queda estrecho y compacto */
+#cam { left: 12px; top: 12px; width: 1496px; height: 1056px; border-radius: 30px; }
+#cam #vig { border-radius: 30px; }
+#side { left: 1524px; top: 12px; width: 384px; height: 1056px; gap: 8px; }
+#side .players { gap: 6px; }
+#side .logbox { flex: 0 0 280px; padding: 8px 12px 6px 26px; }
+#side .logbox h3 { font-size: 18px; margin-bottom: 4px; padding-bottom: 2px; }
+#side #log { font-size: 14px; gap: 4px; }
+</style>
 </head>
 <body class="dev-on">
   <div id="tv-viewport"><div id="stage" aria-label="Tablero de juego"></div></div>
@@ -913,6 +923,9 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     startCoins: 6,
     lapBonus: 2,             // monedas por pasar por la salida
     coinTileReward: 3,
+    catchUp: { gap: 10, bonus: 2 },
+    duel: { stake: 2, seconds: 20 },              // duelo: monedas en juego y segundos para acertar
+    pact: { breakCost: 3, steal: 2, payout: 1 },   // pacto: coste de romperlo, monedas robadas, cobro del aliado por turno   // remontada: el último a >= gap casillas del líder avanza bonus extra
     chaos: { lapDistance: 40, rewardMult: 1.5, timeMult: 0.75, minDifficulty: 2,
              coinTileMult: 2, normalTileBonus: 1, shopDiscount: 0.25, minRoundForEvent: 5 },
     avalancheReward: 5,
@@ -949,10 +962,10 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 
   // índice -> tipo (40 casillas)
   const TILE_LAYOUT = [
-    'start', 'normal', 'challenge', 'coins', 'challenge', 'curse', 'normal', 'shop', 'challenge', 'event',
-    'normal', 'roulette', 'challenge', 'coins', 'curse', 'normal', 'challenge', 'event', 'shop', 'challenge',
-    'event', 'coins', 'challenge', 'normal', 'roulette', 'curse', 'challenge', 'coins', 'normal', 'event',
-    'challenge', 'shop', 'challenge', 'curse', 'normal', 'challenge', 'coins', 'event', 'roulette', 'challenge'
+    'start', 'challenge', 'challenge', 'challenge', 'challenge', 'curse', 'challenge', 'shop', 'challenge', 'event',
+    'challenge', 'challenge', 'challenge', 'challenge', 'curse', 'challenge', 'challenge', 'event', 'shop', 'challenge',
+    'event', 'challenge', 'challenge', 'challenge', 'challenge', 'curse', 'challenge', 'challenge', 'challenge', 'event',
+    'challenge', 'shop', 'challenge', 'curse', 'challenge', 'challenge', 'challenge', 'event', 'challenge', 'challenge'
   ];
 
   // Cuadrícula 12 columnas x 10 filas recorrida en sentido horario desde arriba-izquierda
@@ -1114,11 +1127,9 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
   const EFFECTS = {
     leadFeet:    { name: 'Pies de plomo',     icon: '🦶', turns: 3, uses: 1, text: 'Tu próxima tirada avanza 2 casillas menos (mín. 1).' },
     silence:     { name: 'Silencio mágico',   icon: '🤐', turns: 3, uses: 1, text: 'Tu próximo reto tiene un 40% menos de tiempo.' },
-    hauntedDice: { name: 'Dado embrujado',    icon: '🎲', turns: 3, uses: 1, text: 'Tu próxima tirada será extrema: 1, 2, 5 o 6.' },
     badLuck:     { name: 'Mala suerte',       icon: '🐈‍⬛', turns: 3, uses: 1, text: 'Tu próximo reto da la mitad de monedas.' },
     weight:      { name: 'Peso del liderazgo',icon: '👑', turns: 2, text: 'Durante 2 turnos tus tiradas avanzan 1 casilla menos (mín. 1).' },
     lockShop:    { name: 'Tienda cerrada',    icon: '🔒', turns: 2, text: 'No puedes comprar durante 2 turnos.' },
-    hex:         { name: 'Mal de ojo',        icon: '👁️', turns: 3, uses: 1, text: 'Tu próximo reto: −30% de tiempo y −1 moneda de premio.' },
     mirror:      { name: 'Espejo activo',     icon: '🪞', turns: 3, uses: 1, text: 'Reflejarás el próximo ataque de carta.' },
     ward:        { name: 'Amuleto activo',    icon: '🧿', turns: 3, uses: 1, text: 'Anularás el próximo ataque de carta.' },
     immune:      { name: 'Respiro',           icon: '🕊️', turns: 2, text: 'No pueden atacarte con cartas durante 2 turnos.' },
@@ -1132,12 +1143,8 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
   const CURSES = [
     { id: 'leadFeet',  name: 'Pies de plomo',      icon: '🦶', strength: 'mild',   weight: 10, mild: true, text: 'Tu próxima tirada avanzará 2 casillas menos.' },
     { id: 'pockets',   name: 'Bolsillos embrujados', icon: '👛', strength: 'medium', weight: 8,  text: 'Pierdes hasta 3 monedas (van al bote).' },
-    { id: 'silence',   name: 'Silencio mágico',    icon: '🤐', strength: 'mild',   weight: 10, mild: true, text: 'Menos tiempo para tu próximo reto.' },
-    { id: 'dice',      name: 'Dado embrujado',     icon: '🎲', strength: 'medium', weight: 8,  text: 'Tu próxima tirada será extrema (1, 2, 5 o 6).' },
     { id: 'badLuck',   name: 'Mala suerte',        icon: '🐈‍⬛', strength: 'mild',   weight: 10, mild: true, text: 'Tu próximo reto da la mitad de monedas.' },
-    { id: 'chest',     name: 'Cofre maldito',      icon: '🧰', strength: 'medium', weight: 8,  text: 'Cara o cruz: ganas 4 monedas o pierdes 3.' },
     { id: 'portal',    name: 'Portal cambiante',   icon: '🌀', strength: 'medium', weight: 8,  text: 'Te teletransporta 2-4 casillas hacia delante o hacia atrás.' },
-    { id: 'swap',      name: 'Intercambio maldito',icon: '🔁', strength: 'strong', weight: 0, special: true, text: 'Intercambias tu posición con otro jugador.' },
     { id: 'leader',    name: 'Maldición del líder',icon: '👑', strength: 'strong', weight: 0,  text: 'Recae sobre quien va en cabeza: 2 turnos avanzando 1 casilla menos.' }
   ];
   const CURSE_BY_ID = {};
@@ -1169,8 +1176,6 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     { id: 'curseSome',  w: 2, name: 'Hechizo doble' },
     { id: 'curseAll',   w: 1, name: 'Hechizo colectivo' },
     { id: 'gift',       w: 2, name: 'Regalo del mago' },
-    { id: 'swap',       w: 1, name: 'Intercambio maldito' },
-    { id: 'chaos',      w: 1, name: 'Portal del Caos' }
   ];
 
   const WIZARD = { name: 'Arcano', icon: '🧙' };
@@ -1322,6 +1327,8 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 
   const RULES_TEXT = [
     'Tira el dado en tu turno y avanza. Gana quien llegue primero a la meta.',
+    'Remontada: quien vaya último y esté a 10 o más casillas del líder avanza 2 extra en su tirada.',
+    'Retos de mímica y tararear: uno actúa sin hablar o tararea una canción y los demás adivinan.',
     'Cada casilla hace algo: reto, tesoro, tienda, ruleta, maldición o suceso.',
     'Las monedas compran escudo, pista, tirada extra y reloj de arena. El escudo se usa solo.',
     'Impostor: uno de vosotros pone trampas en secreto. Cada pocas rondas se vota para descubrirlo.',
@@ -1344,11 +1351,147 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
   const SPEED = SPEED_RAW.map((r, i) => ({ id: 'sp' + i, cat: 'rapidez', diff: 1 + (i % 3), text: r[0], correct: r[1], wrong: r[2] }));
   const WORDS = DRAW_WORDS.map((r, i) => ({ id: 'dw' + i, word: r[0], alts: r[1] }));
 
+  // Mímica: el intérprete actúa sin hablar. [palabra, [alternativas]]
+  const MIME_WORDS = [
+    ['nadar', []], ['cocinar', []], ['pescar', []], ['esquiar', []], ['cortar el pelo', []],
+    ['conducir una moto', []], ['tocar la batería', ['bateria']], ['ordeñar una vaca', []], ['hacer yoga', []], ['montar en bici', ['bici']],
+    ['lavarse los dientes', []], ['ser un astronauta', ['astronauta']], ['bailar flamenco', ['flamenco']], ['patinar', []], ['hacer footing', ['correr']],
+    ['superhéroe', ['superheroe']], ['vampiro', []], ['payaso', []], ['zombi', ['zombie']], ['detective', []],
+    ['pingüino', ['pinguino']], ['canguro', []], ['elefante', []], ['gato', []], ['serpiente', []],
+    ['un señor enfadado', []], ['una abuela cotilla', []], ['un camarero torpe', []], ['alguien con hipo', []], ['un pulpo haciendo pesas', []],
+    ['pizza', []], ['helado', []], ['sopa', []], ['fregona', []], ['paraguas', []],
+    ['volcán', ['volcan']], ['tormenta', []], ['fantasma', []], ['castillo', []], ['tren', []],
+    // Acciones
+    ['hacer la compra', []], ['pasear al perro', []], ['hacer una foto', []], ['buscar setas', []], ['ser un mimo', []],
+    ['doblar la ropa', []], ['pelar una patata', []], ['regar las plantas', []], ['hacer un castillo de arena', []], ['tomar una selfie', []],
+    ['jugar al tenis', ['tenis']], ['marcar un gol', ['gol']], ['sacar una canasta', ['canasta']], ['hacer surf', ['surfear']], ['tirar una piedra al agua', []],
+    ['tocar la guitarra', ['guitarra']], ['cantar en un karaoke', ['karaoke']], ['saltar a la comba', ['comba']], ['pescar un pez gigante', []], ['abrir un regalo', []],
+    // Personajes y oficios
+    ['bombero', []], ['cocinero', []], ['cartero', []], ['policía', ['policia']], ['médico', ['medico']],
+    ['profesor', []], ['pirata cojo', []], ['vaquero', []], ['monje', []], ['mimo triste', []],
+    ['momia', []], ['hada', []], ['robot torpe', []], ['gladiador', []], ['chef enfadado', []],
+    // Animales
+    ['cocodrilo', []], ['jirafa', []], ['hipopótamo', ['hipopotamo']], ['rana', []], ['búho', ['buho']],
+    ['oso polar', []], ['pez espada', []], ['mosquito', []], ['caballo al galope', ['caballo']], ['mono haciendo cosquillas', []],
+    // Situaciones
+    ['atasco de tráfico', ['atasco']], ['cita a ciegas', []], ['examen sorpresa', []], ['ir de compras con mamá', []], ['perderse en el metro', []],
+    ['una boda sin invitación', []], ['un concierto de rock', []], ['una cena de Navidad', []], ['un día de playa', []], ['un viaje en avión con turbulencias', []]
+  ];
+  // Reto musical: 75 canciones. [título, [alternativas], pista descriptiva (sin letra), dificultad 1-3]
+  // La pista describe la escena o el ambiente de la canción; nunca incluye versos ni fragmentos de letra.
+  const SONG_LIB = [
+    // Disney
+    ['Libre soy', ['let it go'], 'Frozen: la protagonista se libera en lo alto de una montaña de hielo', 1],
+    ['Un mundo ideal', ['a whole new world'], 'Aladdín: un tapete mágico vuela sobre el mar y las dunas', 2],
+    ['Hakuna Matata', [], 'El rey León: una filosofía de vida con un suricata y un jabalí', 1],
+    ['Bajo el mar', ['under the sea'], 'La sirenita: un cangrejo dirige una gran orquesta en el fondo del océano', 1],
+    ['De nada', [], 'Vaiana: un semidiós presume de sus tatuajes ante la protagonista', 2],
+    ['Recuérdame', ['remember me'], 'Coco: la guitarra y la familia en el Día de Muertos', 2],
+    ['No se habla de Bruno', [], 'Encanto: la familia guarda un secreto sobre un personaje que vive escondido', 2],
+    ['Colores en el viento', ['colors of the wind'], 'Pocahontas: la protagonista descubre los paisajes del bosque y el río', 2],
+    ['El ciclo sin fin', ['circle of life'], 'El rey León: el amanecer sobre la sabana al inicio de la película', 1],
+    ['Supercalifragilisticoespialidoso', [], 'Mary Poppins: la niñera canta un trabalenguas en el parque con los niños', 3],
+    ['Mucho más allá', ['into the unknown'], 'Frozen 2: la protagonista sigue una voz que la llama desde el bosque', 2],
+    ['He Mele No Lilo', [], 'Lilo & Stitch: la canción en hawaiano que suena al comienzo', 3],
+    ['Bella y Bestia son', ['bella y bestia'], 'La bella y la bestia: todo el pueblo canta mientras la protagonista lee en la plaza', 2],
+    ['Yo voy a ser el rey', ['yo voy a ser el rey'], 'El rey León: el cachorro se imagina gobernando sobre todo lo que ve', 1],
+    ['Parte de él', ['part of your world'], 'La sirenita: la protagonista sueña con la vida en tierra firme', 2],
+    // Películas
+    ['My Heart Will Go On', ['titanic'], 'Titanic: una balada con flauta de la película del barco hundido', 2],
+    ['Eye of the Tiger', ['ojo del tigre'], 'Rocky III: el entrenamiento del boxeador en las escaleras', 1],
+    ['Ghostbusters', ['cazafantasmas'], 'Cazafantasmas: el tema de los que cazan fantasmas en Nueva York', 1],
+    ['Footloose', [], 'Footloose: un pueblo que prohíbe bailar y un joven que lo hace igualmente', 3],
+    ['Shallow', ['ha nacido una estrella'], 'Ha nacido una estrella: un dúo al piano y a la guitarra en un bar', 2],
+    ['Danger Zone', ['zona de peligro'], 'Top Gun: el tema de los aviones a toda velocidad', 2],
+    ['Skyfall', [], 'Skyfall: la balada de Adele para la película de espías', 2],
+    ['The Final Countdown', ['cuenta atrás final'], 'Europe: una cuenta atrás con sintetizadores y una gran fanfarria', 2],
+    ['Stayin Alive', ['fiebre del sabado noche'], 'Fiebre del sábado noche: el ritmo de la discoteca con los pasos de baile', 1],
+    ['Mamma Mia', ['mama mia'], 'Mamma Mia!: el musical de ABBA sobre una boda en una isla griega', 1],
+    ['I Will Always Love You', [], 'El guardaespaldas: una balada de amor que cierra la película', 2],
+    ['He is a Pirate', ['piratas del caribe'], 'Piratas del Caribe: el tema de los piratas con ritmo de aventura', 3],
+    ['The NeverEnding Story', ['historia interminable'], 'La historia interminable: el tema de un niño que lee un libro mágico', 3],
+    ['See You Again', ['fast and furious'], 'Fast & Furious 7: una balada de despedida con piano y voz suave', 2],
+    ['Cant Stop the Feeling', ['cant stop the feeling!'], 'Trolls: el tema de los muñecos que bailan sin parar', 1],
+    // Series
+    ['I Will Be There for You', ['friends'], 'Friends: la sintonía del grupo de amigos en un sofá', 1],
+    ['The Simpsons Theme', ['los simpson', 'simpsons'], 'Los Simpson: la sintonía del sofá y la familia amarilla', 1],
+    ['Game of Thrones Theme', ['juego de tronos'], 'Juego de Tronos: el tema de la serie de castillos y reinos en guerra', 3],
+    ['Bella Ciao', [], 'La casa de papel: un canto de resistencia que suena en el atraco', 1],
+    ['The Office Theme', ['the office'], 'The Office: la sintonía de una oficina con documental y cámara en mano', 2],
+    ['Pokémon Theme', ['pokemon'], 'Pokémon: la sintonía de la serie de criaturas de bolsillo', 1],
+    ['Malcolm in the Middle Theme', ['malcolm'], 'Malcolm: la sintonía de una familia caótica con ritmo juguetón', 3],
+    ['Stranger Things Theme', ['stranger things'], 'Stranger Things: el sintetizador de los años ochenta con tono misterioso', 2],
+    ['Peppa Pig Theme', ['peppa pig'], 'Peppa Pig: la sintonía de la cerdita y su familia', 1],
+    ['Wednesday Theme', ['miercoles'], 'Miércoles: el tema de la familia Addams con violín', 2],
+    // Videojuegos
+    ['Super Mario Bros. Tema principal', ['super mario', 'mario'], 'Super Mario Bros.: la melodía de saltos y monedas', 1],
+    ['Sweden', ['minecraft'], 'Minecraft: un piano suave y tranquilo de la banda sonora de construcción', 2],
+    ['Gerudo Valley', ['valle gerudo'], 'The Legend of Zelda: la melodía del valle del desierto', 3],
+    ['Megalovania', [], 'Undertale: el tema de la pelea más rápida y frenética', 3],
+    ['Korobeiniki', ['tetris'], 'Tetris: la melodía de las piezas que caen', 2],
+    ['Love Tonight', [], 'FIFA 22: el tema del juego de fútbol con sintetizador y guitarra', 3],
+    // Éxitos populares
+    ['Despacito', [], 'Luis Fonsi: el reguetón del verano con el título repetido en el estribillo', 1],
+    ['Vivir mi vida', [], 'Marc Anthony: una salsa de celebración con trompetas', 2],
+    ['La Macarena', ['macarena'], 'Los del Río: el baile del verano con los brazos en el aire', 1],
+    ['Waka Waka', [], 'Shakira: el himno de un gran torneo de fútbol con ritmo africano', 1],
+    ['Danza Kuduro', [], 'Don Omar: un reguetón con ritmo de baile en la playa', 2],
+    ['Bailando', [], 'Enrique Iglesias: un éxito de fiesta con ritmo latino', 1],
+    ['La camisa negra', [], 'Juanes: una guitarra con ritmo latino y voz intensa', 2],
+    ['Aserejé', ['ketchup'], 'Las Ketchup: un grupo con coreografía de ritmo rápido y repetitivo', 1],
+    ['Tacones rojos', [], 'Sebastián Yatra: una balada pop de amor con ritmo', 2],
+    ['Blinding Lights', [], 'The Weeknd: un synth pop de los años ochenta para conducir de noche', 2],
+    ['Shape of You', ['shape of you'], 'Ed Sheeran: una guitarra con ritmo de palmas en 2017', 1],
+    ['Dance Monkey', ['dance monkey'], 'Tones and I: un estribillo corto y muy repetitivo con ritmo de bailar', 1],
+    ['Believer', ['believer'], 'Imagine Dragons: un rock con golpes de tambor marcados', 2],
+    ['Happy', ['happy'], 'Pharrell Williams: una canción alegre con palmas y bailes', 1],
+    ['Uptown Funk', ['uptown funk'], 'Mark Ronson con Bruno Mars: un funk con trompetas y mucha energía', 2],
+    ['Bad Romance', ['bad romance'], 'Lady Gaga: un pop eléctrico con sintetizadores y ritmo intenso', 2],
+    ['Counting Stars', ['counting stars'], 'OneRepublic: un pop rock con guitarra suave y voz al aire libre', 2],
+    ['Viva la Vida', ['viva la vida'], 'Coldplay: un piano con cuerdas de tono épico', 2],
+    ['Flowers', ['flowers'], 'Miley Cyrus: una balada pop con piano y ritmo sencillo', 2],
+    ['APT.', ['apt'], 'ROSÉ y Bruno Mars: un pop con ritmo de coreografía', 3],
+    ['Thunder', ['thunder'], 'Imagine Dragons: un rock con golpes de tambor y ritmo de marcha', 2],
+    ['Wake Me Up', ['wake me up'], 'Avicii: una guitarra con violines de tono pegadizo', 2],
+    ['Toxic', ['toxic'], 'Britney Spears: un pop con violines y bajo inquietante', 2],
+    ['I Gotta Feeling', ['i gotta feeling'], 'The Black Eyed Peas: la fiesta de una noche con ritmo electrónico', 3],
+    ['YMCA', ['ymca'], 'Village People: un baile famoso con gestos de brazos que forman letras', 1],
+    ['Dont Stop Me Now', ['dont stop me now'], 'Queen: un piano rápido de rock alegre', 2],
+    ['Hips Dont Lie', ['hips dont lie'], 'Shakira: un ritmo caribeño con percusión y mucho movimiento', 3],
+    ['La vida es un carnaval', ['carnaval'], 'Celia Cruz: una salsa de carnaval con ritmo alegre', 2],
+    ['Mi gran noche', ['gran noche'], 'Raphael: una balada de gran orquesta en una noche especial', 2]
+  ];
+  const MIMES = MIME_WORDS.map((r, i) => ({ id: 'mm' + i, word: r[0], alts: r[1] }));
+  const SONGS = SONG_LIB.map((r, i) => ({ id: 'sg' + i, word: r[0], alts: r[1], hint: r[2], diff: r[3] }));
+
+  // Palabras temáticas para dibujar y mimar cuando los jugadores eligen tema. Personajes originales, sin marcas.
+  const THEME_RAW = {
+    magia: ['varita mágica', 'caldero burbujeante', 'escoba voladora', 'libro de hechizos', 'sombrero de mago', 'dragón bebé', 'gato con alas', 'poción verde', 'bruja con sombrero puntiagudo', 'lechuza mensajera', 'espejo encantado', 'colegio de magia'],
+    dinos: ['tiranosaurio con gafas', 'huevo de dinosaurio', 'estegosaurio bailando', 'pterodáctilo', 'triceratops en bici', 'paleontólogo', 'fósil', 'dinosaurio durmiendo', 'volcán prehistórico', 'dino en patinete'],
+    espacio: ['cohete', 'extraterrestre', 'platillo volante', 'agujero negro', 'astronauta flotando', 'cometa', 'estación espacial', 'marciano', 'luna con cara', 'galaxia en espiral'],
+    piratas: ['barco pirata', 'loro en el hombro', 'mapa del tesoro', 'pata de palo', 'cofre lleno de oro', 'isla desierta', 'parche en el ojo', 'bandera pirata', 'sirena', 'ancla'],
+    heroes: ['capa al viento', 'superhéroe volando', 'escudo brillante', 'villano con capa', 'robot gigante', 'ciudad en peligro', 'máscara', 'rayo láser', 'superhéroe con gafas de sol', 'superpoder de estornudo'],
+    animales: ['perro con sombrero', 'pingüino patinando', 'gato en el sofá', 'elefante en bici', 'mono con plátano', 'pulpo con gafas', 'vaca voladora', 'ardilla con avellana', 'erizo', 'búho sabio'],
+    comida: ['hamburguesa gigante', 'pizza con piña', 'helado derritiéndose', 'tortilla de patatas', 'sandía', 'churro', 'donut', 'perrito caliente', 'cupcake', 'sushi'],
+    miedo: ['fantasma con sábana', 'calabaza tallada', 'momia', 'murciélago', 'zombi bailarín', 'casa encantada', 'esqueleto', 'luna llena', 'lobo aullando', 'bruja con escoba'],
+    naturaleza: ['cascada', 'arcoíris', 'tiburón', 'estrella de mar', 'faro', 'tormenta', 'cactus', 'iceberg', 'nube con forma de oveja', 'pulpo nadando'],
+    historia: ['castillo', 'caballero con armadura', 'catapulta', 'faraón', 'pirámide', 'vikingo', 'pergamino', 'coliseo', 'espada', 'dragón del castillo'],
+    ciencia: ['probeta burbujeante', 'robot inventor', 'cohete de papel', 'bombilla', 'microscopio', 'imán', 'cerebro', 'telescopio', 'máquina del tiempo', 'invento loco'],
+    deportes: ['balón de fútbol', 'raqueta', 'canasta', 'patinete', 'portería', 'pelota de tenis', 'cronómetro', 'medalla de oro', 'carrera de caracoles', 'pesas de gominola'],
+    musica: ['guitarra eléctrica', 'micrófono', 'batería', 'violín', 'trompeta', 'disco de vinilo', 'auriculares', 'piano de cola', 'concierto', 'banda de rock'],
+    juegos: ['mando', 'monstruo de bolsillo', 'dado gigante', 'tablero de juego', 'píxel', 'nave en 8 bits', 'castillo pixelado', 'escalera de mazmorra', 'cofre del tesoro', 'héroe con espada'],
+    viajes: ['avión de papel', 'maleta', 'mapa del mundo', 'camello', 'tren bala', 'globo aerostático', 'Torre Eiffel', 'pirámide de Egipto', 'barco de crucero', 'pasaporte'],
+    misterio: ['lupa', 'huella', 'pista misteriosa', 'detective con sombrero', 'llave oxidada', 'mapa con una X', 'bolsa de dinero', 'caja fuerte', 'reloj parado', 'sombra en la pared'],
+    risa: ['pato con botas', 'sandía con patas', 'gato con gafas de sol', 'zapato volador', 'paraguas al revés', 'vaca patinadora', 'pingüino con gorro', 'caracol corredor', 'tortuga con patines', 'calcetín gigante']
+  };
+  const THEME_WORDS = {};
+  Object.keys(THEME_RAW).forEach(k => { THEME_WORDS[k] = THEME_RAW[k].map((w, i) => ({ id: 'tw' + k + i, word: w, alts: [] })); });
+
   return {
     SETTINGS, TILE_TYPES, TILE_LAYOUT, BOARD, GRID, tileCoord,
     PLAYER_LOOKS, TEST_NAMES, SHOP, SHOP_BY_KEY, EFFECTS, CURSES, CURSE_BY_ID,
     ROULETTE_PRIZES, ROULETTE_WHEEL, MYSTERY_TABLE, EVENTS, WIZARD,
-    CATEGORIES, CHOICE, OPEN, RIDDLES, SPEED, WORDS,
+    CATEGORIES, CHOICE, OPEN, RIDDLES, SPEED, WORDS, MIMES, SONGS, THEME_WORDS,
     MEMORY_SYMBOLS, MEMORY_LENGTH, RULES_TEXT, normalize
   };
 });
@@ -1456,7 +1599,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 
   const clone = o => JSON.parse(JSON.stringify(o));
   const err = m => ({ error: m });
-  const CHALLENGE_WEIGHTS = { choice: 46, open: 18, riddle: 18, speed: 18, memory: 0, draw: 0 };
+  const CHALLENGE_WEIGHTS = { choice: 32, open: 12, riddle: 12, speed: 12, memory: 0, draw: 12, mime: 14, hum: 8 };
   const PASSABLE = ['choice', 'open', 'riddle'];
   /* Bots: cada uno con personalidad propia (decide y habla según ella). Solo los controla la pantalla principal. */
   const BOT_PERS = {
@@ -1514,7 +1657,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       const stock = {};
       Data.SHOP.forEach(s => { stock[s.key] = s.stock; });
       return {
-        v: 1, imp: null, phase: 'lobby', players: [], playerSeq: 0,
+        v: 1, imp: null, phase: 'lobby', players: [], playerSeq: 0, pacts: [], pactReq: null,
         turn: null, round: 0, pending: null, sched: null,
         jackpot: S.jackpot.start, shopStock: stock, chat: (state && state.chat) || [], chatSeq: (state && state.chatSeq) || 0, theme: (state && state.theme) || null,
         chaos: { used: false, active: false, activatorId: null, startDist: 0, endDist: 0 },
@@ -1640,6 +1783,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     /* ------------------------------ turnos ------------------------------ */
     function startTurn(index, isExtra) {
       const old = state.turn;
+      if (old && !isExtra) allyPayout(old.playerId);
       state.turn = {
         number: (old ? old.number : 0) + 1, index, playerId: state.players[index].id,
         step: 'roll', cardPlayed: false, isExtra: !!isExtra
@@ -1954,6 +2098,9 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       if (hasEffect(p, 'weight')) { applied -= 1; mods.push('Peso del liderazgo −1'); }
       if (applied < 1) applied = 1;
       if (applied > value) applied = value;
+      // Remontada: quien va último y está a 10 o más casillas del líder avanza 2 extra
+      { const ds = state.players.map(x => x.dist), gap = Math.max(...ds) - p.dist;
+        if (state.players.length >= 2 && gap >= S.catchUp.gap && p.dist === Math.min(...ds)) { applied += S.catchUp.bonus; mods.push('Empuje del rezagado +' + S.catchUp.bonus); } }
       const from = p.dist;
       const to = Math.min(S.goalDistance, from + applied);
       const laps = Math.floor(to / S.boardSize) - Math.floor(from / S.boardSize);
@@ -1993,10 +2140,8 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           if (!state.chaos.used) return startChaos(p.id, 'tile');
           return tileEvent(p);
         default: // start, normal
-          if (chaos && tile.type === 'normal') {
-            p.coins += S.chaos.normalTileBonus;
-            log('🌀 El Caos convierte el camino en oro: ' + p.name + ' gana ' + S.chaos.normalTileBonus + ' 🪙.');
-          } else log(p.name + ' descansa en el camino.');
+          if (tile.type === 'normal') return tileLittleEvent(p);   // cada casilla de camino tiene un pequeño suceso
+          log(p.name + ' pasa por la salida.');
           return finishInteraction('tile');
       }
     }
@@ -2018,12 +2163,14 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     function startChallenge(pid, o) {
       o = o || {};
       const p = P(pid);
-      const kind = o.kind || (cqOnly() ? 'choice' : weightedPick(Object.keys(CHALLENGE_WEIGHTS), k => CHALLENGE_WEIGHTS[k]));
+      const pickedKind = o.kind || (cqOnly() ? 'choice' : weightedPick(Object.keys(CHALLENGE_WEIGHTS), k => CHALLENGE_WEIGHTS[k]));
+      const variant = pickedKind === 'mime' || pickedKind === 'hum' ? pickedKind : null;   // mímica / tararear: rama de "draw" sin lienzo
+      const kind = variant ? 'draw' : pickedKind;
       const mods = challengeMods(p);
       const minD = minDifficulty();
       const t0 = now();
       const pd = {
-        type: 'challenge', kind, playerId: pid, origin: o.origin || 'tile', status: 'answering',
+        type: 'challenge', kind, variant, playerId: pid, origin: o.origin || 'tile', status: 'answering',
         mods: mods.labels, hintUsed: false, hidden: [], hintText: null, secret: {}, startedAt: t0
       };
       state.turn.step = 'resolving';
@@ -2050,11 +2197,18 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         pd.inputMs = calcMs(S.seconds.memoryInput, mods);
         pd.total = len * S.memoryShowMsPerSymbol + 1500;
       } else if (kind === 'draw') {
-        const w = pickFrom(Data.WORDS.map(x => Object.assign({ diff: 1 }, x)), 1, 1);
-        pd.q = { type: 'draw', cat: 'ocio', diff: 1, text: 'Reto de dibujo' };
-        pd.secret = { word: w.word, alts: w.alts };
-        pd.phase = 'draw';
-        pd.strokes = []; pd.guesses = {}; pd.guessMs = S.seconds.guess * 1000;
+        // Con tema elegido, el 75% de las veces la palabra sale de ese tema (no aplica a tararear)
+        const themeKey = state.theme && state.theme.picks && state.theme.picks.length ? pick(state.theme.picks) : null;
+        const themed = themeKey && variant !== 'hum' && Data.THEME_WORDS[themeKey] && rnd() < 0.75 ? Data.THEME_WORDS[themeKey] : null;
+        const pool = themed || (variant === 'hum' ? Data.SONGS : variant === 'mime' ? Data.MIMES : Data.WORDS);
+        // Reto musical (variant hum): dificultad mixta, pista visible 5 s y 40 s para adivinar
+        const w = variant === 'hum' ? pickFrom(pool.map(x => Object.assign({}, x)), 1, 3) : pickFrom(pool.map(x => Object.assign({ diff: 1 }, x)), 1, 1);
+        pd.q = { type: 'draw', cat: 'ocio', diff: w.diff || 1, text: variant === 'hum' ? 'Reto musical' : variant === 'mime' ? 'Reto de mímica' : 'Reto de dibujo' };
+        pd.secret = { word: w.word, alts: w.alts, hint: w.hint || null };
+        pd.phase = variant ? 'act' : 'draw';
+        pd.strokes = []; pd.guesses = {};
+        pd.guessMs = variant === 'hum' ? 40000 : S.seconds.guess * 1000;
+        if (variant === 'hum') pd.hintUntil = t0 + 5000;
         pd.reward = calcReward(S.rewards.draw, mods);
         pd.total = calcMs(S.seconds.draw, mods);
       }
@@ -2063,7 +2217,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       if (o.avalanche) passToAvalanche(pd, p);
       else log('❓ ' + p.name + ' recibe un reto (' + kindName(kind) + ').', { kind: 'challenge' });
     }
-    const kindName = k => ({ choice: 'pregunta', open: 'pregunta abierta', riddle: 'acertijo', speed: 'rapidez', memory: 'memoria', draw: 'dibujo' }[k] || k);
+    const kindName = k => ({ choice: 'pregunta', open: 'pregunta abierta', riddle: 'acertijo', speed: 'rapidez', memory: 'memoria', draw: 'dibujo', mime: 'mímica', hum: 'tararear' }[k] || k);
 
     function passToAvalanche(pd, p) {
       pd.status = 'avalanche'; pd.excluded = [p.id]; pd.eliminated = [];
@@ -2155,6 +2309,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     }
     function closeCollective() {
       const pd = state.pending;
+      if (pd.duel) return closeDuel(null);
       state.pending = null;
       const all = state.players.every(p => pd.answers[p.id] && pd.answers[p.id].correct); fbRec(pd, 'collective', all ? 'ok' : 'fail');
       if (all) {
@@ -2178,7 +2333,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       if (hasEffect(p, 'lockShop')) return { ok: false, reason: 'Tienda cerrada por un Cerrojo.' };
       const pd = state.pending;
       if (pd && pd.type === 'shop' && pd.playerId === pid) return { ok: true };
-      if (!pd && !state.sched && state.turn.step === 'roll') return { ok: true };
+      if (!pd && !state.sched && state.turn.step === 'roll' && state.turn.playerId === pid) return { ok: true };   // antes de tirar, solo el jugador del turno
       return { ok: false, reason: 'Ahora no se puede comprar: hay un reto o suceso en marcha.' };
     }
     function buyCheck(pid, key) {
@@ -2359,6 +2514,29 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     }
 
     /* ------------------------------ sucesos ------------------------------ */
+    /* ------------------------------ casillas de camino: pequeños sucesos ------------------------------ */
+    function tileLittleEvent(p) {
+      const ranked = state.players.slice().sort((a, b) => b.dist - a.dist);
+      const first = ranked[0], last = ranked[ranked.length - 1];
+      const cards = [
+        { w: 3, run: () => { p.coins += 2; return p.name + ' encuentra 2 🪙 entre las piedras'; } },
+        { w: 2, run: () => { loseCoins(p, 1); return p.name + ' pierde 1 🪙 (va al bote)'; } },
+        { w: 2, run: () => { teleport(p, Math.min(S.goalDistance - 1, p.dist + 2), 'teleport'); return p.name + ' se adelanta 2 casillas'; } },
+        { w: 2, run: () => { teleport(p, Math.max(0, p.dist - 2), 'teleport'); return p.name + ' retrocede 2 casillas'; } },
+        { w: 2, run: () => { if (grantItem(p, randomCardKey(), false)) return p.name + ' encuentra un objeto'; p.coins += 2; return p.name + ' tiene la mano llena: +2 🪙'; } },
+        { w: 1, run: () => { state.players.forEach(x => { x.coins += 1; }); return 'todos ganan 1 🪙'; } },
+        { w: 2, run: () => { last.coins += 1; return last.name + ' (el que va último) gana 1 🪙'; } },
+        { w: 2, run: () => { if (first.coins > 0 && first.id !== p.id) { first.coins -= 1; state.jackpot += 1; return first.name + ' (el que va primero) paga 1 🪙 al bote'; } p.coins += 1; return p.name + ' gana 1 🪙'; } },
+        { w: 2, run: () => { addEffect(p, 'luckyCoin'); return p.name + ' tiene suerte: su próximo reto da el doble de monedas'; } },
+        { w: 2, run: () => 'un pájaro pasa volando y no pasa nada' }
+      ];
+      const card = weightedPick(cards, c => c.w);
+      const msg = card.run();
+      log('🍃 ' + msg + '.', { kind: 'event' });
+      setResult({ kind: 'gift', ok: true, playerId: p.id, title: '🍃 Camino', text: msg });
+      return finishInteraction('tile');
+    }
+
     function tileEvent(p) {
       if (AIP.on && AIP.cfg.events && AIP.events[jgMode].length && rnd() < pAI('pEvent')) return aiEvent(p);       // Carta de Arcano generada por IA
       const valid = Data.EVENTS.filter(e => {
@@ -2389,6 +2567,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           const t = pick(state.players);
           return startCurses([{ curseId: 'swap', targetId: t.id, sourceId: p.id }], 'tile');
         }
+        case 'caos': return playChaosCard(p);
         case 'chaos': return startChaos(p.id, 'tile');
         default: { // gift
           announce({ kind: 'event', icon: Data.WIZARD.icon, title: 'Regalo del mago', text: Data.WIZARD.name + ' sonríe a ' + p.name });
@@ -2400,6 +2579,37 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           return finishInteraction('tile');
         }
       }
+    }
+
+    /* ------------------------------ cartas de caos ------------------------------ */
+    // Efectos inmediatos. Cada carta solo se ofrece si tiene sentido (p. ej. el intercambio exige una gran ventaja del líder).
+    function playChaosCard(p) {
+      const ranked = state.players.slice().sort((a, b) => b.dist - a.dist);
+      const first = ranked[0], lastP = ranked[ranked.length - 1];
+      const others = state.players.filter(x => x.id !== p.id);
+      const cards = [
+        { name: 'Robin de los bosques', ok: () => first.id !== lastP.id && first.coins >= 2,
+          run: () => { first.coins -= 2; lastP.coins += 2; return first.name + ' da 2 🪙 a ' + lastP.name + ' (el que va último)'; } },
+        { name: 'Lluvia de monedas', ok: () => others.some(x => x.coins > 0),
+          run: () => { others.forEach(x => loseCoins(x, 1)); return 'todos pierden 1 🪙 menos ' + p.name + ' (van al bote)'; } },
+        { name: 'Empujón final', ok: () => lastP.dist + 3 < S.goalDistance,
+          run: () => { teleport(lastP, lastP.dist + 3, 'teleport'); return lastP.name + ' avanza 3 casillas'; } },
+        { name: 'Amuleto', ok: () => true,
+          run: () => { addEffect(p, 'ward'); return p.name + ' tiene un amuleto: anulará el próximo ataque de carta'; } },
+        { name: 'Tirada extra', ok: () => true,
+          run: () => { grantItem(p, 'extraRoll', true); return p.name + ' recibe una tirada extra'; } },
+        { name: 'Intercambio de posiciones', ok: () => p.id !== first.id && first.dist - p.dist >= 8 && first.dist < S.goalDistance - 8,
+          run: () => { const a = p.dist, b = first.dist; teleport(p, b, 'swap'); teleport(first, a, 'swap'); return p.name + ' intercambia su posición con ' + first.name; } },
+        { name: 'Escudo para todos', ok: () => true,
+          run: () => { state.players.forEach(x => grantItem(x, 'shield', false)); return 'todos reciben un escudo si tienen hueco'; } }
+      ];
+      const pool = cards.filter(c => c.ok());
+      const card = pick(pool.length ? pool : [cards[3]]);
+      const msg = card.run();
+      announce({ kind: 'event', icon: '🃏', title: 'Carta de caos', text: card.name + ': ' + msg });
+      log('🃏 ' + card.name + ': ' + msg + '.', { kind: 'chaos' });
+      setResult({ kind: 'gift', ok: true, playerId: p.id, title: '🃏 ' + card.name, text: msg });
+      return finishInteraction('tile');
     }
 
     /* ------------------------------ Modo Caos ------------------------------ */
@@ -2428,7 +2638,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           return failChallenge(pd, 'timeout');
         }
         if (pd.kind === 'draw') {
-          if (pd.phase === 'draw') { toGuessPhase(pd); return; }
+          if (pd.phase === 'draw' || pd.phase === 'act') { toGuessPhase(pd); return; }
           return closeDraw(null);
         }
       }
@@ -2461,6 +2671,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         if (state.phase !== 'playing') break;
         const tt = now();
         const pd = state.pending;
+        if (pd && pd.hintUntil && !pd.hintHidden && tt >= pd.hintUntil) { pd.hintHidden = true; changed = true; }   // la pista musical desaparece a los 5 s
         if (pd && pd.deadline && tt >= pd.deadline) { onDeadline(pd); changed = true; continue; }
         if (!pd && state.sched && tt >= state.sched.at) {
           const s = state.sched; state.sched = null; runSched(s); changed = true; continue;
@@ -2524,7 +2735,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           out.drawing = pd.playerId === pid && pd.phase === 'draw';
           out.guess = pd.playerId !== pid && pd.phase === 'guess' && (pd.guesses[pid] || 0) < S.drawGuessMax;
         }
-        if (pd.type === 'collective') out.collective = !pd.answers[pid];
+        if (pd.type === 'collective') out.collective = !pd.answers[pid] && (!pd.duel || pd.duel.ids.includes(pid));
         if (pd.type === 'roulette') out.spin = pd.playerId === pid && pd.status === 'ready';
         if (pd.type === 'shield') out.shield = pd.playerId === pid;
         if (pd.type === 'shop') out.shopDone = pd.playerId === pid;
@@ -2542,6 +2753,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         mine: L.filter(q => q.owner === viewer).map(q => ({ id: q.id, text: q.text, options: q.options.slice(), correct: q.correct, ai: q.ai || null, note: q.note || '' })),
         notices: (AIP.notices[viewer] || []).slice() }; }
       s.themes = THEME_LIST;
+      s.jgMode = jgMode;
       s.ai = { on: AIP.on, mode: jgMode, recap: AIP.recap, cfg: Object.assign({}, AIP.cfg), n: { choice: AIP.choice[jgMode].length, open: AIP.open[jgMode].length + AIP.riddle[jgMode].length, event: AIP.events[jgMode].length } };
       if (s.setup && !full) {       // VOTO SECRETO: nadie recibe los votos de los demás, solo quién ha votado y su propio voto
         const T = s.setup, voted = {};
@@ -2559,7 +2771,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         if (pd.type === 'challenge') {
           if (pd.kind === 'memory' && pd.phase === 'show') pd.q.seq = sec.seq;
           if (pd.kind === 'draw') {
-            if (viewer === pd.playerId) pd.myWord = sec.word;
+            if (viewer === pd.playerId && !pd.hintHidden) { pd.myWord = sec.word; if (sec.hint) pd.myHint = sec.hint; }
             if (viewer !== 'tv') { pd.strokeCount = pd.strokes.length; delete pd.strokes; }
           }
         }
@@ -2702,11 +2914,13 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       if (!pd) return err('No hay nada que responder.');
       if (!P(actor)) return err('Jugador desconocido.');
       if (pd.type === 'collective') {
+        if (pd.duel && !pd.duel.ids.includes(actor)) return err('No participas en este duelo.');
         if (pd.answers[actor]) return err('Ya has respondido.');
         const ok = isCorrect(pd, a.value);
         if (ok === undefined) return err('Respuesta no válida.');
         pd.answers[actor] = { correct: ok };
         log('👥 ' + P(actor).name + ' ha respondido.');
+        if (pd.duel) { if (pd.answers[actor].correct) return closeDuel(actor); if (pd.duel.ids.every(id => pd.answers[id])) return closeDuel(null); return; }
         if (state.players.every(p => pd.answers[p.id])) closeCollective();
         return;
       }
@@ -2755,6 +2969,24 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       if (!pd.strokes.length) return err('Dibuja algo antes de terminar.');
       toGuessPhase(pd);
     };
+    // Acepta una errata pequeña (una letra de más, de menos o cambiada) en respuestas de 6 letras o más
+    function closeWord(a, b) {
+      if (a === b) return true;
+      if (Math.min(a.length, b.length) < 6 || Math.abs(a.length - b.length) > 1) return false;
+      let i = 0, j = 0, edits = 0;
+      while (i < a.length && j < b.length) {
+        if (a[i] === b[j]) { i++; j++; continue; }
+        if (++edits > 1) return false;
+        if (a.length > b.length) i++; else if (b.length > a.length) j++; else { i++; j++; }
+      }
+      edits += (a.length - i) + (b.length - j);
+      return edits <= 1;
+    }
+    H.performDone = (actor) => {                  // mímica / tararear: el intérprete termina su actuación
+      const pd = state.pending;
+      if (!pd || pd.type !== 'challenge' || pd.kind !== 'draw' || pd.phase !== 'act' || actor !== pd.playerId) return err('Ahora no puedes terminar la actuación.');
+      toGuessPhase(pd);
+    };
     H.guess = (actor, a) => {
       const pd = state.pending;
       if (!pd || pd.type !== 'challenge' || pd.kind !== 'draw' || pd.phase !== 'guess') return err('Ahora no se puede adivinar.');
@@ -2763,7 +2995,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       const n = Data.normalize(a.text);
       if (!n) return err('Escribe una palabra.');
       pd.guesses[actor] = (pd.guesses[actor] || 0) + 1;
-      const ok = [pd.secret.word].concat(pd.secret.alts || []).some(w => Data.normalize(w) === n);
+      const ok = [pd.secret.word].concat(pd.secret.alts || []).some(w => closeWord(Data.normalize(w), n));
       if (ok) return closeDraw(actor);
       log('🎨 ' + P(actor).name + ' lo intenta: «' + String(a.text).slice(0, 20) + '».');
       const guessers = state.players.filter(p => p.id !== pd.playerId);
@@ -2843,6 +3075,78 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       grantItem(p, a.key, true);
       state.jackpot += S.jackpot.onPurchase;
       log('🛒 ' + p.name + ' compra ' + def.name + ' (−' + price + ' 🪙, bote +' + S.jackpot.onPurchase + ').', { kind: 'shop' });
+    };
+    H.shopBuy = (actor, a) => {                   // compra desde el móvil del propio jugador (mismas reglas que en la TV)
+      if (!P(actor)) return err('Jugador desconocido.');
+      jgHostBuy = true;
+      try { return H.buy(actor, a); } finally { jgHostBuy = false; }
+    };
+    /* ------------------------------ duelos y pactos (modo adulto) ------------------------------ */
+    function closeDuel(winnerId) {
+      const pd = state.pending;
+      state.pending = null;
+      const x = P(pd.duel.ids[0]), y = P(pd.duel.ids[1]);
+      if (winnerId) {
+        const w = P(winnerId), l = w.id === x.id ? y : x;
+        const pay = Math.min(pd.duel.stake, l.coins);
+        l.coins -= pay; w.coins += pay;
+        setResult({ kind: 'duel', ok: true, playerId: w.id, title: '⚔️ ¡' + w.name + ' gana el duelo!', text: l.name + ' paga ' + pay + ' 🪙', answer: answerText(pd) });
+        log('⚔️ Duelo: ' + w.name + ' gana a ' + l.name + ' (+' + pay + ' 🪙).', { kind: 'good' });
+      } else {
+        setResult({ kind: 'duel', ok: false, playerId: x.id, title: '⚔️ Empate', text: 'Nadie acierta: nadie paga.', answer: answerText(pd) });
+        log('⚔️ Duelo sin ganador.', { kind: 'event' });
+      }
+    }
+    function allyPayout(pid) {
+      state.pacts.forEach(([a, b]) => {
+        if (a !== pid && b !== pid) return;
+        const partner = P(a === pid ? b : a), n = Math.min(S.pact.payout, state.jackpot);
+        if (partner && n > 0) { state.jackpot -= n; partner.coins += n; log('🤝 Pacto: ' + partner.name + ' cobra ' + n + ' 🪙 del bote.', { kind: 'good' }); }
+      });
+    }
+    H.duelChallenge = (actor, a) => {
+      if (jgMode !== 'adult') return err('Los duelos son del modo adulto.');
+      if (state.phase !== 'playing' || !state.turn || state.turn.playerId !== actor) return err('Solo puedes retar en tu turno.');
+      if (state.turn.step !== 'roll' || state.pending || state.sched) return err('Ahora no puedes retar.');
+      if (state.turn.duelUsed) return err('Ya has retado en este turno.');
+      const t = P(a && a.target);
+      if (!t || t.id === actor) return err('Elige a otro jugador.');
+      const b = buildChoice(pickFrom(jgPool('CHOICE'), 1, 2));
+      const t0 = now(), total = S.duel.seconds * 1000;
+      state.turn.duelUsed = true;
+      state.pending = { type: 'collective', origin: 'tile', q: b.q, secret: b.secret, answers: {}, hidden: [], startedAt: t0, total, deadline: t0 + total,
+        reward: 0, penalty: 0, duel: { ids: [actor, t.id], stake: S.duel.stake } };
+      announce({ kind: 'collective', icon: '⚔️', title: '¡Duelo!', text: P(actor).name + ' reta a ' + t.name + '. Gana quien acierte primero.' });
+      log('⚔️ ' + P(actor).name + ' reta a ' + t.name + ' (' + S.duel.stake + ' 🪙 en juego).', { kind: 'event' });
+    };
+    H.pactPropose = (actor, a) => {
+      if (jgMode !== 'adult') return err('Los pactos son del modo adulto.');
+      if (state.phase !== 'playing') return err('La partida no está en marcha.');
+      const t = P(a && a.target);
+      if (!t || t.id === actor) return err('Elige a otro jugador.');
+      if (t.bot) return err('Los bots no hacen pactos.');
+      if (state.pactReq) return err('Ya hay una propuesta pendiente.');
+      if (state.pacts.some(([x, y]) => (x === actor && y === t.id) || (x === t.id && y === actor))) return err('Ya sois aliados.');
+      state.pactReq = { from: actor, to: t.id };
+      log('🤝 ' + P(actor).name + ' propone un pacto a ' + t.name + '.', { kind: 'event' });
+    };
+    H.pactAnswer = (actor, a) => {
+      const r = state.pactReq;
+      if (!r || r.to !== actor) return err('No tienes ninguna propuesta.');
+      state.pactReq = null;
+      if (!a || !a.ok) { log('🤝 ' + P(actor).name + ' rechaza el pacto.', { kind: 'event' }); return; }
+      state.pacts.push([r.from, r.to]);
+      log('🤝 ' + P(r.from).name + ' y ' + P(r.to).name + ' se alían: cada vez que uno acabe su turno, el otro cobra ' + S.pact.payout + ' 🪙 del bote.', { kind: 'good' });
+    };
+    H.pactBreak = (actor, a) => {
+      const t = P(a && a.target);
+      const i = t ? state.pacts.findIndex(([x, y]) => (x === actor && y === t.id) || (x === t.id && y === actor)) : -1;
+      if (!t || i < 0) return err('No tenéis ningún pacto.');
+      const me = P(actor), cost = Math.min(S.pact.breakCost, me.coins), steal = Math.min(S.pact.steal, t.coins);
+      me.coins -= cost; state.jackpot += cost;
+      t.coins -= steal; me.coins += steal;
+      state.pacts.splice(i, 1);
+      log('💔 ' + me.name + ' rompe el pacto con ' + t.name + ': paga ' + cost + ' 🪙 al bote y le roba ' + steal + ' 🪙.', { kind: 'bad' });
     };
     H.shopDone = actor => {
       const pd = state.pending;
@@ -3384,7 +3688,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     return '<span class="cat" style="--cat:' + c.color + '">' + c.icon + ' ' + esc(c.name) + '</span>';
   }
   const diffDots = d => '<span class="diff" title="Dificultad ' + d + '">' + '●'.repeat(d || 1) + '<s>' + '●'.repeat(3 - (d || 1)) + '</s></span>';
-  const KIND_NAME = { choice: 'Pregunta', open: 'Pregunta abierta', riddle: 'Acertijo', speed: 'Rapidez', memory: 'Memoria', draw: 'Dibujo' };
+  const KIND_NAME = { choice: 'Pregunta', open: 'Pregunta abierta', riddle: 'Acertijo', speed: 'Rapidez', memory: 'Memoria', draw: 'Dibujo', mime: 'Mímica', hum: 'Tararear' };
   const OPT_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
   const playerById = (v, id) => v.players.find(p => p.id === id);
 
@@ -3631,7 +3935,30 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       return '<button type="button" class="btn ghost" data-act="hint"' + (m.items.hint.ok ? '' : ' disabled') + '>💡 Usar pista (' + n + ')</button>';
     }
 
-    function screenPlay(v) {
+    function socialCard(v) {
+      if (v.phase !== 'playing' || v.jgMode !== 'adult') return '';
+      const pid = me().id;
+      const name = id => { const q = v.players.find(x => x.id === id); return q ? q.name : '?'; };
+      let h = '';
+      if (v.pactReq && v.pactReq.to === pid) {
+        h += '<div class="ph-card"><h2>🤝 Propuesta de pacto</h2><p>' + esc(name(v.pactReq.from)) + ' quiere ser tu aliado. Cada vez que acabe su turno, cobrarás ' + 1 + ' 🪙 del bote.</p>' +
+          '<div class="row2"><button type="button" class="btn good" data-act="pactAnswer" data-ok="1">Aceptar</button><button type="button" class="btn ghost" data-act="pactAnswer" data-ok="0">Rechazar</button></div></div>';
+      }
+      if (v.turn && v.turn.playerId === pid && v.turn.step === 'roll' && !v.pending && !v.turn.duelUsed) {
+        h += '<div class="ph-card"><h2>⚔️ Retar a alguien</h2><p class="tiny">Duelo de una pregunta: gana quien acierte primero y se lleva las monedas en juego.</p><div class="row2">' +
+          v.players.filter(x => x.id !== pid).map(x => '<button type="button" class="btn small" data-act="duel" data-target="' + x.id + '">⚔️ ' + esc(x.name) + '</button>').join('') + '</div></div>';
+      }
+      const allies = v.pacts.filter(q => q.includes(pid)).map(q => (q[0] === pid ? q[1] : q[0]));
+      let pb = '';
+      v.players.filter(x => x.id !== pid).forEach(x => {
+        if (allies.includes(x.id)) pb += '<button type="button" class="btn small warn" data-act="pactBreak" data-target="' + x.id + '">💔 Romper con ' + esc(x.name) + '</button>';
+        else if (!x.bot && !v.pactReq) pb += '<button type="button" class="btn small" data-act="pactPropose" data-target="' + x.id + '">🤝 Pactar con ' + esc(x.name) + '</button>';
+      });
+      if (pb) h += '<div class="ph-card"><h2>🤝 Aliados</h2><div class="row2">' + pb + '</div><p class="tiny">Romper un pacto cuesta ' + S.pact.breakCost + ' 🪙 y te deja robar ' + S.pact.steal + ' a tu aliado.</p></div>';
+      return h;
+    }
+    function screenPlay(v) { return socialCard(v) + screenPlayBase(v); }
+    function screenPlayBase(v) {
       const m = v.me, pd = v.pending, p = me();
       const turnP = v.turn ? U.playerById(v, v.turn.playerId) : null;
       if (v.phase === 'lobby') {
@@ -3705,6 +4032,14 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 
     function screenDraw(v, pd, mine, who) {
       const m = v.me;
+      if (mine && pd.phase === 'act') {                   // mímica / tararear: solo el intérprete ve la palabra
+        if (pd.variant === 'hum' && !pd.myWord) {        // reto musical: la pista ya ha desaparecido
+          return '<div class="ph-card center"><div class="big">🎤</div><h2>¡CANTA EL ESTRIBILLO DE MEMORIA!</h2>' + timer(pd) +
+            '<p class="tiny">Sin mirar la tarjeta. Los demás intentan adivinar la canción.</p><div class="row2"><button type="button" class="btn good" data-act="performDone">✔ Listo</button></div></div>';
+        }
+        return '<div class="ph-card center"><div class="big">' + (pd.variant === 'hum' ? '🎵' : '🎭') + '</div><div class="secret">' + (pd.variant === 'hum' ? 'Canción: ' : 'Actúa sin hablar: ') + '<b>' + esc(pd.myWord) + '</b></div>' + (pd.myHint ? '<p class="note">🎵 ' + esc(pd.myHint) + '</p>' : '') + timer(pd) +
+          '<p class="tiny">Los demás intentan adivinarlo. Pulsa cuando termines.</p><div class="row2"><button type="button" class="btn good" data-act="performDone">✔ Listo</button></div></div>';
+      }
       if (mine && pd.phase === 'draw') {
         return '<div class="ph-card draw"><div class="secret">Dibuja: <b>' + esc(pd.myWord) + '</b></div>' + timer(pd) +
           '<canvas class="ph-canvas" id="ph-canvas" width="600" height="600"></canvas>' +
@@ -3720,7 +4055,8 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           (m.guess ? '<form class="ph-form" data-form="guess"><input class="txt" type="text" autocomplete="off" autocapitalize="off" placeholder="¿Qué es?" aria-label="Tu respuesta"><button class="btn good" type="submit">Probar (' + left + ' intentos)</button></form>'
             : '<p class="note bad">No te quedan intentos.</p>') + '</div>';
       }
-      return '<div class="ph-card center"><div class="big">🎨</div><h2>' + esc(who.name) + ' está dibujando…</h2><p>Prepárate para adivinar.</p></div>';
+      const doing = pd.variant === 'hum' ? ' está tarareando…' : pd.variant === 'mime' ? ' está actuando…' : ' está dibujando…';
+      return '<div class="ph-card center"><div class="big">' + (pd.variant === 'hum' ? '🎵' : pd.variant === 'mime' ? '🎭' : '🎨') + '</div><h2>' + esc(who.name) + doing + '</h2><p>Prepárate para adivinar.</p></div>';
     }
 
     function screenBag(v) {
@@ -3754,13 +4090,14 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       const p = me(), pd = v.pending;
       const here = !!(pd && pd.type === 'shop' && pd.playerId === pid);
       if (!here) return '<div class="jg-shopclosed"><div class="art">🛒</div><h3>Tienda cerrada</h3><p>La tienda de la jungla solo se abre cuando tu ficha cae en una casilla 🛒. ¡Sigue avanzando!</p></div>';
-      return '<div class="jg-shophead"><div><b>Tienda de la jungla</b><small>Solo consulta · las compras se hacen en la pantalla principal</small></div><span class="jg-wallet">' + p.coins + ' 🪙</span></div>' +
+      return '<div class="jg-shophead"><div><b>Tienda de la jungla</b><small>Pulsa Comprar junto al objeto · se paga con tus monedas</small></div><span class="jg-wallet">' + p.coins + ' 🪙</span></div>' +
         (v.chaos.active ? '<p class="note">🌀 ¡Rebajas del Caos!</p>' : '') +
         '<div class="jg-shop">' + v.catalog.map(c => {
           const has = c.stock > 0, can = p.coins >= c.price;
           return '<article class="jg-sc ' + c.kind + (has ? '' : ' out') + '"><div class="jg-sart"><span>' + c.icon + '</span><i class="sp s1"></i><i class="sp s2"></i></div><div class="jg-sbody"><b>' + esc(c.name) + '</b><small>' + esc(c.desc) + '</small>' +
             '<div class="jg-srow"><span class="jg-price">' + c.price + ' 🪙' + (c.price < c.basePrice ? ' <s>' + c.basePrice + '</s>' : '') + '</span><span class="jg-st ' + (has ? (can ? 'ok' : 'no') : 'out') + '">' + (has ? (can ? 'Te llega' : 'Te faltan ' + (c.price - p.coins)) : 'Agotado') + '</span></div>' +
-            '<small>' + (has ? 'Quedan ' + c.stock : '') + '</small></div></article>';
+            '<small>' + (has ? 'Quedan ' + c.stock : '') + '</small>' +
+            (has && can ? '<button type="button" class="btn small good" data-act="buy" data-key="' + c.key + '">Comprar</button>' : '') + '</div></article>';
         }).join('') + '</div><button type="button" class="btn big" data-act="shopDone">Salir de la tienda</button>';
     }
 
@@ -3897,6 +4234,11 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       else if (a === 'useShield') send('useShield');
       else if (a === 'declineShield') send('declineShield');
       else if (a === 'shopDone') send('shopDone');
+      else if (a === 'buy') send('shopBuy', { key: b.dataset.key });
+      else if (a === 'duel') send('duelChallenge', { target: b.dataset.target });
+      else if (a === 'pactPropose') send('pactPropose', { target: b.dataset.target });
+      else if (a === 'pactAnswer') send('pactAnswer', { ok: b.dataset.ok === '1' });
+      else if (a === 'pactBreak') send('pactBreak', { target: b.dataset.target });
       
       else if (a === 'useItem') send('useItem', { key: b.dataset.k });
       else if (a === 'card') {
@@ -3912,6 +4254,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
       else if (a === 'eraser') { dr.eraser = !dr.eraser; b.classList.toggle('sel', dr.eraser); main.querySelectorAll('.col').forEach(x => x.classList.toggle('sel', !dr.eraser && x.dataset.c === dr.color)); }
       else if (a === 'undo') { dr.strokes.pop(); U.drawStrokes(dr.canvas, dr.strokes); syncDraw(); }
       else if (a === 'drawFinish') { send('drawFinish', { strokes: dr.strokes }); }
+      else if (a === 'performDone') { send('performDone', {}); }
     });
     root.addEventListener('input', ev => { if (ev.target.dataset && ev.target.dataset.act === 'width') dr.width = Number(ev.target.value); });
     root.addEventListener('submit', ev => {
@@ -5010,6 +5353,10 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         else body += '<h2 class="c-question">' + esc(who.name) + ' repite la secuencia</h2><div class="mem-slots">' + '<i></i>'.repeat(q.length) + '</div><p class="hint-line">' + q.length + ' símbolos</p>';
       } else if (q.type === 'draw') {
         const guess = pd.phase === 'guess';
+        if (pd.variant) {                                  // mímica / tararear: sin lienzo, la palabra no se muestra
+          const doing = pd.variant === 'hum' ? ' canta el estribillo de memoria…' : ' está actuando en secreto…';
+          body += '<h2 class="c-question small">' + (guess ? '¡Adivina el ' + (pd.variant === 'hum' ? 'título que tararean' : 'que actúan') + '! Escribe tu respuesta en el móvil' : esc(who.name) + doing) + '</h2><div class="mime-stage">' + (pd.variant === 'hum' ? '🎵' : '🎭') + '</div>';
+        } else
         body += '<h2 class="c-question small">' + (guess ? '¡Adivina qué es! Escribe tu respuesta en el móvil' : esc(who.name) + ' está dibujando en secreto…') + '</h2>' +
           '<canvas id="tv-canvas" width="560" height="560" class="draw-canvas"></canvas>';
       }
@@ -5023,6 +5370,11 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
     }
 
     function centerCollective(v, pd) {
+      if (pd.duel) {
+        const names = pd.duel.ids.map(id => { const q = v.players.find(x => x.id === id); return q ? q.name : '?'; }).join(' vs ');
+        return '<div class="c-challenge group"><div class="c-head"><span class="cat" style="--cat:#ef4444">⚔️ Duelo: ' + esc(names) + '</span><span class="reward">' + pd.duel.stake + ' 🪙 en juego</span></div>' +
+          '<p class="hint-line">Gana quien acierte primero.</p>' + U.timerHTML(pd) + '<h2 class="c-question">' + esc(pd.q.text) + '</h2><ol class="c-options">' + pd.q.options.map((o, i) => '<li><span class="ol">' + U.OPT_LETTERS[i] + '</span>' + esc(o) + '</li>').join('') + '</ol></div>';
+      }
       return '<div class="c-challenge group"><div class="c-head"><span class="cat" style="--cat:#f97316">👥 Reto de grupo</span><span class="reward">+' + pd.reward + ' 🪙 todos</span></div>' +
         '<p class="hint-line">Si todos aciertan, todos ganan. Si alguien falla, todos pierden hasta ' + pd.penalty + ' 🪙.</p>' + U.timerHTML(pd) +
         '<h2 class="c-question">' + esc(pd.q.text) + '</h2><ol class="c-options">' + pd.q.options.map((o, i) => '<li><span class="ol">' + U.OPT_LETTERS[i] + '</span>' + esc(o) + '</li>').join('') + '</ol>' +
@@ -5132,7 +5484,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
         afterCenter(v, pd, kind);
       } else {
         const cb = centerEl.querySelector('#chaos-bar'); if (cb && chaosBar) cb.innerHTML = chaosBar;
-        if (pd && pd.type === 'challenge' && pd.kind === 'draw') U.drawStrokes(centerEl.querySelector('#tv-canvas'), pd.strokes);
+        if (pd && pd.type === 'challenge' && pd.kind === 'draw' && !pd.variant) U.drawStrokes(centerEl.querySelector('#tv-canvas'), pd.strokes);
       }
       if (res && !pd && kind === 'result') {
         setTimeout(() => { if (view && view.result && view.result.seq === res.seq) render(); }, Math.max(50, res.until - t + 30));
@@ -5174,7 +5526,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           if (note && d && !moving && diceRest && diceRest.seq === d.seq) note.innerHTML = '<b>' + d.value + '</b>' + (d.applied !== d.value ? ' → avanza ' + d.applied : '');
         }
       }
-      if (kind === 'challenge' && pd.kind === 'draw') U.drawStrokes(centerEl.querySelector('#tv-canvas'), pd.strokes);
+      if (kind === 'challenge' && pd.kind === 'draw' && !pd.variant) U.drawStrokes(centerEl.querySelector('#tv-canvas'), pd.strokes);
       if (kind === 'challenge' && pd.kind === 'memory' && pd.phase === 'show') {
         const sym = centerEl.querySelector('#mem-sym'), dots = centerEl.querySelectorAll('.mem-dots i'), ms = D.SETTINGS.memoryShowMsPerSymbol;
         const upd = () => {
@@ -5406,7 +5758,7 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
           '<div class="dv-row">' + sel('curse', D.CURSES.map(c => [c.id, c.icon + ' ' + c.name]), keep.curse) + '</div>' +
           '<div class="dv-row">' + sel('target', [['cur', 'Jugador del turno'], ['sel', 'Jugador elegido arriba'], ['all', 'Todos (colectiva)']], keep.target) + '<button data-d="curse">💀 Lanzar</button></div>' +
           '<div class="dv-row"><button data-d="shieldtest">🛡️ Probar escudo (da 1 escudo + maldición)</button></div>' +
-          '<div class="dv-row">' + sel('kind', ['choice', 'open', 'riddle', 'speed', 'memory', 'draw'].map(k => [k, U.KIND_NAME[k]]), keep.kind) + '<button data-d="challenge">Lanzar reto</button></div>' +
+          '<div class="dv-row">' + sel('kind', ['choice', 'open', 'riddle', 'speed', 'memory', 'draw', 'mime', 'hum'].map(k => [k, U.KIND_NAME[k]]), keep.kind) + '<button data-d="challenge">Lanzar reto</button></div>' +
         '</details>' +
         '<details open><summary>Turnos</summary><div class="dv-row"><button data-d="skipint">Saltar interacción</button><button data-d="skipturn">Saltar turno</button><button data-d="skip5">5 turnos</button></div>' +
           '<div class="dv-row"><input id="dv-goal" data-keep="goal" type="number" min="5" value="' + keep.goal + '"><button data-d="goal">Fijar meta (casillas)</button></div></details>' +
@@ -5487,8 +5839,8 @@ body.phase-lobby #cam .tvc { top: 40px; height: 956px; left: 176px; }
 (function (root) {
   'use strict';
   const TE = (root.TE = root.TE || {});
-  const PHONE_ACTIONS = ['roll', 'answer', 'pass', 'useItem', 'spin', 'useShield', 'declineShield', 'shopDone',
-    'playCard', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat'];
+  const PHONE_ACTIONS = ['roll', 'answer', 'pass', 'useItem', 'spin', 'useShield', 'declineShield', 'shopDone', 'shopBuy', 'duelChallenge', 'pactPropose', 'pactAnswer', 'pactBreak',
+    'playCard', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'performDone', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat'];
   const SKIP_AFTER_MS = 25000;       // turno de un jugador desconectado: se salta pasado este tiempo
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -8243,6 +8595,7 @@ return { SYSTEM, TASKS, extractJson, str, num, list, TONES };
               act(b.id, { type: 'submitMemory', seq });
             });
           } else if (pd.kind === 'draw') {
+            if (pd.phase === 'act' && pd.playerId === b.id) once('act:' + key, delay(b, 3), () => act(b.id, { type: 'performDone' }));
             if (pd.phase === 'draw' && pd.playerId === b.id) once('draw:' + key, delay(b, 2.2), () => act(b.id, { type: 'drawFinish', strokes: doodle() }));
             if (pd.phase === 'guess' && pd.playerId !== b.id && ((pd.guesses || {})[b.id] || 0) < 3) {
               const n = (pd.guesses || {})[b.id] || 0;
@@ -8253,7 +8606,7 @@ return { SYSTEM, TASKS, extractJson, str, num, list, TONES };
               });
             }
           }
-        } else if (pd.type === 'collective' && !pd.answers[b.id]) {
+        } else if (pd.type === 'collective' && !pd.answers[b.id] && (!pd.duel || pd.duel.ids.includes(b.id))) {
           once('col:' + key, delay(b, 1.4), () => {
             const ok = r() < skillFor(b, pd.q && pd.q.diff), sec = pd.secret || {};
             let value;
