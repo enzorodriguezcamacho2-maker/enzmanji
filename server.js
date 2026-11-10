@@ -29,7 +29,8 @@ const RPC_TIMEOUT = 6000;
 const OFFLINE_GRACE = 6000;              // un móvil sin stream durante 6 s cuenta como desconectado
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // sin I ni O (se confunden con 1 y 0)
 // Misma lista que el juego (index.html): chat, votaciones, jungla, impostor, reacciones… (el motor de la TV valida cada acción)
-const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'spin', 'useShield', 'declineShield', 'shopDone', 'playCard', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat', 'buy']);
+// Acciones que puede mandar un móvil. Tiene que coincidir con PHONE_ACTIONS de index.html (si falta una, el móvil ve «Acción no permitida»).
+const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'shopDone', 'shopBuy', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'performDone', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat', 'mini']);
 
 const rooms = new Map();
 const rid = n => crypto.randomBytes(n).toString('hex');

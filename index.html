@@ -928,14 +928,14 @@ body.phase-lobby #cam .tvc { height: 956px; }
              coinTileMult: 2, normalTileBonus: 1, shopDiscount: 0.25, minRoundForEvent: 5 },
     avalancheReward: 2,
     avalancheSeconds: 20,
-    seconds: { choice: 25, open: 30, riddle: 40, speed: 10, memoryInput: 20,
-               draw: 60, guess: 45, collective: 30, shield: 12, roulette: 25, shop: 45 },
+    seconds: { choice: 25, open: 30, riddle: 30, speed: 10, memoryInput: 20,     // NADA dura más de 30 s
+               draw: 30, guess: 30, collective: 30, shield: 12, roulette: 25, shop: 30 },
     memoryShowMsPerSymbol: 900,
     rewards: {               // CASILLAS que avanza quien acierta, por dificultad 1/2/3
       choice: [1, 2, 3], open: [1, 2, 3], riddle: [2, 2, 3], speed: [1, 2, 3],
       memory: [2, 2, 3], draw: 2
     },
-    drawGuessMax: 3,
+    drawGuessMax: 6,         // intentos para adivinar el dibujo (se adivina MIENTRAS se dibuja)
     collectiveReward: 1,     // casillas para todos si el grupo acierta
     collectivePenalty: 1,    // casillas que retroceden todos si el grupo falla
     maxHandCards: 3,
@@ -2196,7 +2196,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         const tg = kids ? rint(4, 8) : rint(5, 12) + (rnd() < 0.4 ? 0.5 : 0);
         const target = Math.round(tg * 1000);
         state.pending = { type: 'mini', kind: 'clock', origin: 'tile', playerId: p.id, ids: [p.id, r.id], phase: 'play', startedAt: t0, res: {}, secret: {},
-          reward: stake, seq: 0, target, total: target + 20000, deadline: t0 + target + 20000, duel: { stake, rematch: H0.n } };
+          reward: stake, seq: 0, target, total: Math.min(30000, target + 12000), deadline: t0 + Math.min(30000, target + 12000), duel: { stake, rematch: H0.n } };
         return;
       }
       const b = buildChoice(pickFrom(jgPool('CHOICE'), 1, 2)), total = S.duel.seconds * 1000;
@@ -2313,12 +2313,12 @@ body.phase-lobby #cam .tvc { height: 956px; }
         pd.secret = { word: w.word, alts: w.alts, hint: w.hint || null };
         pd.phase = variant ? 'act' : 'draw';
         pd.strokes = []; pd.guesses = {};
-        pd.guessMs = S.seconds.guess * 1000;
+        pd.guessMs = S.seconds.guess * 1000; pd.live = true;     // se adivina mientras se dibuja / actúa
         pd.reward = calcReward(S.rewards.draw, mods);
         pd.total = calcMs(S.seconds.draw, mods);
         if (o.pair && !variant) { pd.pair = o.pair; pd.maxStrokes = 3; pd.q.text = 'Dibujo en pareja'; }   // 3 trazos y solo adivina la pareja
       }
-      pd.deadline = t0 + pd.total;
+      pd.deadline = t0 + pd.total; pd.t0 = t0;
       state.pending = pd;
       if (pd.pair) { announce({ kind: 'collective', icon: '🎨', title: 'Dibujo en pareja', text: p.name + ' dibuja con solo 3 trazos y ' + P(pd.pair).name + ' adivina.' }); log('🎨 Dibujo en pareja: ' + p.name + ' y ' + P(pd.pair).name + '.', { kind: 'challenge' }); return; }
       if (o.avalanche) passToAvalanche(pd, p);
@@ -2379,7 +2379,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const pd = state.pending;
       state.pending = null;
       const drawer = P(pd.playerId); fbRec(pd, 'draw', winnerId ? 'ok' : 'fail');
-      const isDrawing = !pd.variant, fast = pd.phase === 'guess' && pd.guessMs && (now() - pd.startedAt) < pd.guessMs * 0.35;
+      const isDrawing = !pd.variant, fast = (now() - (pd.t0 || pd.startedAt)) < 12000;
       if (isDrawing) { drawer.stats.draws++; storyDrawing(pd, winnerId); }
       if (winnerId) {
         const w = P(winnerId);
@@ -2475,19 +2475,20 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const pd = { type: 'mini', kind, origin, playerId: pid, ids, phase: 'play', startedAt: t0, res: {}, secret: {}, reward: S.mini.reward, seq: 0 };
       if (kind === 'clock') {
         const tg = kids ? rint(5, 10) : rint(8, 18) + (rnd() < 0.4 ? 0.5 : 0);
-        pd.target = Math.round(tg * 1000); pd.total = pd.target + 25000;
+        pd.target = Math.round(tg * 1000); pd.total = Math.min(30000, pd.target + 12000);
       } else if (kind === 'relay') {
         pd.target = Math.round((kids ? rint(8, 14) : rint(12, 20)) * 1000);
-        pd.step = 0; pd.margin = kids ? 1500 : 1000; pd.total = pd.target + 20000;
+        pd.target = Math.round((kids ? rint(6, 10) : rint(8, 13)) * 1000);
+        pd.step = 0; pd.margin = kids ? 1500 : 1000; pd.total = Math.min(30000, pd.target + 10000);
       } else if (kind === 'moon' || kind === 'sync') {
         const it = pick(Data.MOON[kids ? 'kids' : 'adult']);
         pd.q = { id: it.id, text: it.text }; pd.secret = { answers: it.answers.slice() };
-        pd.total = kind === 'moon' ? 40000 : 30000;
+        pd.total = kind === 'moon' ? 22000 : 25000;   // la Luna: 22 s para escribir + 8 s para tachar respuestas = 30 s
       } else if (kind === 'describe') {
         const w = pickFrom(Data.WORDS.concat(Data.MIMES).map(x => Object.assign({ diff: 1 }, x)), 1, 1);
-        pd.secret = { word: w.word, alts: w.alts || [] }; pd.tries = 0; pd.maxTries = 8; pd.total = 60000;
+        pd.secret = { word: w.word, alts: w.alts || [] }; pd.tries = 0; pd.maxTries = 8; pd.total = 30000;
       } else if (kind === 'chain') {
-        pd.words = [pick(Data.CHAIN_STARTS)]; pd.by = [null]; pd.goal = kids ? 4 : 6; pd.step = 0; pd.wordMs = kids ? 20000 : 15000; pd.total = pd.wordMs;
+        pd.words = [pick(Data.CHAIN_STARTS)]; pd.by = [null]; pd.goal = kids ? 3 : 4; pd.step = 0; pd.wordMs = kids ? 10000 : 8000; pd.total = pd.wordMs; pd.endAt = t0 + 30000;   // la cadena entera: 30 s como mucho
       }
       pd.deadline = t0 + pd.total;
       state.turn.step = 'resolving';
@@ -2546,7 +2547,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       }
       if (pd.kind === 'moon') {
         if (pd.phase === 'play') {                   // pasa a la revisión: cada uno puede tachar respuestas que no valen
-          const t = now(); pd.phase = 'veto'; pd.flags = {}; pd.okd = {}; pd.startedAt = t; pd.total = 15000; pd.deadline = t + pd.total; pd.seq++;
+          const t = now(); pd.phase = 'veto'; pd.flags = {}; pd.okd = {}; pd.startedAt = t; pd.total = 8000; pd.deadline = t + pd.total; pd.seq++;
           if (!Object.keys(pd.res).length) return miniClose(pd);
           return;
         }
@@ -2592,7 +2593,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const t = now();
       if (pd.phase === 'reveal') return finishInteraction(pd.origin);
       if (pd.kind === 'relay' && pd.step === 0) {          // el primero no paró: se pasa igualmente al segundo (sin tiempo = fallo)
-        pd.step = 1; pd.startedAt = t; pd.total = pd.target + 20000; pd.deadline = t + pd.total; pd.seq++;
+        pd.step = 1; pd.startedAt = t; pd.total = Math.min(30000, pd.target + 10000); pd.deadline = t + pd.total; pd.seq++;
         if (!pd.res[pd.ids[0]]) return miniClose(pd);
         return;
       }
@@ -2612,7 +2613,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         if (!isFinite(ms) || ms < 100 || ms > 120000) return err('Tiempo no válido.');
         pd.res[actor] = { ms }; pd.seq++;
         if (pd.kind === 'relay') {
-          if (pd.step === 0) { const t = now(); pd.step = 1; pd.startedAt = t; pd.total = pd.target + 20000; pd.deadline = t + pd.total; return; }
+          if (pd.step === 0) { const t = now(); pd.step = 1; pd.startedAt = t; pd.total = Math.min(30000, pd.target + 10000); pd.deadline = t + pd.total; return; }
           return miniClose(pd);
         }
         if (miniAllIn(pd, pd.ids)) miniClose(pd);
@@ -2655,7 +2656,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         if (pd.words.some(w => Data.normalize(w).replace(/[^a-z]/g, '') === n)) return err('Esa palabra ya ha salido.');
         pd.words.push(raw.toLowerCase()); pd.by.push(actor); pd.step++; pd.seq++;
         if (pd.words.length - 1 >= pd.goal) return miniClose(pd);
-        const t = now(); pd.startedAt = t; pd.total = pd.wordMs; pd.deadline = t + pd.total;
+        const t = now(); pd.startedAt = t; pd.total = Math.max(1000, Math.min(pd.wordMs, (pd.endAt || Infinity) - t)); pd.deadline = t + pd.total;
         return;
       }
       return err('Acción no válida.');
@@ -2732,7 +2733,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
           return failChallenge(pd, 'timeout');
         }
         if (pd.kind === 'draw') {
-          if (pd.phase === 'draw' || pd.phase === 'act') { toGuessPhase(pd); return; }
+          if (!pd.live && (pd.phase === 'draw' || pd.phase === 'act')) { toGuessPhase(pd); return; }
           return closeDraw(null);
         }
       }
@@ -2743,11 +2744,12 @@ body.phase-lobby #cam .tvc { height: 956px; }
     }
     function toGuessPhase(pd) {
       const t = now();
+      if (pd.live) { pd.phase = 'guess'; return; }      // en directo: el reloj sigue, no se reinicia
       pd.phase = 'guess'; pd.total = pd.guessMs; pd.startedAt = t; pd.deadline = t + pd.guessMs;
       log('🎨 ¡' + P(pd.playerId).name + ' terminó de dibujar! A adivinar.', { kind: 'event' });
     }
     function countdownFits(pd) {          // la cuenta atrás solo cuando de verdad se está esperando a alguien
-      if (pd.type === 'challenge') return (QUESTION_KINDS.includes(pd.kind) && pd.status === 'answering') || (pd.kind === 'draw' && pd.phase === 'guess');
+      if (pd.type === 'challenge') return (QUESTION_KINDS.includes(pd.kind) && pd.status === 'answering') || pd.kind === 'draw';
       if (pd.type === 'collective') return true;
       if (pd.type === 'mini') return pd.phase === 'play' && pd.kind !== 'clock' && pd.kind !== 'relay';
       if (pd.type === 'rush') return pd.phase === 'play';
@@ -2829,7 +2831,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         if (pd.type === 'challenge' && pd.kind === 'memory') out.memoryInput = pd.playerId === pid && pd.phase === 'input';
         if (pd.type === 'challenge' && pd.kind === 'draw') {
           out.drawing = pd.playerId === pid && pd.phase === 'draw';
-          out.guess = pd.playerId !== pid && (!pd.pair || pd.pair === pid) && pd.phase === 'guess' && (pd.guesses[pid] || 0) < S.drawGuessMax;
+          out.guess = pd.playerId !== pid && (!pd.pair || pd.pair === pid) && (pd.phase === 'guess' || (pd.live && (pd.phase === 'draw' || pd.phase === 'act'))) && (pd.guesses[pid] || 0) < S.drawGuessMax;
         }
         if (pd.type === 'collective') out.collective = !pd.answers[pid] && (!pd.duel || pd.duel.ids.includes(pid));
         if (pd.type === 'shop') out.shopDone = pd.playerId === pid;
@@ -3115,7 +3117,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     };
     H.guess = (actor, a) => {
       const pd = state.pending;
-      if (!pd || pd.type !== 'challenge' || pd.kind !== 'draw' || pd.phase !== 'guess') return err('Ahora no se puede adivinar.');
+      if (!pd || pd.type !== 'challenge' || pd.kind !== 'draw' || !(pd.phase === 'guess' || (pd.live && (pd.phase === 'draw' || pd.phase === 'act')))) return err('Ahora no se puede adivinar.');
       if (!P(actor) || actor === pd.playerId) return err('El dibujante no puede adivinar.');
       if (pd.pair && actor !== pd.pair) return err('Solo adivina la pareja de ' + P(pd.playerId).name + '.');
       if ((pd.guesses[actor] || 0) >= S.drawGuessMax) return err('Ya no te quedan intentos.');
@@ -4064,10 +4066,10 @@ body.phase-lobby #cam .tvc { height: 956px; }
           '<div class="row2"><button type="button" class="btn small ghost" data-act="undo">↶ Deshacer</button><button type="button" class="btn small good" data-act="drawFinish">✔ Terminar</button></div></div></div>';
       }
       if (mine) return '<div class="ph-card center"><div class="big">🎨</div><h2>Tu dibujo está en la pantalla</h2><p>Los demás intentan adivinarlo.</p>' + timer(pd) + '</div>';
-      if (pd.phase === 'guess' && pd.pair && pd.pair !== pid) return '<div class="ph-card center"><div class="big">🎨</div><h2>Dibujo en pareja</h2><p>Solo adivina ' + esc((U.playerById(v, pd.pair) || {}).name || '') + '. ¡Mira la pantalla!</p>' + timer(pd) + '</div>';
-      if (pd.phase === 'guess') {
+      if ((pd.phase === 'guess' || pd.live) && pd.pair && pd.pair !== pid) return '<div class="ph-card center"><div class="big">🎨</div><h2>Dibujo en pareja</h2><p>Solo adivina ' + esc((U.playerById(v, pd.pair) || {}).name || '') + '. ¡Mira la pantalla!</p>' + timer(pd) + '</div>';
+      if (pd.phase === 'guess' || pd.live) {
         const left = D.SETTINGS.drawGuessMax - (pd.guesses[pid] || 0);
-        return '<div class="ph-card"><h2>🎨 ¡Adivina el dibujo de ' + esc(who.name) + '!</h2>' + timer(pd) +
+        return '<div class="ph-card"><h2>' + (pd.variant === 'mime' ? '🎭 ¡Adivina lo que actúa ' : '🎨 ¡Adivina el dibujo de ') + esc(who.name) + '!</h2><p class="tiny">' + (pd.variant === 'mime' ? 'Mira a ' + esc(who.name) + ' y escribe en cuanto lo sepas.' : 'Se dibuja en directo en la tele: escribe en cuanto lo sepas.') + '</p>' + timer(pd) +
           (m.guess ? '<form class="ph-form" data-form="guess"><input class="txt" type="text" autocomplete="off" autocapitalize="off" placeholder="¿Qué es?" aria-label="Tu respuesta"><button class="btn good" type="submit">Probar (' + left + ' intentos)</button></form>'
             : '<p class="note bad">No te quedan intentos.</p>') + '</div>';
       }
@@ -5409,9 +5411,9 @@ body.phase-lobby #cam .tvc { height: 956px; }
       } else if (q.type === 'draw') {
         const guess = pd.phase === 'guess';
         if (pd.variant) {                                  // mímica: sin lienzo, la palabra no se muestra
-          body += '<h2 class="c-question small">' + (guess ? '¡Adivina lo que actúan! Escribe tu respuesta en el móvil' : esc(who.name) + ' está actuando en secreto…') + '</h2><div class="mime-stage">🎭</div>';
+          body += '<h2 class="c-question small">' + (guess || pd.live ? '🎭 ' + esc(who.name) + ' actúa · ¡adivinad desde el móvil!' : esc(who.name) + ' está actuando en secreto…') + '</h2><div class="mime-stage">🎭</div>';
         } else
-        body += '<h2 class="c-question small">' + (guess ? '¡Adivina qué es! Escribe tu respuesta en el móvil' : esc(who.name) + ' está dibujando en secreto…') + '</h2>' +
+        body += '<h2 class="c-question small">' + (guess ? '¡Adivina qué es! Escribe tu respuesta en el móvil' : pd.live ? '🎨 ' + esc(who.name) + ' dibuja en directo · ¡adivinad desde el móvil!' : esc(who.name) + ' está dibujando en secreto…') + '</h2>' +
           '<canvas id="tv-canvas" width="560" height="560" class="draw-canvas"></canvas>';
       }
       let foot = '';
@@ -9517,9 +9519,9 @@ return { SYSTEM, TASKS, extractJson, str, num, list, TONES };
           } else if (pd.kind === 'draw') {
             if (pd.phase === 'act' && pd.playerId === b.id) once('act:' + key, delay(b, 3), () => act(b.id, { type: 'performDone' }));
             if (pd.phase === 'draw' && pd.playerId === b.id) once('draw:' + key, delay(b, 2.2), () => act(b.id, { type: 'drawFinish', strokes: doodle() }));
-            if (pd.phase === 'guess' && pd.playerId !== b.id && ((pd.guesses || {})[b.id] || 0) < 3) {
+            if ((pd.phase === 'guess' || pd.live) && pd.playerId !== b.id && (!pd.pair || pd.pair === b.id) && ((pd.guesses || {})[b.id] || 0) < 3) {
               const n = (pd.guesses || {})[b.id] || 0;
-              once('g:' + key + ':' + n, delay(b, 1.6), () => {
+              once('g:' + key + ':' + n, delay(b, 1.6) + (n === 0 ? 4000 : 0), () => {
                 const drawer = st.players.find(p => p.id === pd.playerId), human = drawer && !drawer.bot;
                 const okP = human ? .12 + n * .12 : .3 + n * .15;        // a las personas se les deja adivinar primero
                 act(b.id, { type: 'guess', text: r() < okP ? pd.secret.word : pick(r, WRONG) });
