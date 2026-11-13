@@ -30,7 +30,7 @@ const OFFLINE_GRACE = 6000;              // un móvil sin stream durante 6 s cue
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // sin I ni O (se confunden con 1 y 0)
 // Misma lista que el juego (index.html): chat, votaciones, jungla, impostor, reacciones… (el motor de la TV valida cada acción)
 // Acciones que puede mandar un móvil. Tiene que coincidir con PHONE_ACTIONS de index.html (si falta una, el móvil ve «Acción no permitida»).
-const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'shopDone', 'shopBuy', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'performDone', 'rename', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat', 'mini']);
+const PHONE_ACTIONS = new Set(['roll', 'answer', 'pass', 'useItem', 'shopDone', 'shopBuy', 'submitMemory', 'guess', 'drawUpdate', 'drawFinish', 'performDone', 'rename', 'setLook', 'jBet', 'jFlash', 'jEvent', 'jReact', 'jGift', 'impTrap', 'impHelp', 'impVote', 'impBoost', 'sVote', 'qAdd', 'qDel', 'fb', 'survey', 'chat', 'mini', 'skipIntro']);
 
 const rooms = new Map();
 const rid = n => crypto.randomBytes(n).toString('hex');
@@ -204,14 +204,53 @@ async function handle(req, res) {
   /* ---------- estáticos ---------- */
   if (m !== 'GET') return json(res, 405, { ok: false });
   if (p !== '/' && p !== '/play' && p !== '/index.html') { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); return res.end('No encontrado'); }
-  let file = '/index.html';
-  const full = path.normalize(path.join(PUBLIC, file));
-  if (!full.startsWith(PUBLIC + path.sep) && full !== PUBLIC) { res.writeHead(403); return res.end(); }
-  fs.readFile(full, (e, data) => {
-    if (e) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); return res.end('No encontrado'); }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(full)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
-    res.end(data);
+  return sendPage(req, res, p === '/play');
+}
+
+/* ---------- la página, optimizada ----------
+   · Se lee UNA vez (y otra si el archivo cambia) y se guarda ya comprimida (brotli y gzip).
+   · Los móviles (/play) reciben una versión recortada: sin la isla 3D, sin Octavio y sin las voces,
+     que solo usa la pantalla principal. Así el móvil descarga y arranca mucho más rápido.
+   · ETag: si el navegador ya la tiene, no se vuelve a enviar. */
+const zlib = require('zlib');
+const TV_ONLY = ['voz-data', 'octavio-audio', 'octavio-lib', 'octavio-tv', 'isla-js'];
+let pageCache = null;
+function stripForPhone(html) {
+  TV_ONLY.forEach(id => {
+    const a = html.indexOf('<script id="' + id + '"');
+    if (a < 0) return;
+    const b = html.indexOf('</script>', a);
+    if (b > a) html = html.slice(0, a) + html.slice(b + 9);
   });
+  return html;
+}
+function buildPages() {
+  const full = path.join(PUBLIC, 'index.html');
+  const st = fs.statSync(full);
+  if (pageCache && pageCache.mtime === st.mtimeMs) return pageCache;
+  const html = fs.readFileSync(full, 'utf8');
+  const mk = text => {
+    const raw = Buffer.from(text, 'utf8');
+    const v = { raw, gz: zlib.gzipSync(raw, { level: 9 }), br: null, etag: '"' + crypto.createHash('sha1').update(raw).digest('hex').slice(0, 20) + '"' };
+    try { v.br = zlib.brotliCompressSync(raw, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 7, [zlib.constants.BROTLI_PARAM_SIZE_HINT]: raw.length } }); } catch (e) { v.br = null; }
+    return v;
+  };
+  pageCache = { mtime: st.mtimeMs, tv: mk(html), phone: mk(stripForPhone(html)) };
+  console.log('Página lista · TV ' + (pageCache.tv.raw.length / 1e6).toFixed(2) + ' MB → ' + ((pageCache.tv.br || pageCache.tv.gz).length / 1e6).toFixed(2) + ' MB · móvil ' + (pageCache.phone.raw.length / 1e6).toFixed(2) + ' MB → ' + ((pageCache.phone.br || pageCache.phone.gz).length / 1e6).toFixed(2) + ' MB');
+  return pageCache;
+}
+function sendPage(req, res, phone) {
+  let c;
+  try { c = buildPages(); } catch (e) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); return res.end('No encontrado'); }
+  const v = phone ? c.phone : c.tv, ae = String(req.headers['accept-encoding'] || '');
+  const head = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache', ETag: v.etag, Vary: 'Accept-Encoding' };
+  if (req.headers['if-none-match'] === v.etag) { res.writeHead(304, head); return res.end(); }
+  let body = v.raw;
+  if (v.br && /\bbr\b/.test(ae)) { body = v.br; head['Content-Encoding'] = 'br'; }
+  else if (/\bgzip\b/.test(ae)) { body = v.gz; head['Content-Encoding'] = 'gzip'; }
+  head['Content-Length'] = body.length;
+  res.writeHead(200, head);
+  res.end(body);
 }
 
 const server = http.createServer((req, res) => {
@@ -220,6 +259,7 @@ const server = http.createServer((req, res) => {
 server.requestTimeout = 0;                 // los streams SSE son largos
 
 if (require.main === module) {
+  try { buildPages(); } catch (e) { console.error('No se pudo preparar index.html:', e.message); }
   server.listen(PORT, '0.0.0.0', () => {
     console.log('\n  Tablero Encantado · servidor de salas\n');
     console.log('  En ESTE ordenador (la TV):   http://localhost:' + PORT);
