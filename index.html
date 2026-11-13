@@ -969,7 +969,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       chance: 0.6,           // probabilidad de que una casilla de reto dé un minijuego en vez de una pregunta
       reward: 2,             // casillas que avanza quien gana
       perfect: 1,            // casilla extra por un cronómetro casi perfecto
-      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 12, blur: 18 }
+      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 8, blur: 30 }
     },
     boardSize: 73,
     goalDistance: 72,        // meta en la cima de la isla (casilla 72; antes hay que pasar la puerta del 6)
@@ -1960,7 +1960,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
 
   const clone = o => JSON.parse(JSON.stringify(o));
   const err = m => ({ error: m });
-  const CHALLENGE_WEIGHTS = { choice: 12, open: 6, riddle: 7, speed: 7, memory: 0, draw: 20, mime: 7 };   // el dibujo sale más que cualquier tipo de pregunta; tararear eliminado
+  const CHALLENGE_WEIGHTS = { choice: 12, open: 6, riddle: 7, speed: 7, memory: 0, draw: 12, mime: 14 };   // el dibujo sale más que cualquier tipo de pregunta; tararear eliminado
   const PASSABLE = ['choice', 'open', 'riddle'];
   /* Bots: cada uno con personalidad propia (decide y habla según ella). Solo los controla la pantalla principal. */
   const BOT_PERS = {
@@ -2423,6 +2423,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         if (t.type === 'start') return;
         if (t.type === 'event') { if (!eventDone) { eventDone = true; seq.push({ k: 'event', id: p.id, d: p.dist }); } return; }
         if (!cqOnly() && rnd() < S.mini.chance) { minis.push(p.id); return; }
+        if (!cqOnly() && rnd() < 0.15) { seq.push({ k: 'mini', id: p.id, kind: 'blur', d: p.dist }); return; }   // Foto borrosa también en casillas de reto
         const kind = pickClassicKind();
         if (QUESTION_KINDS.includes(kind)) qs.push({ id: p.id, kind, d: p.dist });
         else seq.push({ k: 'ch', id: p.id, kind, d: p.dist });
@@ -2457,7 +2458,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const p = P(it.id); if (!p) return false;
       state.turn.playerId = p.id; landMark(p.id);
       if (it.k === 'ch') { startChallenge(p.id, { origin: 'tile', kind: it.kind }); return true; }
-      if (it.k === 'mini') { if (!startMini(p.id, 'tile')) startChallenge(p.id, { origin: 'tile', kind: 'choice' }); return true; }
+      if (it.k === 'mini') { if (!startMini(p.id, 'tile', it.kind)) startChallenge(p.id, { origin: 'tile', kind: 'choice' }); return true; }
       if (it.k === 'event') { tileEvent(p); return true; }
       return false;
     }
