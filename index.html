@@ -588,7 +588,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
   display: grid; place-items: center; }
 .bl-pic > * { grid-area: 1 / 1; animation: bl-focus var(--dur) steps(12, end) var(--del) both; will-change: filter; }
 .bl-pic.sharp > * { animation: none; filter: none; }
-.bl-pic .bl-emo { font-size: 300px; line-height: 1; width: auto; height: auto; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
+.bl-pic .bl-emo::before { content: attr(data-e); font-size: 300px; line-height: 1; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
 .bl-img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }
 .bl-img.ok { opacity: 1; }
 @keyframes bl-focus { 0% { filter: blur(46px); } 45% { filter: blur(15px); } 80% { filter: blur(5px); } 100% { filter: blur(1.5px); } }
@@ -597,6 +597,67 @@ body.phase-lobby #cam .tvc { height: 956px; }
 .bl-wr { color: #ffd0d0 !important; }
 .phone .bl-opts { display: grid; grid-template-columns: 1fr 1fr; gap: .6em; margin-top: .8em; }
 .phone .bl-opts .bl-opt { min-height: 4.2em; font-size: 1.05em; line-height: 1.15; white-space: normal; }
+</style>
+<style id="v7a-css">
+.phone .ph-bonus { display: inline-block; background: #ffd23f; color: #3a2300; border-radius: .6em; padding: 0 .35em; font-size: .8em; vertical-align: .1em; }
+</style>
+<style id="v7c-css">
+#announce.announce { left: 0 !important; top: 0 !important; width: 1920px !important; height: 1080px !important; padding-bottom: 60px; box-sizing: border-box; }
+#announce.announce.show { animation: none; }
+#announce .ann-card.ann2 { position: relative; min-width: 620px; max-width: 980px; padding: 92px 64px 40px !important; border-radius: 40px !important;
+  background: #fff !important; color: #0b1f4d; border: 0 !important;
+  box-shadow: 0 0 0 10px #ffd23f, 0 0 0 18px #0d47c9, 0 30px 70px rgba(5,25,80,.45) !important;
+  animation: ann2in .55s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes ann2in { 0% { transform: translateY(40px) scale(.55) rotate(-4deg); opacity: 0; } 70% { transform: translateY(-6px) scale(1.04) rotate(1deg); opacity: 1; } 100% { transform: none; } }
+#announce .ann2 .ann-badge { position: absolute; left: 50%; top: -78px; width: 156px; height: 156px; margin-left: -78px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6c8, #ffd23f 60%, #f0a500); box-shadow: 0 0 0 8px #fff, 0 10px 0 rgba(5,25,80,.25);
+  display: grid; place-items: center; animation: ann2spin .9s ease-out both .1s; }
+@keyframes ann2spin { from { transform: rotate(-200deg) scale(.3); } to { transform: none; } }
+#announce .ann2 .ann-icon { font-size: 92px; line-height: 1; }
+#announce .ann2 .ann-icon .ico { width: 1em; height: 1em; }
+#announce .ann2 h2 { font-size: 68px !important; line-height: 1.02; margin: 0 0 10px; color: #0d47c9 !important; text-shadow: none !important; }
+#announce .ann2 p { font: 800 30px 'Nunito', system-ui, sans-serif; color: #33415f; margin: 8px 0 0; line-height: 1.3; }
+#announce .ann2 .ann-avs { display: flex; gap: 22px; justify-content: center; margin: 14px 0 6px; flex-wrap: wrap; }
+#announce .ann2 .ann-av { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+#announce .ann2 .ann-av .an, #announce .ann2 .ann-av .av3 { width: 108px; height: 108px; border-radius: 50%; background-color: color-mix(in srgb, var(--pc) 40%, #fff); box-shadow: 0 0 0 6px var(--pc); }
+#announce .ann2 .ann-av b { font: 900 28px 'Nunito', system-ui, sans-serif; color: #0b1f4d; }
+#announce.k-chaos .ann-card.ann2 { background: #fff !important; }
+</style>
+<style id="gala-css">
+#octv.mode-intro.mode-gala { background: radial-gradient(ellipse at 70% 20%, #3a2a6e 0%, #1a1240 55%, #0b0820 100%); }
+#octv.mode-intro.mode-gala::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(180,20,40,.95) 0 3vw, rgba(140,10,30,.95) 3vw 6vw); clip-path: polygon(0 0, 9vw 0, 6vw 100%, 0 100%, 0 0, 100% 0, 100% 100%, 94vw 100%, 91vw 0, 0 0); opacity: .9; }
+#octv.mode-intro.mode-gala::after { content: ''; position: absolute; left: 50%; top: -20vh; width: 70vw; height: 140vh; margin-left: -35vw; background: radial-gradient(ellipse at 50% 0%, rgba(255,240,180,.22), transparent 60%); pointer-events: none; }
+#octv .gl-title { color: #ffd23f !important; text-shadow: 0 .4vh 0 #8a4a00; font-size: 4.4vh !important; z-index: 2; }
+#octv .gl-screen { z-index: 2; background: #1b0f3a !important; border-color: #3b2a72 !important; box-shadow: 0 0 0 .6vh #ffd23f, 0 3vh 6vh rgba(0,0,0,.5) !important; }
+#octv .gl-in { background: radial-gradient(ellipse at 50% 35%, #5a3fb0, #22155a 75%) !important; perspective: 120vh; }
+#octv .gl-label { background: #ffd23f !important; color: #3a2300 !important; }
+#octv .gl-emo::before { content: attr(data-e); font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
+#octv .gl-env { position: absolute; left: 50%; top: 52%; width: 30vw; height: 19vw; margin: -9.5vw 0 0 -15vw; transform: translateY(70vh) rotate(-12deg); transition: transform .9s cubic-bezier(.2,1.3,.4,1), opacity .5s; transform-style: preserve-3d; }
+#octv .gl-env.in { transform: none; }
+#octv .gl-env.gone { opacity: 0; transform: scale(.7) translateY(10vh); }
+#octv .gl-back, #octv .gl-front { position: absolute; inset: 0; border-radius: 1.2vw; }
+#octv .gl-back { background: #e9d7b0; }
+#octv .gl-front { background: linear-gradient(160deg, #fff4dc, #f2dfb6); clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%); z-index: 3; box-shadow: inset 0 -.6vh 0 rgba(0,0,0,.08); }
+#octv .gl-flap { position: absolute; left: 0; right: 0; top: 0; height: 58%; background: linear-gradient(180deg, #f6e6c2, #e6cf9e); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: 50% 0; transition: transform .7s ease; z-index: 4; }
+#octv .gl-env.open .gl-flap { transform: rotateX(180deg); z-index: 1; }
+#octv .gl-seal { position: absolute; left: 50%; top: 46%; width: 5vw; height: 5vw; margin: -2.5vw 0 0 -2.5vw; border-radius: 50%; background: #c62828; color: #fff; display: grid; place-items: center; font-size: 2.6vw; z-index: 5; box-shadow: 0 .4vh 0 #7f1010; transition: opacity .3s, transform .4s; }
+#octv .gl-env.open .gl-seal { opacity: 0; transform: scale(1.8); }
+#octv .gl-card { position: absolute; left: 6%; right: 6%; top: 8%; bottom: 8%; background: #fff; border-radius: .9vw; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6vh; text-align: center; padding: 1vh 1vw; transition: transform .9s cubic-bezier(.2,1.2,.4,1); box-shadow: 0 0 0 .4vh #ffd23f inset; }
+#octv .gl-env.card .gl-card { transform: translateY(-62%); z-index: 6; }
+#octv .gl-card .gl-ic { font-size: 6vh; line-height: 1; }
+#octv .gl-card b { font-size: 3.6vh; font-weight: 900; color: #2a1a6e; line-height: 1.05; }
+#octv .gl-card small { font-size: 2vh; font-weight: 800; color: #6a5b8f; }
+#octv .gl-win { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6vh; opacity: 0; transform: scale(.6); transition: opacity .4s, transform .7s cubic-bezier(.2,1.5,.4,1); }
+#octv .gl-win.show { opacity: 1; transform: none; }
+#octv .gl-av .an, #octv .gl-av .av3 { width: 22vh; height: 22vh; border-radius: 50%; background-color: color-mix(in srgb, var(--pc) 45%, #fff); box-shadow: 0 0 0 1vh var(--pc), 0 0 6vh rgba(255,210,63,.6); }
+#octv .gl-trophy { font-size: 11vh; line-height: 1; filter: drop-shadow(0 1vh 1.5vh rgba(0,0,0,.4)); animation: gl-drop 1s cubic-bezier(.3,1.6,.5,1) both .25s; margin-bottom: -3vh; z-index: 2; }
+@keyframes gl-drop { from { transform: translateY(-40vh) rotate(-30deg); } }
+#octv .gl-win b { font-size: 5vh; font-weight: 900; color: #fff; text-shadow: 0 .5vh 0 rgba(0,0,0,.35); }
+#octv .gl-win small { font-size: 2.6vh; font-weight: 900; color: #ffd23f; }
+#octv .gl-conf { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+#octv .gl-conf i { position: absolute; top: -4vh; width: 1.1vh; height: 2vh; border-radius: .3vh; animation: gl-fall linear both; }
+@keyframes gl-fall { to { top: 110vh; } }
+#octv.mode-gala .oc-dlg { z-index: 3; }
 </style>
 </head>
 <body class="dev-on">
@@ -971,8 +1032,8 @@ body.phase-lobby #cam .tvc { height: 956px; }
       perfect: 1,            // casilla extra por un cronómetro casi perfecto
       weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 8, blur: 30 }
     },
-    boardSize: 73,
-    goalDistance: 72,        // meta en la cima de la isla (casilla 72; antes hay que pasar la puerta del 6)
+    boardSize: 121,
+    goalDistance: 120,       // meta en la cima de la isla (casilla 120; antes hay que pasar la puerta del 6)
     minPlayers: 2,
     tutorial: true,          // Octavio explica las normas al empezar (se puede saltar si votan todos)
     maxPlayers: 8,
@@ -1021,17 +1082,17 @@ body.phase-lobby #cam .tvc { height: 956px; }
     goal:     { name: 'Meta',          icon: '🏆', color: '#f2c14e', desc: 'La cima de la isla. ¡Quien llegue primero gana!' }
   };
 
-  // índice -> tipo: 73 casillas de la isla, de la playa (0) a la cima (72)
-  const TOTEMS = [[15, 38], [33, 60]];          // [abajo, arriba]: el de abajo te sube, el de arriba te baja
-  const VOLCANO = { at: [30, 56], tiles: 7 };   // casillas de volcán y nº de casillas dentro del volcán
-  const WALLS = [26, 50], GATE = 71;            // muros (número del 3 al 6 sorteado en cada partida) y puerta final (un 6)
+  // índice -> tipo: 121 casillas de la isla, de la playa (0) a la cima (120)
+  const TOTEMS = [[24, 62], [56, 99]];          // [abajo, arriba]: el de abajo te sube, el de arriba te baja
+  const VOLCANO = { at: [49, 93], tiles: 7 };   // casillas de volcán y nº de casillas dentro del volcán
+  const WALLS = [43, 83], GATE = 119;           // muros (el primero pide 3 o más, el segundo 4 o más) y puerta final (un 6)
   const TILE_LAYOUT = (function () {
-    const L = new Array(73).fill('challenge');
+    const L = new Array(121).fill('challenge');
     const put = (t, a) => a.forEach(i => { L[i] = t; });
-    put('boost4', [6, 23, 41, 58]); put('boost5', [12, 35, 52]); put('boost6', [18, 47, 66]); put('back4', [9, 28, 44, 63, 69]);
+    put('boost4', [9, 40, 71, 97]); put('boost5', [17, 46, 87]); put('boost6', [27, 61, 90]); put('back4', [14, 37, 55, 76, 104, 114]);
     put('totemUp', TOTEMS.map(p => p[0])); put('totemDown', TOTEMS.map(p => p[1])); put('wall', WALLS);
-    put('event', [3, 20, 31, 39, 55, 64]); put('volcano', VOLCANO.at);
-    L[0] = 'start'; L[GATE] = 'gate'; L[72] = 'goal';
+    put('event', [5, 21, 34, 50, 65, 82, 95, 108]); put('volcano', VOLCANO.at);
+    L[0] = 'start'; L[GATE] = 'gate'; L[120] = 'goal';
     return L;
   })();
 
@@ -2119,6 +2180,8 @@ body.phase-lobby #cam .tvc { height: 956px; }
       add(top(q => q.stats.bestStreak, 3), '⚡', 'En racha', 'Ganó varias seguidas');
       add(top(q => q.stats.lost, 4), '🔁', 'Montaña rusa', 'El que más casillas ha perdido');
       add(top(q => q.stats.drawsGuessed, 2), '🎨', 'Picasso de bolsillo', 'Sus dibujos se adivinan');
+      if (St.moon && P(St.moon.id)) aw.unshift({ id: St.moon.id, icon: '🌙', title: 'La respuesta más absurda', text: '«' + St.moon.text + '»' });
+      add(top(q => q.stats.won, 2), '🧠', 'Cerebrito de la noche', 'El que más retos ha ganado');
       const moments = [];
       if (St.bestDuel) moments.push({ icon: '⚔️', title: 'El duelo más reñido', text: name(St.bestDuel.a) + ' ganó a ' + name(St.bestDuel.b) + (St.bestDuel.kind === 'clock' ? ' por ' + (St.bestDuel.gap / 1000).toFixed(2).replace('.', ',') + ' s' : '') });
       if (St.closeMini) moments.push({ icon: '⏱️', title: 'El cronómetro más ajustado', text: name(St.closeMini.a) + ' se adelantó a ' + name(St.closeMini.b) + ' por ' + (St.closeMini.gap / 1000).toFixed(2).replace('.', ',') + ' s' });
@@ -2278,7 +2341,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       else value = rint(1, 6);
       let applied = value;
       { const ds = state.players.map(x => x.dist), gap = Math.max(...ds) - p.dist;
-        if (state.players.length >= 2 && gap >= S.catchUp.gap && p.dist === Math.min(...ds)) { applied += S.catchUp.bonus; mods.push('Empuje del rezagado +' + S.catchUp.bonus); } }
+        if (state.players.length >= 2 && gap >= S.catchUp.gap && p.dist === Math.min(...ds)) { applied += S.catchUp.bonus; mods.push('+' + S.catchUp.bonus + ' por ir el último'); } }
       const from = p.dist; let to = Math.min(S.goalDistance, from + applied), note = '';
       for (const w of wallList()) {                       // muros y puerta del 6
         const up = w.gate ? !state.gate.passed[p.id] : w.up;
@@ -2298,7 +2361,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       }
       p.dist = to; if (to !== from) p.spAt = null;
       const prevRoll = state.dice;
-      R.done[p.id] = { value, applied: to - from, from, to, auto: !!auto, mods }; R.order.push(p.id);
+      R.done[p.id] = { value, applied: to - from, from, to, auto: !!auto, mods, bonus: applied - value }; R.order.push(p.id);
       state.dice = { seq: nextSeq(), playerId: p.id, value, applied: to - from, mods, revealAt: now() };
       pushMove({ playerId: p.id, from, to, kind: 'walk', note });
       log('🎲 ' + p.name + (auto ? ' (tira el juego por él)' : '') + ' saca un ' + value + (mods.length ? ' (' + mods.join(', ') + ')' : '') + ' y avanza ' + (to - from) + '.');
@@ -2333,11 +2396,12 @@ body.phase-lobby #cam .tvc { height: 956px; }
        La casilla a la que te mandan no vuelve a activarse (no hay cadenas). */
     const SP_TXT = { boost4: '⏩ Muelle: +4', boost5: '⏩ Muelle: +5', boost6: '⏩ Muelle: +6', back4: '⏪ Retrocede 4', totemUp: '🗿 Tótem: ¡arriba!', totemDown: '🗿 Tótem: ¡abajo!' };
     let lastSpVolc = false;
+    let spMs = 0;
     function applySpecials(list) {
-      const done = [], ids = [];
+      const done = [], ids = []; spMs = 0;
       lastSpVolc = false;
       list.forEach(p => { const ty = tileOf(p).type; if (applySpecial(p)) { ids.push(p.id); if (ty === 'volcano') lastSpVolc = true; done.push(ty === 'volcano' ? p.name + ' · 🌋 ¡Octavio lo manda al volcán de una patada!' : p.name + ' · ' + SP_TXT[ty] + ' → casilla ' + p.dist); } });
-      if (done.length) announce({ kind: 'event', icon: '🌀', title: done.length > 1 ? '¡Casillas especiales!' : '¡Casilla especial!', text: done.join('   ·   '), until: now() + 3200 });
+      if (done.length) announce({ kind: 'event', icon: '🌀', title: done.length > 1 ? '¡Casillas especiales!' : '¡Casilla especial!', text: done.join('   ·   '), pids: ids.slice(), until: now() + 2600 });
       return ids;
     }
     function applySpecial(p) {           // devuelve true si la casilla era especial (ya no hay reto para ese jugador esta ronda)
@@ -2348,7 +2412,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const t = tileOf(p), from = p.dist;
       const n = { boost4: 4, boost5: 5, boost6: 6, back4: -4 }[t.type];
       if (n) {
-        const moved = adv(p, n, true);
+        const moved = adv(p, n, true); spMs += 1800 + Math.abs(moved || n) * 190;
         pushMove({ playerId: p.id, from, to: p.dist, kind: n > 0 ? 'boost' : 'back', note: (n > 0 ? '+' : '−') + Math.abs(moved || n) });
         log((n > 0 ? '⏩ ' : '⏪ ') + p.name + (n > 0 ? ' sale disparado ' : ' retrocede ') + Math.abs(moved) + ' casillas.');
         return true;
@@ -2356,12 +2420,12 @@ body.phase-lobby #cam .tvc { height: 956px; }
       if (t.type === 'totemUp' || t.type === 'totemDown') {
         const to = TOTEM_TO[t.index]; if (to == null) return false;
         p.dist = to; if (to > from) p.stats.gained += to - from; else p.stats.lost += from - to;
-        pushMove({ playerId: p.id, from, to, kind: 'totem', note: to > from ? '¡Arriba!' : '¡Abajo!' });
+        pushMove({ playerId: p.id, from, to, kind: 'totem', note: to > from ? '¡Arriba!' : '¡Abajo!' }); spMs += 3700;
         log('🗿 El tótem lanza a ' + p.name + (to > from ? ' montaña arriba' : ' montaña abajo') + ' (casilla ' + to + ').');
         return true;
       }
       if (t.type === 'volcano') {
-        p.volc = { pos: 0 };
+        p.volc = { pos: 0 }; spMs += 6000;
         pushMove({ playerId: p.id, from, to: from, kind: 'volcano', note: '' });
         log('🌋 Octavio manda a ' + p.name + ' al volcán de una patada. ¡7 casillas para salir!');
         return true;
@@ -2398,7 +2462,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       applySpecials(state.players).forEach(id => { sp[id] = true; });
       state.players.forEach(p => { if (p.volc || (R.volc && R.volc[p.id])) sp[p.id] = true; });     // en el volcán no hay reto de casilla
       R.special = sp;
-      if (Object.keys(sp).length) { state.turn.step = 'moving'; sched('planRound', lastSpVolc ? 5600 : 1800); return; }
+      if (Object.keys(sp).length) { state.turn.step = 'moving'; sched('planRound', Math.max(1800, spMs + 700)); return; }
       planRound();
     }
     function planRound() {
@@ -2464,7 +2528,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     }
     function endRound() {           // al acabar los retos: quien haya caído en una casilla especial por un reto o un duelo, la activa ahora
       state.pending = null;
-      if (state.phase === 'playing' && applySpecials(state.players).length) { state.turn.step = 'moving'; sched('endRound2', lastSpVolc ? 5800 : 2400); return; }
+      if (state.phase === 'playing' && applySpecials(state.players).length) { state.turn.step = 'moving'; sched('endRound2', Math.max(2400, spMs + 900)); return; }
       endRound2();
     }
     function endRound2() {
@@ -4652,7 +4716,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       }
       if (R && R.done[pid] && v.turn && (v.turn.step === 'rollAll' || v.turn.step === 'moving')) {
         const d = R.done[pid], left = v.players.filter(x => !R.done[x.id]).map(x => x.name);
-        return '<div class="ph-card center"><div class="big">🎲</div><h2>Has sacado un ' + d.value + '</h2><p>' + (d.volc ? (d.exit ? '🌀 ¡Sales del volcán por el portal!' : '🌋 Volcán: casilla <b>' + d.vto + '</b> de 7') : 'Vas a la casilla <b>' + d.to + '</b>') + (d.mods && d.mods.length ? ' (' + esc(d.mods.join(', ')) + ')' : '') + '.</p>' +
+        return '<div class="ph-card center"><div class="big">🎲</div><h2>Has sacado un ' + d.value + (d.bonus ? ' <span class="ph-bonus">+' + d.bonus + '</span>' : '') + '</h2><p>' + (d.volc ? (d.exit ? '🌀 ¡Sales del volcán por el portal!' : '🌋 Volcán: casilla <b>' + d.vto + '</b> de 7') : 'Vas a la casilla <b>' + d.to + '</b>') + (d.mods && d.mods.length ? ' (' + esc(d.mods.join(', ')) + ')' : '') + '.</p>' +
           (left.length ? '<p class="note">Esperando a ' + esc(left.join(', ')) + '…</p>' + timer(R) : '<p class="note">¡Ya han tirado todos! Mira la pantalla.</p>') + '</div>';
       }
       if (m.roll) {
@@ -5298,6 +5362,40 @@ body.phase-lobby #cam .tvc { height: 956px; }
       setTimeout(stepOnce, Math.max(0, delayMs));
       layoutTokens();
     }
+    /* Casillas especiales (muelles, tótems, volcán): se animan de una en una; la cámara va a cada ficha,
+       se ve el cartel, el golem lanza / la ficha avanza casilla a casilla, y luego la siguiente. */
+    const spQ = []; let spBusy = false;
+    function spQueue(mv) {
+      const pid = mv.playerId; walking[pid] = true; if (mv.kind === 'volcano') walkingV[pid] = true;
+      spQ.push(mv); if (!spBusy) spNext();
+    }
+    function spNext() {
+      const mv = spQ.shift(); if (!mv) { spBusy = false; return; }
+      spBusy = true;
+      const pid = mv.playerId;
+      const finish = () => { walking[pid] = false; arrive(pid, 150); focusOn(pid, 500); setTimeout(spNext, 550); };
+      focusOn(pid, 600000);                               // la cámara se queda en esta ficha hasta que acabe su animación
+      if (mv.kind === 'volcano') {
+        walking[pid] = false; walkingV[pid] = false; shownV[pid] = 0; if (isla) isla.jump(pid, 'kick');
+        setTimeout(() => TE.Audio.play('avalanche'), 2000); setTimeout(finish, 5600); return;
+      }
+      setTimeout(() => {
+        if (isla && mv.note) isla.say(pid, mv.note, mv.kind === 'back' ? '#ff8a7a' : '#ffd23f');
+        TE.Audio.play(mv.kind === 'back' ? 'bad' : 'good');
+        if (mv.kind === 'totem') {
+          if (isla) isla.jump(pid, 'totem', mv.from, mv.to);           // el golem levanta las palmas…
+          setTimeout(() => { shown[pid] = mv.to; layoutTokens(); TE.Audio.play('avalanche'); }, 620);   // …y lanza la ficha
+          setTimeout(finish, 2800);
+          return;
+        }
+        let cur = mv.from; const dir = mv.to > mv.from ? 1 : -1;      // muelles: casilla a casilla, rápido
+        const step = () => {
+          if (cur === mv.to) return setTimeout(finish, 450);
+          cur += dir; shown[pid] = cur; layoutTokens(); TE.Audio.play('step'); setTimeout(step, 190);
+        };
+        setTimeout(step, 350);
+      }, 750);
+    }
     function syncTokens(v) {
       v.players.forEach(p => {
         ensureToken(p);
@@ -5307,11 +5405,8 @@ body.phase-lobby #cam .tvc { height: 956px; }
       mvs.forEach(mv => {                     // con la ronda a la vez se mueven varias fichas a la vez
         last.move = Math.max(last.move, mv.seq);
         if (first) return;
+        if (mv.kind === 'boost' || mv.kind === 'back' || mv.kind === 'totem' || mv.kind === 'volcano') { spQueue(mv); return; }
         if (isla && mv.note) setTimeout(() => isla.say(mv.playerId, mv.note, mv.kind === 'back' || /Muro|Necesita|Puerta/.test(mv.note) ? '#ff8a7a' : '#ffd23f'), mv.kind === 'walk' ? 600 : 250);
-        if (mv.kind === 'volcano') {           // la patada espera a que la ficha haya llegado a su casilla
-          const pid = mv.playerId, go = () => { if (walking[pid]) return setTimeout(go, 120); shownV[pid] = 0; if (isla) isla.jump(pid, 'kick'); setTimeout(() => TE.Audio.play('avalanche'), 2000); focusOn(pid, 5400); };
-          walkingV[pid] = true; setTimeout(() => { walkingV[pid] = false; go(); }, 250); return;
-        }
         if (mv.kind === 'volc') { walkV(mv.playerId, mv.vfrom, mv.vto, mv.exit, 1300); focusOn(mv.playerId, 700 + (mv.vto - mv.vfrom) * (D.SETTINGS.stepMs + 60) + (mv.exit ? 2600 : 600)); return; }
         if (mv.kind === 'walk' && mv.to > mv.from) {
           const wait = (v.dice && v.dice.playerId === mv.playerId ? Math.max(0, v.dice.revealAt - v.serverNow) : 0) + (v.rolls ? 1100 : 0);   // primero se ve el dado encima del personaje
@@ -5503,7 +5598,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       if (rolling) { const c = U.playerById(v, v.turn.playerId);
         return '<div class="c-rollone"><span class="ro-av" style="--pc:' + (c ? c.color : '#fff') + '">' + (c ? c.avatar : '') + '</span><div class="ro-t"><small>Turno ' + (k + 1) + ' de ' + n + '</small><b>¡Te toca, ' + esc(c ? c.name : '') + '!</b><em>Tira el dado desde tu móvil</em></div>' + U.timerHTML(R) + '</div>'; }
       const d = v.dice && U.playerById(v, v.dice.playerId), dd = R && d && R.done[d.id];
-      return '<div class="c-rollone done"><span class="ro-av" style="--pc:' + (d ? d.color : '#fff') + '">' + (d ? d.avatar : '🎲') + '</span><div class="ro-t"><small>' + (R ? k + ' de ' + n + ' han tirado' : '') + '</small><b>' + (d ? esc(d.name) + ' saca un ' + v.dice.value : '¡A moverse!') + '</b><em>' + (dd ? (dd.volc ? (dd.exit ? '🌀 Sale del volcán' : '🌋 Volcán: ' + dd.vto + ' de 7') : 'Va a la casilla ' + dd.to) : '') + '</em></div></div>';
+      return '<div class="c-rollone done"><span class="ro-av" style="--pc:' + (d ? d.color : '#fff') + '">' + (d ? d.avatar : '🎲') + '</span><div class="ro-t"><small>' + (R ? k + ' de ' + n + ' han tirado' : '') + '</small><b>' + (d ? esc(d.name) + ' saca un ' + v.dice.value : '¡A moverse!') + '</b><em>' + (dd ? (dd.volc ? (dd.exit ? '🌀 Sale del volcán' : '🌋 Volcán: ' + dd.vto + ' de 7') : (dd.bonus ? '🚀 +' + dd.bonus + ' por ir el último · ' : '') + 'Va a la casilla ' + dd.to) : '') + '</em></div></div>';
     }
     function centerRollAllOld(v) {
       const R = v.rolls, done = R ? R.done : {}, n = v.players.length, k = Object.keys(done).length, rolling = v.turn.step === 'rollAll';
@@ -5654,7 +5749,10 @@ body.phase-lobby #cam .tvc { height: 956px; }
         extra = '<div class="ann-scope">' + (a.scope === 'all' ? 'MALDICIÓN COLECTIVA' : a.scope === 'multi' ? 'MALDICIÓN DOBLE' : 'MALDICIÓN') + '</div><div class="ann-targets">' + tg.map(p => chip(p, 'live', '')).join('') + '</div>';
       }
       el.className = 'announce show k-' + a.kind + (a.scope ? ' s-' + a.scope : '');
-      el.innerHTML = '<div class="ann-card"><div class="ann-icon">' + esc(a.icon || '✨') + '</div>' + extra + '<h2>' + esc(a.title) + '</h2><p>' + esc(a.text) + '</p></div>';
+      const avs = (a.pids || []).map(id => U.playerById(v, id)).filter(Boolean);
+      el.innerHTML = '<div class="ann-card ann2"><div class="ann-badge"><span class="ann-icon">' + esc(a.icon || '✨') + '</span></div>' + extra + '<h2>' + esc(a.title) + '</h2>' +
+        (avs.length ? '<div class="ann-avs">' + avs.map(p => '<span class="ann-av" style="--pc:' + p.color + '">' + p.avatar + '<b>' + esc(p.name) + '</b></span>').join('') + '</div>' : '') +
+        (a.text ? '<p>' + esc(a.text) + '</p>' : '') + '</div>';
       const snd = { curse: 'curse', chaos: 'chaos', avalanche: 'avalanche', win: 'win', collective: 'good', event: 'good', chaosEnd: 'good' }[a.kind];
       if (snd) TE.Audio.play(snd);
       clearTimeout(annTimer);
@@ -8255,21 +8353,27 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
   const BLUR_CACHE = {};
   function blurUrl(t) {
     if (BLUR_CACHE[t]) return BLUR_CACHE[t];
-    BLUR_CACHE[t] = fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + t, { headers: { Accept: 'application/json' } })
-      .then(r => r.ok ? r.json() : null).then(j => { const src = j && ((j.thumbnail && j.thumbnail.source) || (j.originalimage && j.originalimage.source)); return src ? src.replace(/\/(\d+)px-/, '/900px-') : null; })
-      .catch(() => null);
+    const big = u => u ? u.replace(/\/(\d+)px-/, '/800px-') : null;
+    const viaApi = () => fetch('https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=800&redirects=1&format=json&origin=*&titles=' + t)
+      .then(r => r.ok ? r.json() : null).then(j => { const pg = j && j.query && j.query.pages; const k = pg && Object.keys(pg)[0]; return k && pg[k].thumbnail ? pg[k].thumbnail.source : null; });
+    const viaRest = () => fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + t)
+      .then(r => r.ok ? r.json() : null).then(j => big(j && ((j.thumbnail && j.thumbnail.source) || (j.originalimage && j.originalimage.source))));
+    BLUR_CACHE[t] = viaApi().catch(e => { console.warn('[foto] api', e); return null; })
+      .then(u => u || viaRest().catch(e => { console.warn('[foto] rest', e); return null; }))
+      .then(u => { if (!u) { console.warn('[foto] sin imagen para', t); delete BLUR_CACHE[t]; } return u; });
     return BLUR_CACHE[t];
   }
   function blurFill() {
     document.querySelectorAll('.bl-img[data-t]:not([data-ld])').forEach(im => {
       im.dataset.ld = '1';
-      blurUrl(im.dataset.t).then(src => { if (!src) return; im.onload = () => im.classList.add('ok'); im.onerror = () => { const alt = src.replace('/900px-', '/640px-'); if (im.src !== alt) im.src = alt; }; im.src = src; });
+      im.referrerPolicy = 'no-referrer';
+      blurUrl(im.dataset.t).then(src => { if (!src) return; im.onload = () => im.classList.add('ok'); im.onerror = () => { console.warn('[foto] no carga', src); const alt = src.replace(/\/(\d+)px-/, '/500px-'); if (im.src !== alt) im.src = alt; }; im.src = src; });
     });
   }
   setInterval(blurFill, 250);
   function blurPic(pd, sharp) {
     const tot = pd.phase === 'reveal' ? 1 : pd.total, el = Math.max(0, (TE.UI && TE.UI.now ? TE.UI.now() : Date.now()) - pd.startedAt);
-    return '<div class="bl-pic' + (sharp ? ' sharp' : '') + '" style="--dur:' + (tot / 1000) + 's;--del:-' + (el / 1000) + 's"><span class="bl-emo">' + pd.img.e + '</span><img class="bl-img" alt="" data-t="' + pd.img.t + '"></div>';
+    return '<div class="bl-pic' + (sharp ? ' sharp' : '') + '" style="--dur:' + (tot / 1000) + 's;--del:-' + (el / 1000) + 's"><span class="bl-emo" data-e="' + pd.img.e + '"></span><img class="bl-img" alt="" data-t="' + pd.img.t + '"></div>';
   }
   const HOW = {
     clock: 'Pulsa EMPEZAR y para cuando creas que ha pasado el tiempo. ¡Sin ver el reloj! Gana quien más se acerque.',
@@ -10326,7 +10430,7 @@ const sm=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
 const lerp=(a,b,t)=>a+(b-a)*t;
 
 /* ---------- forma de la isla: rampa en espiral con terrazas ---------- */
-const ROUT=50, PITCH=12, TURNS=3.3, SMAX=TAU*TURNS, H0=1.6, HTOP=44, FLAT=0.33, NT=73;
+const ROUT=50, PITCH=12, TURNS=3.3, SMAX=TAU*TURNS, H0=1.6, HTOP=44, FLAT=0.33, NT=Math.max(2,(opts.types||[]).length||73);
 const WA=4.2;
 function warpOff(x,z){const k=WA*2*sm(5,18,Math.hypot(x,z));return [k*(fbm(x*.045+11,z*.045+3)-.5),k*(fbm(x*.045+31,z*.045+17)-.5)];}
 function unwarp(qx,qz){let px=qx,pz=qz;for(let i=0;i<6;i++){const w=warpOff(px,pz);px=qx-w[0];pz=qz-w[1];}return [px,pz];}
@@ -10596,7 +10700,7 @@ tiles.forEach((t,i)=>{
   if(t.ty==='v')makeDoor(i,t);
   if(t.ty==='tu'||t.ty==='td'){const q=pathPoint(t.s,0.255),g=new T.Group(),body=new T.Mesh(golemBody,propMat);body.castShadow=true;g.add(body);g.add(new T.Mesh(eyeGeo,eyeMat));
     const arms=[-1,1].map(d=>{const a=new T.Mesh(golemArm,propMat);a.position.set(d*1.22,2.62,0);a.castShadow=true;g.add(a);return a;});
-    g.position.set(q.x,heightAt(q.x,q.z)-.05,q.z);g.rotation.y=Math.atan2(t.p.x-q.x,t.p.z-q.z);g.scale.setScalar(1.12);scene.add(g);reserved.push(q);golems[i]={g,arms,t};}
+    g.position.set(q.x,heightAt(q.x,q.z)-.05,q.z);g.rotation.y=Math.atan2(t.p.x-q.x,t.p.z-q.z);g.scale.setScalar(1.12);scene.add(g);reserved.push(q);const up=t.ty==='tu',am=new T.MeshStandardMaterial({color:up?0xffc93a:0xff5a4a,emissive:up?0xb07a00:0xa01e10,emissiveIntensity:.55,roughness:.4}),arw=new T.Group();const hd=new T.Mesh(new T.ConeGeometry(.62,.8,4),am);hd.position.y=up?.55:-.55;if(!up)hd.rotation.x=Math.PI;const sh=new T.Mesh(new T.BoxGeometry(.36,.7,.36),am);sh.position.y=up?-.15:.15;arw.add(hd,sh);arw.position.set(0,5.4,0);g.add(arw);golems[i]={g,arms,t,arw,up};}
   if(t.ty==='w'||t.ty==='wf'){const fin=t.ty==='wf',s2=(t.s+tilesS[i+1])/2,q=pathPoint(s2),tg=tangentAt(s2),m=new T.Mesh(wallGeo(fin),fin?goldPropMat:propMat);m.position.set(q.x,q.y-.05,q.z);m.rotation.y=Math.atan2(-tg[1],tg[0])+Math.PI/2;m.castShadow=true;scene.add(m);
     const d=new T.Mesh(new T.BoxGeometry(1.3,1.3,1.3),new T.MeshStandardMaterial({map:dieTex(WN[i],fin),roughness:.45,metalness:fin?.3:0}));d.position.set(q.x,q.y+3.9,q.z);d.rotation.set(.5,.6,.2);d.castShadow=false;scene.add(d);spinners.push(d);reserved.push(q);wallObjs[i]={wall:m,die:d,fin,need:WN[i],broken:false,y:m.position.y,dy:d.position.y,t0:null};}
 });
@@ -10789,20 +10893,20 @@ function slot(idx,k,n){if(n<=1)return [0,0];const t=tiles[Math.max(0,Math.min(NT
   const r=n<=4?1.05:n<=7?1.55:2.1,a=k/n*TAU+.4;return [(tg[0]*Math.cos(a)+out[0]*Math.sin(a))*r,(tg[1]*Math.cos(a)+out[1]*Math.sin(a))*r];}
 const pending={};
 function jump(pid,kind,from,to){pending[pid]={kind,from,to};if(kind==='totem'&&golems[from])golems[from].t0=simT;}
-function keyOf(pid){const v=opts.shownV?opts.shownV(pid):null;return v!=null?100+Math.max(0,Math.min(VN,v|0)):Math.max(0,Math.min(NT-1,opts.shown(pid)|0));}
-function baseOf(key,j,n){if(key>=100){const p=VT[key-100].clone();if(n>1){const a=j/n*TAU;p.x+=Math.cos(a)*.75;p.z+=Math.sin(a)*.75;}return p;}
+function keyOf(pid){const v=opts.shownV?opts.shownV(pid):null;return v!=null?1000+Math.max(0,Math.min(VN,v|0)):Math.max(0,Math.min(NT-1,opts.shown(pid)|0));}
+function baseOf(key,j,n){if(key>=1000){const p=VT[key-1000].clone();if(n>1){const a=j/n*TAU;p.x+=Math.cos(a)*.75;p.z+=Math.sin(a)*.75;}return p;}
   const o=slot(key,j,n);return tileTop(key).add(new T.Vector3(o[0],0,o[1]));}
 function updateToks(t,dt){
   const groups={};ST.players.forEach(p=>{const k=keyOf(p.id);(groups[k]=groups[k]||[]).push(p.id);});
   Object.keys(groups).forEach(k=>{const g=groups[k],key=+k;g.forEach((pid,j)=>{const tk=toks[pid];if(!tk||!tk.av)return;
     const base=baseOf(key,j,g.length);
     if(!tk.pos){tk.pos=base.clone();tk.key=key;}
-    tk.idx=Math.max(0,Math.min(NT-1,opts.shown(pid)|0));tk.vk=key>=100;
+    tk.idx=Math.max(0,Math.min(NT-1,opts.shown(pid)|0));tk.vk=key>=1000;
     if(tk.key!==key){const d=Math.abs(key-tk.key),pj=pending[pid],kind=pj?pj.kind:'';delete pending[pid];
       tk.from=tk.pos.clone();tk.to=base.clone();tk.t0=t;tk.mode='';
       if(kind==='kick'){camSnap=true;tk.from=tileTop(tk.key);tk.t0=t+KICK_AT;tk.dur=2.1;tk.arc=34;tk.mode='kick';startKick(pid,tk.key,t);}
       else if(kind==='portal'){tk.dur=1.7;tk.arc=0;tk.mode='portal';}
-      else if(kind==='totem'){tk.dur=1.55;tk.arc=16;}else if(d===1&&!kind){tk.dur=Math.max(.18,(opts.stepMs||280)/1000*.92);tk.arc=key>=100?1.3:.9;}else if(key>=100&&tk.key>=100){tk.dur=.5;tk.arc=1.6;}else{tk.dur=.7+Math.min(.8,d*.05);tk.arc=2.5+Math.min(9,d*.45);}
+      else if(kind==='totem'){tk.dur=2.0;tk.arc=24;}else if(d===1&&!kind){tk.dur=Math.max(.18,(opts.stepMs||280)/1000*.92);tk.arc=key>=1000?1.3:.9;}else if(key>=1000&&tk.key>=1000){tk.dur=.5;tk.arc=1.6;}else{tk.dur=.7+Math.min(.8,d*.05);tk.arc=2.5+Math.min(9,d*.45);}
       tk.key=key;}
     else if(!tk.from)tk.goal=base;
     tk.sc=1;tk.spin=0;tk.lift=0;
@@ -10883,7 +10987,7 @@ function updateDie(t,dt){const m=DIE.mesh,tk=DIE.pid&&toks[DIE.pid];const hideN=
 /* ---------- golems: levantan las palmas al lanzar ---------- */
 function updateGolems(t){Object.values(golems).forEach(G=>{const v=G.t0==null?9:t-G.t0;let a=0,sq=1;
   if(v<.45){a=-.35*sm(0,.45,v);sq=1-.07*sm(0,.45,v);}else if(v<.7){a=lerp(-.35,2.85,sm(.45,.7,v));sq=lerp(.93,1.06,sm(.45,.7,v));}else if(v<1.7){a=2.85;sq=lerp(1.06,1,sm(.7,1,v));}else if(v<2.6){a=2.85*(1-sm(1.7,2.6,v));}
-  G.arms.forEach(m=>m.rotation.x=-a);G.g.scale.set(1.12,1.12*sq,1.12);});}
+  G.arms.forEach(m=>m.rotation.x=-a);G.g.scale.set(1.12,1.12*sq,1.12);if(G.arw){G.arw.rotation.y=t*1.6;G.arw.position.y=5.4+Math.sin(t*2.4)*.25+(v<1.7?.8*Math.sin(Math.min(1,v/1.7)*Math.PI):0);}});}
 
 /* ---------- muros: dado con el número que pide, y se derrumban al romperlos ---------- */
 function setWalls(list){(list||[]).forEach(w=>{const o=wallObjs[w.i];if(!o)return;
@@ -11778,15 +11882,17 @@ return {
     teardown(true);
     ov = document.createElement('div');
     ov.id = 'octv'; ov.className = 'mode-' + mode; ov.dataset.mode = mode;
+    if (mode === 'gala') ov.className = 'mode-intro mode-gala';
     ov.innerHTML = '<canvas class="oc-c"></canvas>' +
       (mode === 'intro' ? '<div class="oc-title">🐙 Octavio explica cómo se juega</div><div class="oc-screen"><div class="oc-scr-in"></div><div class="oc-scr-label"></div></div><div class="oc-skip"></div>' : '') +
+      (mode === 'gala' ? '<div class="oc-title gl-title">🏆 Gala de premios</div><div class="oc-screen gl-screen"><div class="oc-scr-in gl-in"></div><div class="oc-scr-label gl-label"></div></div><div class="gl-conf"></div>' : '') +
       '<div class="oc-dlg"><div class="oc-pw"><div class="oc-portrait"></div></div><div class="oc-box"><div class="oc-name">Octavio</div><div class="oc-text"></div></div></div>';
     document.body.appendChild(ov);
     requestAnimationFrame(() => ov && ov.classList.add('on'));
     if (window.THREE && window.Octavio) {
       try {
         O = window.Octavio.create({ canvas: ov.querySelector('.oc-c'), portraitEl: ov.querySelector('.oc-portrait'), textEl: ov.querySelector('.oc-text'),
-          main: mode === 'intro', pan: 2.75, dist: 11, yaw: -0.38, portraitBg: 0xffe6c9 });
+          main: mode === 'intro' || mode === 'gala', pan: 2.75, dist: 11, yaw: -0.38, portraitBg: 0xffe6c9 });
       } catch (e) { console.error(e); O = null; }
     }
     return ov;
@@ -11841,8 +11947,57 @@ return {
   }
 
   /* ------------------------------ despedida ------------------------------ */
+  /* Gala: por cada premio, un sobre entra en la pantalla, Octavio lo abre, lee el premio y lo entrega:
+     sale el personaje con su trofeo y confeti. Al final, el campeón. Después, las frases grabadas de despedida. */
+  const sleep = ms => new Promise(r => later(r, ms));
+  const pName = (v, id) => { const p = (v.players || []).find(x => x.id === id); return p ? String(p.name).replace(/[<>&]/g, '') : '?'; };
+  const pAv = (v, id) => { const p = (v.players || []).find(x => x.id === id); return p ? p.avatar : ''; };
+  const pCol = (v, id) => { const p = (v.players || []).find(x => x.id === id); return p ? p.color : '#ffd23f'; };
+  const emo = e => '<span class="gl-emo" data-e="' + String(e || '🏆').replace(/"/g, '') + '"></span>';
+  function confetti(n) {
+    const c = ov && ov.querySelector('.gl-conf'); if (!c) return;
+    c.innerHTML = Array.from({ length: n || 60 }, (_, i) => '<i style="left:' + (Math.random() * 100) + '%;animation-delay:' + (Math.random() * .6) + 's;animation-duration:' + (2.2 + Math.random() * 1.6) + 's;background:' + ['#ffd23f', '#f07a1e', '#2f78c9', '#1fa79a', '#e2566a', '#fff'][i % 6] + ';transform:rotate(' + (Math.random() * 360) + 'deg)"></i>').join('');
+  }
+  async function award(v, id, a, step) {
+    const box = ov && ov.querySelector('.gl-in'), lab = ov && ov.querySelector('.gl-label'); if (!box) return false;
+    const myRun = runId, nm = pName(v, id);
+    lab.textContent = step;
+    box.innerHTML = '<div class="gl-env"><div class="gl-back"></div><div class="gl-card"><div class="gl-ic">' + emo(a.icon) + '</div><b>' + String(a.title).replace(/[<>&]/g, '') + '</b>' + (a.text ? '<small>' + String(a.text).replace(/[<>&]/g, '') + '</small>' : '') + '</div><div class="gl-front"></div><div class="gl-flap"></div><div class="gl-seal">🐙</div></div>' +
+      '<div class="gl-win" style="--pc:' + pCol(v, id) + '"><div class="gl-trophy">' + emo(a.big ? '🏆' : '🥇') + '</div><div class="gl-av">' + pAv(v, id) + '</div><b>' + nm + '</b><small>' + String(a.title).replace(/[<>&]/g, '') + '</small></div>';
+    const env = box.querySelector('.gl-env'), win = box.querySelector('.gl-win');
+    requestAnimationFrame(() => env.classList.add('in'));
+    const talk = O ? O.say({ text: a.say || ('El premio a «' + a.title + '» es para… ¡' + nm + '!'), face: 'feliz', pose: 'presentar', hold: 0.2 }, null) : sleep(4200);
+    later(() => { if (env) env.classList.add('open'); if (TE.Audio) TE.Audio.play('click'); }, 1500);
+    later(() => { if (env) env.classList.add('card'); }, 2100);
+    await talk; if (myRun !== runId) return false;
+    env.classList.add('gone'); win.classList.add('show'); confetti(a.big ? 120 : 60);
+    if (TE.Audio) TE.Audio.play(a.big ? 'win' : 'good');
+    if (O) { O.setFace && O.setFace('feliz'); }
+    await (O ? O.say({ text: a.after || ['¡Enhorabuena!', '¡Un aplauso!', '¡Bien merecido!', '¡Qué nivel!'][Math.floor(Math.random() * 4)], face: 'feliz', pose: 'celebrar', hold: 1.1 }, null) : sleep(2600));
+    return myRun === runId;
+  }
+  async function runGala(v) {
+    const sm = v.summary || {}, list = [];
+    (sm.awards || []).slice(0, 4).forEach(a => list.push({ id: a.id, a }));
+    if (sm.mvp) list.push({ id: sm.mvp, a: { icon: '⭐', title: 'Jugador más valioso', text: 'Retos, duelos y minijuegos', say: 'Y ahora, el jugador más valioso de la noche. Abro el sobre… ¡' + pName(v, sm.mvp) + '!' } });
+    const wid = sm.winnerId || v.winnerId;
+    if (wid) list.push({ id: wid, a: { icon: '🏆', big: true, title: 'Campeón de la isla', text: 'El primero en llegar a la cima', say: 'Y el último sobre, el más importante. El campeón de la isla es… ¡' + pName(v, wid) + '!', after: '¡Tenemos campeón! ¡Que suene la música!' } });
+    if (!list.length) return true;
+    build('gala');
+    const myRun = runId;
+    if (TE.Voice) { TE.Voice.stop(); if (TE.Voice.hold) TE.Voice.hold(list.length * 9000 + 6000); }
+    if (O) O.setTalkMode(true);
+    if (O) await O.say({ text: '¡Bienvenidos a la gala de premios del Tablero Encantado! Tengo aquí unos sobres muy importantes…', face: 'feliz', pose: 'saludar', hold: 0.4 }, null); else await sleep(3000);
+    for (let i = 0; i < list.length; i++) {
+      if (myRun !== runId) return false;
+      if (!(await award(v, list[i].id, list[i].a, 'Premio ' + (i + 1) + ' de ' + list.length))) return false;
+    }
+    return myRun === runId;
+  }
   async function runEnd() {
-    const lines = (D().OCTAVIO || {}).final || []; if (!lines.length) return;
+    const lines = (D().OCTAVIO || {}).final || [];
+    try { const ok = await runGala(lastView || {}); if (!ok) return; } catch (e) { console.error(e); }
+    if (!lines.length) { teardown(false); return; }
     build('end');
     const id = runId, total = lines.reduce((a, l) => a + l.ms, 0);
     if (TE.Voice) { TE.Voice.stop(); if (TE.Voice.hold) TE.Voice.hold(total + 600); }
@@ -11903,7 +12058,7 @@ return {
         updateSkip(v, act);
       } else if (introKey) { introKey = null; if (TE.Voice && TE.Voice.hold) TE.Voice.hold(0); if (ov && ov.dataset.mode === 'intro') teardown(false); }
       if (v.phase === 'ended' && lastPhase && lastPhase !== 'ended' && !first) later(runEnd, 1800);
-      if (v.phase !== 'ended' && ov && ov.dataset.mode === 'end') teardown(false);
+      if (v.phase !== 'ended' && ov && (ov.dataset.mode === 'end' || ov.dataset.mode === 'gala')) teardown(false);
       lastPhase = v.phase;
     },
     speak, hush, moodOf,
