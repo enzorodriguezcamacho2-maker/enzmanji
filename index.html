@@ -575,6 +575,29 @@ body.phase-lobby #cam .tvc { height: 956px; }
 #side .logbox h3 { font-size: 18px; margin-bottom: 4px; padding-bottom: 2px; }
 #side #log { font-size: 14px; }
 </style>
+<style id="v5-css">
+.phone .ph-intro .btn.ph-skip { display: block; width: 100%; margin: 1em 0 .4em; min-height: 3.4em; font-size: 1.1em; border-radius: 1.2em; }
+.phone .ph-intro .big .emo { width: auto; height: auto;  font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; line-height: 1; }
+#octv .v-nm { display: block; font-style: normal; font-size: .32em; font-weight: 900; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); margin-top: .15em; white-space: nowrap; }
+#octv .v-bubbles b { font-weight: 900; }
+</style>
+<style id="blur-css">
+#stage #cam .tvc:has(.c-blur), #stage #cam .tvc:has(.bl-pic.sharp) { transform: none !important; top: 70px !important; left: 380px !important; width: 1100px !important; height: 900px !important; }
+.c-blur, .c-mini:has(.bl-pic) { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.bl-pic { position: relative; width: 760px; height: 470px; border-radius: 26px; overflow: hidden; background: #fff; box-shadow: 0 0 0 6px #fff, 0 16px 40px rgba(5,25,80,.35);
+  display: grid; place-items: center; }
+.bl-pic > * { grid-area: 1 / 1; animation: bl-focus var(--dur) steps(12, end) var(--del) both; will-change: filter; }
+.bl-pic.sharp > * { animation: none; filter: none; }
+.bl-pic .bl-emo { font-size: 300px; line-height: 1; width: auto; height: auto; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
+.bl-img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }
+.bl-img.ok { opacity: 1; }
+@keyframes bl-focus { 0% { filter: blur(46px); } 45% { filter: blur(15px); } 80% { filter: blur(5px); } 100% { filter: blur(1.5px); } }
+.bl-opts.tv { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.bl-opts.tv span { background: #fff; color: #0b1f4d; font: 900 30px 'Nunito', system-ui, sans-serif; padding: 10px 22px; border-radius: 16px; box-shadow: 0 6px 0 rgba(5,25,80,.3); }
+.bl-wr { color: #ffd0d0 !important; }
+.phone .bl-opts { display: grid; grid-template-columns: 1fr 1fr; gap: .6em; margin-top: .8em; }
+.phone .bl-opts .bl-opt { min-height: 4.2em; font-size: 1.05em; line-height: 1.15; white-space: normal; }
+</style>
 </head>
 <body class="dev-on">
   <div id="tv-viewport"><div id="stage" aria-label="Tablero de juego"></div></div>
@@ -946,7 +969,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       chance: 0.6,           // probabilidad de que una casilla de reto dé un minijuego en vez de una pregunta
       reward: 2,             // casillas que avanza quien gana
       perfect: 1,            // casilla extra por un cronómetro casi perfecto
-      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 12 }
+      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 12, blur: 18 }
     },
     boardSize: 73,
     goalDistance: 72,        // meta en la cima de la isla (casilla 72; antes hay que pasar la puerta del 6)
@@ -992,7 +1015,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     back4:    { name: 'Retrocede 4',   icon: '⏪', color: '#c92f25', desc: 'Vuelves 4 casillas atrás.' },
     totemUp:  { name: 'Tótem que sube', icon: '🗿', color: '#b3261b', desc: 'El tótem de piedra te lanza montaña arriba, hasta su pareja.' },
     totemDown:{ name: 'Tótem que baja', icon: '🗿', color: '#1a47b0', desc: 'El tótem de piedra te lanza montaña abajo, hasta su pareja.' },
-    wall:     { name: 'Muro',          icon: '🧱', color: '#5f6772', desc: 'Para pasar hay que sacar en el dado el número que pide (de 3 a 6).' },
+    wall:     { name: 'Muro',          icon: '🧱', color: '#5f6772', desc: 'Para pasar hay que sacar ese número o más. Cada ronda que falles, baja uno.' },
     volcano:  { name: 'Volcán',        icon: '🌋', color: '#c2461c', desc: 'Octavio sale por su puerta metálica y te manda de una patada al volcán. Dentro hay 7 casillas: tira el dado hasta llegar al portal para volver.' },
     gate:     { name: 'Puerta final',  icon: '🚪', color: '#c98f00', desc: 'Para llegar a la meta hay que sacar un 6.' },
     goal:     { name: 'Meta',          icon: '🏆', color: '#f2c14e', desc: 'La cima de la isla. ¡Quien llegue primero gana!' }
@@ -1937,7 +1960,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
 
   const clone = o => JSON.parse(JSON.stringify(o));
   const err = m => ({ error: m });
-  const CHALLENGE_WEIGHTS = { choice: 12, open: 6, riddle: 7, speed: 7, memory: 0, draw: 20, mime: 14 };   // el dibujo sale más que cualquier tipo de pregunta; tararear eliminado
+  const CHALLENGE_WEIGHTS = { choice: 12, open: 6, riddle: 7, speed: 7, memory: 0, draw: 20, mime: 7 };   // el dibujo sale más que cualquier tipo de pregunta; tararear eliminado
   const PASSABLE = ['choice', 'open', 'riddle'];
   /* Bots: cada uno con personalidad propia (decide y habla según ella). Solo los controla la pantalla principal. */
   const BOT_PERS = {
@@ -2003,7 +2026,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         dice: null, move: null, landed: null, result: null, announce: null,
         log: [], logSeq: 0, seqCounter: 0, winnerId: null, usedQ: {}, forcedDice: null, setup: null, cq: { list: [], src: 'orig' },
         fb: { gid: ++GAMES, n: 0, items: [], log: [], survey: {} }, fbq: null,
-        walls: Data.WALLS.map(i => ({ i, need: 3 + Math.floor(Math.random() * 4), broken: false, by: null })),
+        walls: Data.WALLS.map((i, k) => ({ i, need: k === 0 ? 3 : 4, tries: {}, broken: false, by: null })),
         gate: { i: Data.GATE, need: 6, passed: {} }
       };
     }
@@ -2148,6 +2171,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     /* Muros y puerta final: quien llega se para delante; para pasar tiene que sacar el número justo en el dado.
        Un muro roto queda roto para todos; la puerta del 6 la tiene que pasar cada uno. */
     function wallList() { return (state.walls || []).map(w => ({ i: w.i, need: w.need, gate: false, up: !w.broken, w })).concat(state.gate ? [{ i: state.gate.i, need: state.gate.need, gate: true }] : []); }
+    function wallNeed(w, p) { return Math.max(1, w.need - ((w.tries || {})[p.id] || 0)); }
     function wallStop(p, from, to) {
       for (const w of wallList()) {
         const up = w.gate ? !state.gate.passed[p.id] : w.up;
@@ -2260,13 +2284,16 @@ body.phase-lobby #cam .tvc { height: 956px; }
         const up = w.gate ? !state.gate.passed[p.id] : w.up;
         if (!up || !(from <= w.i && w.i < to)) continue;
         if (from === w.i) {
-          if (value === w.need) {
+          const nd = w.gate ? w.need : wallNeed(w.w, p);
+          if (w.gate ? value === w.need : value >= nd) {
             if (w.gate) { state.gate.passed[p.id] = true; note = '¡Abre la puerta!'; mods.push('¡Saca un 6 y abre la puerta!'); log('🚪 ' + p.name + ' saca un 6 y abre la puerta final.'); }
-            else { w.w.broken = true; w.w.by = p.id; note = '¡Rompe el muro!'; mods.push('¡Rompe el muro del ' + w.need + '!'); log('🧱 ' + p.name + ' saca un ' + w.need + ' y rompe el muro.'); }
+            else { w.w.broken = true; w.w.by = p.id; note = '¡Rompe el muro!'; mods.push('¡Rompe el muro (' + nd + ' o más)!'); log('🧱 ' + p.name + ' saca un ' + value + ' y rompe el muro.'); }
             continue;
           }
-          to = from; note = 'Necesita un ' + w.need; mods.push('Muro: necesita un ' + w.need);
-        } else { to = w.i; note = w.gate ? 'Puerta: ¡un 6!' : 'Muro: un ' + w.need; mods.push(w.gate ? 'Se para en la puerta final' : 'Se para en el muro'); }
+          to = from;
+          if (w.gate) { note = 'Necesita un 6'; mods.push('Puerta: necesita un 6'); }
+          else { w.w.tries[p.id] = (w.w.tries[p.id] || 0) + 1; const nx = wallNeed(w.w, p); note = 'Necesita un ' + nd + ' o más'; mods.push('Muro: necesita ' + nd + ' o más · la próxima, ' + nx + ' o más'); }
+        } else { to = w.i; note = w.gate ? 'Puerta: ¡un 6!' : 'Muro: ' + wallNeed(w.w, p) + ' o más'; mods.push(w.gate ? 'Se para en la puerta final' : 'Se para en el muro'); }
         break;
       }
       p.dist = to; if (to !== from) p.spAt = null;
@@ -2980,7 +3007,23 @@ body.phase-lobby #cam .tvc { height: 956px; }
        chain    — Cadena (pareja): palabras encadenadas por turnos (empieza por la última letra).
        drawPair — Dibujo en pareja: 3 trazos, solo tu pareja adivina.
        El tiempo de los cronómetros se mide EN EL MÓVIL (el retraso de internet no cuenta). */
-    const MINI_NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', drawPair: 'Dibujo en pareja' };
+    const MINI_NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', drawPair: 'Dibujo en pareja', blur: 'Foto borrosa' };
+    /* Foto borrosa: [artículo de Wikipedia (inglés) del que sale la foto, nombre, emoji de reserva si no carga la foto] */
+    const BLUR_ITEMS = [
+      ['Banana', 'Plátano', '🍌'], ['Pineapple', 'Piña', '🍍'], ['Bicycle', 'Bicicleta', '🚲'], ['Umbrella', 'Paraguas', '☂️'], ['Teapot', 'Tetera', '🫖'],
+      ['Hammer', 'Martillo', '🔨'], ['Scissors', 'Tijeras', '✂️'], ['Lighthouse', 'Faro', '🗼'], ['Giraffe', 'Jirafa', '🦒'], ['Penguin', 'Pingüino', '🐧'],
+      ['Strawberry', 'Fresa', '🍓'], ['Croissant', 'Cruasán', '🥐'], ['Saxophone', 'Saxofón', '🎷'], ['Hot_air_balloon', 'Globo aerostático', '🎈'], ['Violin', 'Violín', '🎻'],
+      ['Toothbrush', 'Cepillo de dientes', '🪥'], ['Alarm_clock', 'Despertador', '⏰'], ['Pizza', 'Pizza', '🍕'], ['Tractor', 'Tractor', '🚜'], ['Anchor', 'Ancla', '⚓'],
+      ['Padlock', 'Candado', '🔒'], ['Flamingo', 'Flamenco', '🦩'], ['Pumpkin', 'Calabaza', '🎃'], ['Watermelon', 'Sandía', '🍉'], ['Helicopter', 'Helicóptero', '🚁'],
+      ['Typewriter', 'Máquina de escribir', '⌨️'], ['Accordion', 'Acordeón', '🪗'], ['Rubber_duck', 'Patito de goma', '🦆'], ['Chameleon', 'Camaleón', '🦎'], ['Octopus', 'Pulpo', '🐙'],
+      ['Hedgehog', 'Erizo', '🦔'], ['Broccoli', 'Brócoli', '🥦'], ['Lemon', 'Limón', '🍋'], ['Doughnut', 'Dónut', '🍩'], ['Skateboard', 'Monopatín', '🛹'],
+      ['Microphone', 'Micrófono', '🎤'], ['Hourglass', 'Reloj de arena', '⏳'], ['Kettle', 'Hervidor', '🫖'], ['Windmill', 'Molino de viento', '🌬️'], ['Owl', 'Búho', '🦉'],
+      ['Zebra', 'Cebra', '🦓'], ['Camel', 'Camello', '🐫'], ['Koala', 'Koala', '🐨'], ['Snail', 'Caracol', '🐌'], ['Avocado', 'Aguacate', '🥑'],
+      ['Trumpet', 'Trompeta', '🎺'], ['Hamburger', 'Hamburguesa', '🍔'], ['Teddy_bear', 'Osito de peluche', '🧸'], ['Rubik%27s_Cube', 'Cubo de Rubik', '🧩'], ['Ferris_wheel', 'Noria', '🎡'],
+      ['Sushi', 'Sushi', '🍣'], ['Red_panda', 'Panda rojo', '🐼'], ['Cupcake', 'Magdalena', '🧁'], ['Sunglasses', 'Gafas de sol', '🕶️'], ['Sneakers', 'Zapatillas', '👟'],
+      ['Igloo', 'Iglú', '🧊'], ['Volcano', 'Volcán', '🌋'], ['Tiger', 'Tigre', '🐯'], ['Parrot', 'Loro', '🦜'], ['Peacock', 'Pavo real', '🦚']
+    ];
+    let blurUsed = [];
     const MINI_PAIR = { relay: 1, sync: 1, describe: 1, chain: 1, drawPair: 1 };
     const MINI_HUMAN = { describe: 1, chain: 1, drawPair: 1 };      // necesitan dos personas (los bots no pueden)
     const online = id => !OFFLINE.has(id);
@@ -3015,6 +3058,13 @@ body.phase-lobby #cam .tvc { height: 956px; }
       } else if (kind === 'describe') {
         const w = pickFrom(Data.WORDS.concat(Data.MIMES).map(x => Object.assign({ diff: 1 }, x)), 1, 1);
         pd.secret = { word: w.word, alts: w.alts || [] }; pd.tries = 0; pd.maxTries = 8; pd.total = 30000;
+      } else if (kind === 'blur') {
+        let pool = BLUR_ITEMS.filter(x => !blurUsed.includes(x[0])); if (pool.length < 4) { blurUsed = []; pool = BLUR_ITEMS.slice(); }
+        const it = pick(pool); blurUsed.push(it[0]);
+        const others = BLUR_ITEMS.filter(x => x !== it && x[1] !== it[1]).map(x => ({ x, k: rnd() })).sort((a, b) => a.k - b.k).slice(0, 3).map(o => o.x);
+        const opts = others.concat([it]).map(x => ({ x, k: rnd() })).sort((a, b) => a.k - b.k).map(o => o.x);
+        pd.img = { t: it[0], e: it[2] }; pd.opts = opts.map(x => x[1]); pd.secret = { ok: opts.indexOf(it), name: it[1] };
+        pd.total = kids ? 26000 : 22000; pd.wrong = {};
       } else if (kind === 'chain') {
         pd.words = [pick(Data.CHAIN_STARTS)]; pd.by = [null]; pd.goal = kids ? 3 : 4; pd.step = 0; pd.wordMs = kids ? 10000 : 8000; pd.total = pd.wordMs; pd.endAt = t0 + 30000;   // la cadena entera: 30 s como mucho
       }
@@ -3022,7 +3072,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       state.turn.step = 'resolving';
       state.pending = pd;
       const names = ids.map(id => P(id).name).join(' y ');
-      announce({ kind: 'collective', icon: { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗' }[kind], title: '¡' + MINI_NAME[kind] + '!',
+      announce({ kind: 'collective', icon: { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '📷' }[kind], title: '¡' + MINI_NAME[kind] + '!',
         text: MINI_PAIR[kind] ? 'Reto en pareja: ' + names + '.' : only ? 'Juegan ' + names + ' desde el móvil.' : '¡Jugáis todos desde el móvil!' });
       log('🎲 Minijuego: ' + MINI_NAME[kind] + (MINI_PAIR[kind] || only ? ' (' + names + ')' : ' (todos)') + '.', { kind: 'event' });
       const vk = { relay: 'pareja', sync: 'sync', describe: 'describe', chain: 'chain', moon: 'luna' }[kind];
@@ -3110,6 +3160,12 @@ body.phase-lobby #cam .tvc { height: 956px; }
           title: ok ? '¡' + name(pd.ids[1]) + ' lo adivina!' : 'No lo habéis adivinado', text: ok ? pd.ids.map(name).join(' y ') + ' ' + cas(R) + ' cada uno' : 'Era: ' + pd.secret.word, ms: 7000,
           say: !ok ? 'describeFalla' : pd.tries <= 1 ? 'describeRapido' : pd.tries >= 4 ? 'describeLargo' : (rnd() < 0.5 ? 'parejaBien' : null) });
       }
+      if (pd.kind === 'blur') {
+        const w = pd.winner, gain = {}, name0 = (pd.secret || {}).name || '';
+        if (w) gain[w] = R + (pd.winAt != null && pd.winAt < pd.total * 0.4 ? S.mini.perfect : 0);
+        return miniReveal(pd, { icon: '📷', word: name0, img: pd.img, win: w ? [w] : [], gain, wrong: Object.keys(pd.wrong || {}),
+          title: w ? '¡' + name(w) + ' lo adivina!' : 'Nadie lo ha adivinado', text: (w ? cas(gain[w]) + ' · ' : '') + 'Era: ' + name0, ms: 7000 });
+      }
       if (pd.kind === 'chain') {
         const done = pd.words.length - 1, ok = done >= pd.goal, gain = {};
         if (ok) pd.ids.forEach(id => { gain[id] = R; });
@@ -3174,6 +3230,16 @@ body.phase-lobby #cam .tvc { height: 956px; }
         if (pd.tries >= pd.maxTries) return miniClose(pd);
         return;
       }
+      if (pd.kind === 'blur') {
+        if (op !== 'pick') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has elegido.');
+        const i = Number(a.i); if (!Number.isInteger(i) || i < 0 || i >= pd.opts.length) return err('Opción no válida.');
+        pd.res[actor] = { i, at: now() - pd.startedAt }; pd.seq++;
+        if (i === pd.secret.ok) { pd.winner = actor; pd.winAt = pd.res[actor].at; return miniClose(pd); }
+        pd.wrong[actor] = true;
+        if (miniAllIn(pd, pd.ids)) return miniClose(pd);
+        return;
+      }
       if (pd.kind === 'chain') {
         if (op !== 'word') return err('Acción no válida.');
         if (pd.ids[pd.step % 2] !== actor) return err('Es el turno de tu pareja.');
@@ -3199,6 +3265,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         pd.need = Math.floor((pd.ids.length - 1) / 2) + 1; pd.okd = Object.assign({}, pd.okd);
       }
       if (pd.res[viewer] && pd.res[viewer].text != null) pd.myText = pd.res[viewer].text;
+      if (pd.kind === 'blur' && pd.res[viewer]) pd.myPick = pd.res[viewer].i;
       if (!full) { delete pd.res; delete pd.flags; }
       return pd;
     }
@@ -4535,8 +4602,8 @@ body.phase-lobby #cam .tvc { height: 956px; }
       }
       if (v.phase === 'playing' && v.intro) {      // Octavio explica las normas en la tele
         const voters = v.players.filter(x => !x.bot && !x.offline), n = voters.filter(x => v.intro.votes[x.id]).length, mine = !!v.intro.votes[pid];
-        return '<div class="ph-card center ph-intro"><div class="big">🐙</div><h2>Octavio explica cómo se juega</h2><p>Mira la pantalla principal.</p>' +
-          '<button type="button" class="btn big' + (mine ? ' ghost' : '') + '" data-act="skipIntro">' + (mine ? '✔ Has votado saltar (toca para quitarlo)' : '⏭ Votar para saltar la explicación') + '</button>' +
+        return '<div class="ph-card center ph-intro"><div class="big"><span class="emo ico">🐙</span></div><h2>Octavio explica cómo se juega</h2><p>Mira la pantalla principal.</p>' +
+          '<button type="button" class="btn ph-skip' + (mine ? ' ghost' : '') + '" data-act="skipIntro">' + (mine ? '✔ Has votado saltar (toca para quitarlo)' : '⏭ Votar para saltar la explicación') + '</button>' +
           '<p class="tiny">Se salta si votáis todos: ' + n + ' de ' + voters.length + '</p></div>';
       }
       if (v.phase === 'ended') {
@@ -4963,7 +5030,8 @@ body.phase-lobby #cam .tvc { height: 956px; }
     function islaSync(v) {
       if (!isla) return;
       isla.setPlayers(v.players.map(p => ({ id: p.id, name: p.name, color: p.color, look: p.look })));
-      isla.setWalls((v.walls || []).map(w => ({ i: w.i, need: w.need, broken: w.broken })).concat(v.gate ? [{ i: v.gate.i, need: 6, broken: false }] : []));
+      const wp = v.turn && v.players.find(x => x.id === v.turn.playerId);
+      isla.setWalls((v.walls || []).map(w => ({ i: w.i, need: wp && wp.dist === w.i ? Math.max(1, w.need - ((w.tries || {})[wp.id] || 0)) : w.need, broken: w.broken })).concat(v.gate ? [{ i: v.gate.i, need: 6, broken: false }] : []));
       isla.setPhase(v.phase, v.winnerId);
       let cur = null, zoom = 'mid';
       const R = v.rolls;
@@ -8180,14 +8248,35 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
 (function () {
   'use strict';
   const TE = (window.TE = window.TE || {}); const U = TE.UI, esc = U.esc;
-  const NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras' };
-  const ICON = { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗' };
+  const NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', blur: 'Foto borrosa' };
+  const ICON = { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '📷' };
+  /* Foto borrosa: la tele pide la foto del artículo de Wikipedia; si no llega, se usa el emoji grande (también se emborrona). */
+  const BLUR_CACHE = {};
+  function blurUrl(t) {
+    if (BLUR_CACHE[t]) return BLUR_CACHE[t];
+    BLUR_CACHE[t] = fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + t, { headers: { Accept: 'application/json' } })
+      .then(r => r.ok ? r.json() : null).then(j => { const src = j && ((j.thumbnail && j.thumbnail.source) || (j.originalimage && j.originalimage.source)); return src ? src.replace(/\/(\d+)px-/, '/900px-') : null; })
+      .catch(() => null);
+    return BLUR_CACHE[t];
+  }
+  function blurFill() {
+    document.querySelectorAll('.bl-img[data-t]:not([data-ld])').forEach(im => {
+      im.dataset.ld = '1';
+      blurUrl(im.dataset.t).then(src => { if (!src) return; im.onload = () => im.classList.add('ok'); im.onerror = () => { const alt = src.replace('/900px-', '/640px-'); if (im.src !== alt) im.src = alt; }; im.src = src; });
+    });
+  }
+  setInterval(blurFill, 250);
+  function blurPic(pd, sharp) {
+    const tot = pd.phase === 'reveal' ? 1 : pd.total, el = Math.max(0, (TE.UI && TE.UI.now ? TE.UI.now() : Date.now()) - pd.startedAt);
+    return '<div class="bl-pic' + (sharp ? ' sharp' : '') + '" style="--dur:' + (tot / 1000) + 's;--del:-' + (el / 1000) + 's"><span class="bl-emo">' + pd.img.e + '</span><img class="bl-img" alt="" data-t="' + pd.img.t + '"></div>';
+  }
   const HOW = {
     clock: 'Pulsa EMPEZAR y para cuando creas que ha pasado el tiempo. ¡Sin ver el reloj! Gana quien más se acerque.',
     relay: 'Entre los dos tenéis que sumar el tiempo: uno cuenta la primera parte y el otro la segunda, sin saber cuánto contó el compañero.',
     moon: 'Escribe una respuesta que NADIE más diga. Las respuestas únicas llegan a la Luna.',
     sync: 'Los dos tenéis que escribir EXACTAMENTE lo mismo, sin hablar.',
     describe: 'Uno describe la palabra en voz alta (sin decirla) y su pareja la escribe en el móvil.',
+    blur: 'La foto se va enfocando poco a poco. ¡El primero que acierte en el móvil gana! Solo tenéis un intento.',
     chain: 'Por turnos, escribid una palabra que empiece por la última letra de la anterior.'
   };
   const seg = ms => (ms == null ? '—' : (ms / 1000).toFixed(2).replace('.', ',') + ' s');
@@ -8316,6 +8405,12 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
       return '<div class="ph-card">' + head(pd, true) + tm + '<h2 class="q">Escucha a ' + nm(v, pd.ids[0]) + ' y adivina</h2>' +
         '<form class="ph-form" data-form="mini"><input class="txt" type="text" maxlength="24" autocomplete="off" placeholder="¿Qué es?" aria-label="Tu respuesta"><button class="btn good" type="submit">Probar (' + (pd.maxTries - pd.tries) + ')</button></form>' + (pd.last ? '<p class="note">Último intento: «' + esc(pd.last) + '»</p>' : '') + '</div>';
     }
+    if (pd.kind === 'blur') {
+      if (!inG) return watch;
+      if (pd.myPick != null) return '<div class="ph-card center">' + head(pd, true) + '<div class="big">❌</div><h2>No era «' + esc(pd.opts[pd.myPick] || '') + '»</h2><p>Ya has usado tu intento. ¡Mira quién lo adivina!</p>' + tm + '</div>';
+      return '<div class="ph-card">' + head(pd, true) + tm + '<h2 class="q">¿Qué sale en la foto?</h2><p class="mg-how">Mira la tele: se va enfocando. Solo tienes un intento.</p><div class="bl-opts">' +
+        pd.opts.map((o, i) => '<button type="button" class="btn bl-opt" data-act="mini" data-op="pick" data-i="' + i + '">' + esc(o) + '</button>').join('') + '</div></div>';
+    }
     if (pd.kind === 'chain') {
       if (!inG) return watch;
       const last = pd.words[pd.words.length - 1], L = (TE.Data.normalize(last).replace(/[^a-z]/g, '').slice(-1) || '?').toUpperCase(), turnId = pd.ids[pd.step % 2];
@@ -8338,6 +8433,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
       if (navigator.vibrate) try { navigator.vibrate([20, 30, 20]); } catch (e) { /* nada */ }
     }
     else if (op === 'flag') send('mini', { op: 'flag', target: b.dataset.t });
+    else if (op === 'pick') send('mini', { op: 'pick', i: Number(b.dataset.i) });
     else if (op === 'ok') send('mini', { op: 'ok' });
   }
   function submit(val, v, send) {
@@ -8368,6 +8464,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
       else if (pd.kind === 'sync') body = '<ol class="mg-tvlist"><li class="' + (win.length ? 'win' : '') + '"><b>' + nm(v, pd.ids[0]) + '</b>' + esc(o.answers[0] || '—') + '</li><li class="' + (win.length ? 'win' : '') + '"><b>' + nm(v, pd.ids[1]) + '</b>' + esc(o.answers[1] || '—') + '</li></ol>';
       else if (pd.kind === 'describe') body = '<div class="mg-big">' + esc(o.word || '') + '</div>';
       else if (pd.kind === 'chain') body = '<div class="mg-tvchain">' + (o.words || []).map(w => '<span>' + esc(w) + '</span>').join('') + '</div>';
+      else if (pd.kind === 'blur' && pd.img) body = blurPic(pd, true) + '<div class="mg-big">' + esc(o.word || '') + '</div>';
       return '<div class="c-mini">' + top + '<h2 class="c-question">' + esc(o.title || '') + '</h2><p class="hint-line">' + esc(o.text || '') + (pd.target ? ' · objetivo ' + tgt(pd.target) : '') + '</p>' + body + '</div>';
     }
     if (pd.kind === 'clock') return '<div class="c-mini">' + top + '<div class="mg-big">' + tgt(pd.target) + '</div><p class="hint-line">' + HOW.clock + '</p>' + chips(v, pd) + '</div>';
@@ -8381,6 +8478,12 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
       return '<div class="c-mini">' + top + (pd.kind === 'moon' ? '<div class="mg-moon">🌙</div>' : '') + U.timerHTML(pd) + '<h2 class="c-question">' + esc(pd.q.text) + '</h2><p class="hint-line">' + HOW[pd.kind] + '</p>' + chips(v, pd) + '</div>';
     }
     if (pd.kind === 'describe') return '<div class="c-mini">' + top + U.timerHTML(pd) + '<h2 class="c-question small">🗣️ ' + nm(v, pd.ids[0]) + ' describe · ✍️ ' + nm(v, pd.ids[1]) + ' adivina</h2><p class="hint-line">Sin decir la palabra ni hacer gestos de letras. Intentos: ' + pd.tries + '/' + pd.maxTries + '</p>' + (pd.last ? '<p class="hint-line">Último intento: «' + esc(pd.last) + '»</p>' : '') + '</div>';
+    if (pd.kind === 'blur') {
+      const wr = pd.ids.filter(id => (pd.wrong || {})[id]);
+      return '<div class="c-mini c-blur">' + top + U.timerHTML(pd) + blurPic(pd) + '<p class="hint-line">' + HOW.blur + '</p>' +
+        '<div class="bl-opts tv">' + pd.opts.map(o => '<span>' + esc(o) + '</span>').join('') + '</div>' +
+        (wr.length ? '<p class="hint-line bl-wr">❌ Han fallado: ' + wr.map(id => nm(v, id)).join(', ') + '</p>' : '') + '</div>';
+    }
     if (pd.kind === 'chain') {
       const last = pd.words[pd.words.length - 1], L = (TE.Data.normalize(last).replace(/[^a-z]/g, '').slice(-1) || '?').toUpperCase();
       return '<div class="c-mini">' + top + U.timerHTML(pd) + '<p class="hint-line">' + HOW.chain + '</p><div class="mg-tvchain">' + pd.words.map(w => '<span>' + esc(w) + '</span>').join('') + '</div>' +
@@ -9537,6 +9640,9 @@ return { SYSTEM, TASKS, extractJson, str, num, list, TONES };
             act(b.id, { type: 'mini', op: 'word', text: L[Math.min(L.length - 1, i)] });
           });
           if (pd.kind === 'moon' && pd.phase === 'veto' && !(pd.okd || {})[b.id]) once('mv:' + key, delay(b, 1.5), () => act(b.id, { type: 'mini', op: 'ok' }));
+          if (pd.kind === 'blur' && !R[b.id]) { const wait = 4000 + r() * 14000; once('mb:' + key, wait, () => {
+            const sec = pd.secret || {}, ok = r() < 0.25 + wait / 26000, wr = pd.opts.map((_, i) => i).filter(i => i !== sec.ok);
+            act(b.id, { type: 'mini', op: 'pick', i: ok && sec.ok != null ? sec.ok : wr[Math.floor(r() * wr.length)] }); }); }
         } else if (pd.type === 'shop' && pd.playerId === b.id) {
           once('shop:' + key, delay(b, 1.1), () => act(b.id, { type: 'shopDone' }));
         }
@@ -10465,7 +10571,7 @@ const eyeMat=new T.MeshBasicMaterial({color:0xffe9a8});
 const golems={},pawns=[],wallObjs={};
 function dieTex(n,gold){const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle=gold?'#ffe38a':'#fffdf5';g.fillRect(0,0,128,128);g.strokeStyle=gold?'#c98f00':'#d9d2bd';g.lineWidth=8;g.strokeRect(4,4,120,120);g.fillStyle=gold?'#7a4a00':'#e5483b';
   const L={3:[[32,32],[64,64],[96,96]],4:[[36,36],[92,36],[36,92],[92,92]],5:[[34,34],[94,34],[64,64],[34,94],[94,94]],6:[[38,30],[90,30],[38,64],[90,64],[38,98],[90,98]]}[n];
-  L.forEach(p=>{g.beginPath();g.arc(p[0],p[1],12,0,TAU);g.fill();});const t=new T.CanvasTexture(cv);t.colorSpace=T.SRGBColorSpace;return t;}
+  if(!gold||!L){g.font='900 '+(n>=10?60:74)+'px Nunito,system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(gold?String(n):n+'+',64,68);}else L.forEach(p=>{g.beginPath();g.arc(p[0],p[1],12,0,TAU);g.fill();});const t=new T.CanvasTexture(cv);t.colorSpace=T.SRGBColorSpace;return t;}
 function wallGeo(final){const L=[];const cols=final?[0xf3ead2,0xe6dcc0,0xfff6e0,0xeadfc4]:[0xa9b0b8,0x8f97a1,0xbcc2c9,0x9aa2ab];let k=0;
   for(let r=0;r<4;r++)for(let q=0;q<5;q++){const off=r%2?.6:0;const x=-2.4+q*1.2+off;if(x>2.7)continue;L.push(P(new T.BoxGeometry(1.14,.62,1.0),cols[(k++*7+r)%4],M(x,.33+r*.66,0)));}
   for(let q=0;q<3;q++)L.push(P(new T.BoxGeometry(.9,.5,1.0),final?0xffc93a:0x8f97a1,M(-2.1+q*2.1,2.9,0)));
@@ -11616,7 +11722,9 @@ return {
   const audioFor = id => (TE.OCTA_AUDIO || {})[id] || null;
   const soundOn = () => { const c = TE.Audio && TE.Audio.cfg; return !(c && c.sound === false); };
   const nowMs = () => (TE.UI && TE.UI.now ? TE.UI.now() : Date.now());
-  const av = i => { const L = D().PLAYER_LOOKS || []; return L.length ? L[i % L.length].avatar : '🙂'; };
+  const curP = () => { const P0 = (lastView && lastView.players) || []; return P0.length ? P0 : (D().PLAYER_LOOKS || []).map((l, i) => ({ name: 'Jugador ' + (i + 1), avatar: '🙂' })); };
+  const av = i => { const P0 = curP(); const p = P0[i % P0.length]; return (p && p.avatar) || '🙂'; };
+  const nmo = i => { const P0 = curP(); const p = P0[i % P0.length]; return p && p.name ? String(p.name).replace(/[<>&]/g, '') : ''; };
   const later = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
   function clearTimers() { timers.forEach(t => { clearTimeout(t); clearInterval(t); }); timers = []; }
 
@@ -11629,8 +11737,8 @@ return {
       return { label: 'Gana el primero que llegue a la casilla ' + g,
         html: '<div class="v-meta"><div class="v-track">' + n.map((x, i) => '<div class="v-tile' + (i === n.length - 1 ? ' goal' : '') + '">' + (i === n.length - 1 ? '🏁<b>' + x + '</b>' : x) + '</div>').join('') +
           '</div><div class="v-tok">' + av(1) + '</div></div>' }; },
-    dado: () => ({ label: 'Todos tiran el dado a la vez desde el móvil · 15 s',
-      html: '<div class="v-dado">' + [0, 1, 2, 3].map(i => '<div class="v-phone"><span class="v-pav">' + av(i) + '</span><span class="v-die" style="animation-delay:' + (i * .15) + 's">🎲</span><b style="animation-delay:' + (1.6 + i * .25) + 's">' + [5, 2, 6, 3][i] + '</b></div>').join('') +
+    dado: () => ({ label: 'Cada uno tira su dado desde el móvil cuando le toca · 15 s',
+      html: '<div class="v-dado">' + [0, 1, 2, 3].map(i => '<div class="v-phone"><span class="v-pav">' + av(i) + '</span><em class="v-nm">' + nmo(i) + '</em><span class="v-die" style="animation-delay:' + (i * .15) + 's">🎲</span><b style="animation-delay:' + (1.6 + i * .25) + 's">' + [5, 2, 6, 3][i] + '</b></div>').join('') +
         '<div class="v-clock">15</div></div>' }),
     reto: () => ({ label: 'Casilla de reto: pregunta, dibujo o mímica',
       html: '<div class="v-reto">' + [['❓', 'Pregunta'], ['🎨', 'Dibujo'], ['🎭', 'Mímica']].map((c, i) => '<div class="v-card" style="animation-delay:' + (i * .45) + 's"><span>' + c[0] + '</span><b>' + c[1] + '</b></div>').join('') + '</div>' }),
@@ -11640,9 +11748,9 @@ return {
         '<div class="v-row bad"><span class="v-mark">❌</span><div class="v-lane"><i></i><i></i><i></i><i></i><i></i><span class="v-t">' + av(3) + '</span></div><b>−1 casilla</b></div></div>' }),
     dibujo: () => ({ label: 'Mientras se dibuja, los demás adivinan desde el móvil',
       html: '<div class="v-draw"><svg viewBox="0 0 200 160" class="v-svg"><path pathLength="1" d="M40 80 L100 30 L160 80 M55 70 L55 140 L145 140 L145 70 M85 140 L85 105 L112 105 L112 140 M120 92 L136 92 L136 108 L120 108 Z M128 50 L128 30 L140 30 L140 60"/></svg>' +
-        '<div class="v-bubbles"><span class="no" style="animation-delay:1.2s">' + av(4) + ' ¿Un barco?</span><span class="no" style="animation-delay:2.3s">' + av(5) + ' ¿Una tienda?</span><span class="yes" style="animation-delay:3.4s">' + av(1) + ' ¡Una casa!</span></div></div>' }),
+        '<div class="v-bubbles"><span class="no" style="animation-delay:1.2s">' + av(1) + ' <b>' + nmo(1) + ':</b> ¿Un barco?</span><span class="no" style="animation-delay:2.3s">' + av(2) + ' <b>' + nmo(2) + ':</b> ¿Una tienda?</span><span class="yes" style="animation-delay:3.4s">' + av(0) + ' <b>' + nmo(0) + ':</b> ¡Una casa!</span></div></div>' }),
     duelo: () => ({ label: 'Dos en la misma casilla: ¡duelo!',
-      html: '<div class="v-duel"><span class="v-a">' + av(0) + '</span><span class="v-vs">VS</span><span class="v-b">' + av(3) + '</span><div class="v-tile big">⚔️</div></div>' }),
+      html: '<div class="v-duel"><span class="v-a">' + av(0) + '<em class="v-nm">' + nmo(0) + '</em></span><span class="v-vs">VS</span><span class="v-b">' + av(1) + '<em class="v-nm">' + nmo(1) + '</em></span><div class="v-tile big">⚔️</div></div>' }),
     todos: () => ({ label: '«Todos juegan»: un reto para todos a la vez',
       html: '<div class="v-all"><div class="v-big">👥</div><div class="v-ring">' + [0, 1, 2, 3, 4, 5].map(i => '<span style="--a:' + (i * 60) + 'deg">' + av(i) + '</span>').join('') + '</div></div>' }),
     tiempo: () => ({ label: 'Nada dura más de 30 segundos', timer: true,
