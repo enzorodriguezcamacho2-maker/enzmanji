@@ -659,6 +659,204 @@ body.phase-lobby #cam .tvc { height: 956px; }
 @keyframes gl-fall { to { top: 110vh; } }
 #octv.mode-gala .oc-dlg { z-index: 3; }
 </style>
+<style id="ng8-css">
+#stage #cam .tvc:has(.c-wide) { transform: none !important; top: 70px !important; left: 380px !important; width: 1100px !important; height: 900px !important; }
+.ico.e8 { width: auto !important; height: auto !important; line-height: 1; vertical-align: middle; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; font-style: normal; }
+.c-ng { gap: 12px !important; }
+.c-ng .c-question { font-size: 44px; margin: 4px 0; }
+.c-ng .c-question.small { font-size: 34px; }
+.ng-av { display: inline-grid; place-items: center; width: 1.35em; height: 1.35em; border-radius: 50%; background: color-mix(in srgb, var(--pc) 35%, #fff); box-shadow: 0 0 0 .08em var(--pc); overflow: hidden; flex: none; }
+.ng-av .an.av3 { width: 1.2em; height: 1.2em; }
+.ng-av.xl { font-size: 120px; }
+.c-mini .ng-rows li { font-size: 28px; padding: 6px 18px; }
+.c-mini .ng-rows li span { opacity: .92; }
+.c-mini .ng-rows li.lose { border-color: #ff4d63; background: rgba(255,77,99,.15); }
+.phone .mg-row.lose { background: rgba(255,77,99,.18); border: 1px solid #ff4d63; }
+.c-mini .ng-bigtxt { font-size: 92px; }
+.ng-holder { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ng-holder b { font: 900 52px var(--font-display); color: #ffe08a; }
+.ng-holder small { font-size: 26px; color: #d9e6ff; }
+.ng-bomb { display: flex; align-items: center; justify-content: center; gap: 70px; margin-top: 10px; }
+.ng-bomb-e { position: relative; font-size: 230px; line-height: 1; animation: ng-shake .32s ease-in-out infinite alternate; }
+@keyframes ng-shake { from { transform: rotate(-6deg); } to { transform: rotate(6deg) scale(1.05); } }
+.ng-spark { position: absolute; right: 14%; top: 4%; width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(#fff, #ffd84a 40%, #ff6a00 70%, transparent 72%); animation: ng-spark .14s linear infinite alternate; }
+@keyframes ng-spark { to { transform: scale(1.6); opacity: .55; } }
+/* móvil */
+.phone .ng-grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: .5em; margin-top: .6em; }
+.phone .ng-cell { min-height: 4.4em; font-size: 1.9em !important; padding: 0 !important; }
+.phone .ng-bombme { background: radial-gradient(120% 80% at 50% 0%, rgba(255,77,99,.4), rgba(255,255,255,.03) 70%) !important; border-color: #ff4d63 !important; }
+.phone .ng-want { text-align: center; font-size: 1.3em; font-weight: 900; margin: .2em 0; }
+.phone .ng-want .e8 { font-size: 1.8em; }
+.phone .ng-bad { color: #ff9aa5 !important; font-weight: 800; text-align: center; }
+.phone .ng-card .big .e8 { font-size: 1em; }
+.phone .ng-sneak { background: #2b1a3a; color: #f3e8ff; border: 2px dashed #c084fc; border-radius: .8em; padding: .6em .8em; margin: .4em 0; font-size: .95em; line-height: 1.35; }
+.phone .bl-opt.ng-hl { box-shadow: 0 0 0 .22em #c084fc inset !important; }
+.phone .ng-vote { display: flex !important; align-items: center; gap: .5em; width: 100%; justify-content: flex-start !important; min-height: 3.2em; }
+.phone .ng-vote b { flex: 1; text-align: left; }
+.phone .ng-vote .ng-av { font-size: 1.4em; }
+/* Simón */
+.sm-dots { display: flex; gap: .4em; justify-content: center; margin: .4em 0 .8em; }
+.sm-dots i { width: 1.1em; height: 1.1em; border-radius: 50%; border: 2px solid rgba(255,255,255,.55); background: var(--c); }
+.sm-pads { display: grid; grid-template-columns: 1fr 1fr; gap: .7em; }
+.sm-pad { position: relative; border: 0; border-radius: 1.2em; background: color-mix(in srgb, var(--c) 55%, #0b1630); box-shadow: inset 0 -.35em 0 rgba(0,0,0,.25), 0 .3em .8em rgba(0,0,0,.3); }
+.phone .sm-pad { height: 8.5em; touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.phone .sm-pad:active { background: var(--c); filter: brightness(1.25); box-shadow: 0 0 1.4em var(--c); }
+.sm-board { display: grid; grid-template-columns: 270px 270px; gap: 26px; margin: 10px auto; }
+.sm-pad.tv { height: 270px; border-radius: 40px; overflow: hidden; background: color-mix(in srgb, var(--c) 28%, #0b1630); }
+.sm-lit { position: absolute; inset: 0; background: var(--c); box-shadow: inset 0 0 50px rgba(255,255,255,.8); opacity: 0; animation-name: sm-flash; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes sm-flash { 0% { opacity: 0; } 12% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; } }
+/* Topos */
+.mo-grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); }
+.c-ng .mo-grid { gap: 20px; width: 700px; margin: 0 auto; }
+.phone .mo-grid { gap: .5em; margin-top: .5em; }
+.mo-hole { position: relative; aspect-ratio: 1; border-radius: 50%; border: 0; padding: 0; display: grid; place-items: end center; overflow: hidden;
+  background: radial-gradient(ellipse 62% 28% at 50% 76%, #24160a 0 60%, #6b4422 62% 75%, transparent 77%), radial-gradient(circle at 50% 40%, #8fd46a, #4f9e3a 72%); }
+button.mo-hole { cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.c-ng .mo-hole { font-size: 44px; }
+.phone .mo-hole { font-size: 1.1em; }
+.mo-mole { font-size: 2.3em; line-height: 1; margin-bottom: 14%; animation: mo-up .16s ease-out both; }
+@keyframes mo-up { from { transform: translateY(70%) scale(.7); } to { transform: none; } }
+.mo-ham { position: absolute; top: 4%; right: 4%; font-size: 1.5em; transform: rotate(-30deg); }
+.mo-hole.hit { box-shadow: 0 0 0 .2em #ffe08a; }
+/* Cuenta de viajeros */
+.ct-scene { position: relative; width: 1000px; height: 380px; margin: 0 auto; overflow: hidden; border-radius: 30px; background: linear-gradient(#bfe6ff, #e8f7ff 62%, #8fd46a 63%, #5fae45); }
+.ct-house { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); font-size: 250px; line-height: 1; z-index: 2; display: grid; place-items: center; }
+.ct-house b { position: absolute; top: 44%; font: 900 100px var(--font-display); color: #fff; text-shadow: 0 5px 0 #0b1f4d; }
+.ct-ev { position: absolute; bottom: 36px; left: 0; font-size: 78px; white-space: nowrap; opacity: 0; z-index: 3; animation-duration: 1300ms; animation-timing-function: ease-in-out; animation-fill-mode: both; }
+.ct-ev.in { animation-name: ct-in; } .ct-ev.out { animation-name: ct-out; }
+@keyframes ct-in { 0% { opacity: 1; transform: translateX(-380px); } 82% { opacity: 1; transform: translateX(380px) scale(.95); } 100% { opacity: 0; transform: translateX(440px) scale(.5); } }
+@keyframes ct-out { 0% { opacity: 0; transform: translateX(440px) scale(.5); } 18% { opacity: 1; transform: translateX(560px) scale(.95); } 100% { opacity: 1; transform: translateX(1120px); } }
+/* Regalos con trampa */
+.gf-stage { position: relative; width: 1000px; height: 330px; margin: 6px auto; }
+.gf-box { position: absolute; left: 50%; top: 110px; width: 180px; margin-left: -90px; text-align: center; font-size: 150px; line-height: 1; }
+.gf-box .gf-n { display: block; font: 900 44px var(--font-display); color: #ffe08a; margin-top: 4px; }
+.gf-box.win > .e8 { filter: drop-shadow(0 0 26px #ffe08a); }
+.gf-gem { position: absolute; left: 50%; top: -50px; transform: translateX(-50%); font-size: 70px; animation: gf-gem 1600ms ease-in both; }
+.gf-gem.stay { animation: none; top: -78px; }
+@keyframes gf-gem { 0% { opacity: 0; transform: translate(-50%, -120px); } 20% { opacity: 1; } 70% { opacity: 1; transform: translate(-50%, 30px); } 100% { opacity: 0; transform: translate(-50%, 70px) scale(.5); } }
+.phone .gf-opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6em; margin-top: .6em; }
+.phone .gf-opt { min-height: 5em; font-size: 1.5em !important; display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: .1em; }
+/* Rompecabezas de caras */
+.phone .fz-grid { gap: 3px !important; width: min(100%, 19em); margin: .5em auto 0; border-radius: .8em; overflow: hidden; }
+.fz-t { aspect-ratio: 1; border: 0; padding: 0; background-color: #dfe9ff; background-repeat: no-repeat; box-shadow: inset 0 0 0 2px rgba(0,0,0,.15); touch-action: manipulation; font: 900 1.8em var(--font-display); color: #0b1f4d; cursor: pointer; }
+.fz-t.sel { box-shadow: inset 0 0 0 .25em #ffe08a; filter: brightness(1.15); }
+.fz-t.ok { box-shadow: inset 0 0 0 2px rgba(34,197,94,.95); }
+.fz-tv { display: flex; gap: 50px; align-items: center; justify-content: center; width: 100%; }
+.fz-face { font-size: 300px; width: 1.1em; height: 1.1em; border-radius: 40px; display: grid; place-items: center; background: linear-gradient(135deg, var(--pc), #fff7d6 55%, #7fd3ff); overflow: hidden; }
+.fz-bars { display: flex; flex-direction: column; gap: 14px; width: 520px; }
+.fz-bar { position: relative; display: flex; align-items: center; gap: 12px; font-size: 28px; padding: 8px 16px; border-radius: 16px; background: rgba(255,255,255,.08); overflow: hidden; }
+.fz-bar > i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); background: color-mix(in srgb, var(--pc) 50%, transparent); transition: width .3s; }
+.fz-bar > *:not(i) { position: relative; } .fz-bar b { flex: 1; } .fz-bar.done { box-shadow: 0 0 0 3px #ffe08a; }
+/* Cronómetro de parada */
+.sp8-goal { text-align: center; }
+.sp8-goal small { display: block; letter-spacing: .2em; font-weight: 800; color: #9bb3d6; font-size: .75em; }
+.sp8-goal b { font: 900 2.4em var(--font-display); color: #ffe08a; }
+.sp8-goal.tv b { font-size: 170px; line-height: 1.05; } .sp8-goal.tv small { font-size: 30px; }
+.sp8-num { text-align: center; font: 900 4.2em var(--font-display); color: #fff; margin: .15em 0 .3em; font-variant-numeric: tabular-nums; }
+.sp8-num.stop { color: #6be3ae; }
+.phone .ng-card .sw-btn.stop { display: block; margin: 0 auto; }
+/* Recolector de frutas */
+.fr-tree { display: flex; flex-direction: column; align-items: center; }
+.fr-crown { padding: 30px 44px; border-radius: 48% 52% 44% 46% / 55% 55% 45% 45%; background: radial-gradient(circle at 40% 30%, #6fd16a, #2f8f3a 75%); box-shadow: inset 0 -20px 40px rgba(0,0,0,.25), 0 12px 30px rgba(0,0,0,.3); }
+.fr-trunk { width: 90px; height: 60px; background: linear-gradient(90deg, #6b4422, #8a5a2e, #6b4422); border-radius: 0 0 18px 18px; margin-top: -8px; }
+.fr-grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 16px; }
+.fr-cell { width: 136px; height: 136px; border-radius: 50%; display: grid; place-items: center; font-size: 84px; background: rgba(255,255,255,.18); }
+.fr-cell.ok { background: #ffe08a; box-shadow: 0 0 40px #ffe08a; }
+.phone .fr-grid.ph { gap: .5em; margin-top: .6em; padding: .7em; border-radius: 2em; background: radial-gradient(circle at 40% 30%, #6fd16a, #2f8f3a 75%); }
+.phone .fr-leaf { aspect-ratio: 1; border: 0; border-radius: 50%; background: rgba(255,255,255,.2); font-size: 2em; display: grid; place-items: center; touch-action: manipulation; cursor: pointer; }
+.phone .fr-leaf.sel { background: #ffe08a; }
+
+.ng-pick8{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%;padding:14px 16px;margin:6px 0}
+.ng-pick8 b{font-size:1.15em}.ng-pick8 small{opacity:.8;font-weight:500;font-size:.85em}
+.ng-pick8tv{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0}
+.ng-pick8tv>div{background:rgba(255,255,255,.14);border-radius:18px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ng-pick8tv .ico{font-size:3em}.ng-pick8tv b{font-size:1.4em}.ng-pick8tv small{opacity:.85}
+</style>
+<style id="ng9-css">
+
+/* ===== v9: Corta verduras, Tejer bufanda, Sintonía, Libreta de caras, Mapa de capitales ===== */
+.ng-big9 { font-size: 5.5em; line-height: 1.1; text-align: center; margin: .1em 0; }
+.ng-big9 .ico { font-size: 1em; }
+.tp9-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1em; width: 9.5em; height: 9.5em; margin: .6em auto 0; border-radius: 50%; border: 0;
+  background: radial-gradient(circle at 35% 30%, #ffd36b, #ff8a1e 60%, #d9590b); color: #fff; font-size: 1em; font-weight: 900; letter-spacing: .04em;
+  box-shadow: 0 .45em 0 #a8430a, 0 .8em 1.4em rgba(0,0,0,.25); touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.tp9-btn .ico { font-size: 2.6em; }
+.tp9-btn b { font-size: 1.35em; text-shadow: 0 .08em 0 rgba(0,0,0,.25); }
+.tp9-btn:active { transform: translateY(.3em); box-shadow: 0 .15em 0 #a8430a, 0 .4em .8em rgba(0,0,0,.25); }
+.tp9-btn.knit { background: radial-gradient(circle at 35% 30%, #9ee6ff, #2f8fe0 60%, #1d5fb0); box-shadow: 0 .45em 0 #17457f, 0 .8em 1.4em rgba(0,0,0,.25); }
+.tp9-prog { position: relative; height: .9em; border-radius: 1em; background: rgba(255,255,255,.25); overflow: hidden; margin: .4em 0 .2em; }
+.tp9-prog .tp9-fill { position: absolute; left: 0; top: 0; bottom: 0; display: block; width: 0; background: linear-gradient(90deg, #ffd23f, #ff8a1e); border-radius: 1em; transition: width .08s; }
+.ch9-veg { font-size: 4.6em; text-align: center; line-height: 1.15; transform: scale(var(--s, 1)); transition: transform .12s; }
+.ch9-veg .ico { font-size: 1em; }
+.ch9-veg.hit { animation: ch9hit .14s; }
+@keyframes ch9hit { 0% { transform: scale(var(--s,1)) rotate(-8deg); } 100% { transform: scale(var(--s,1)) rotate(0); } }
+.ch9-n { text-align: center; font-weight: 800; }
+/* barras de la tele */
+.tp9-bars { display: flex; flex-direction: column; gap: .55em; margin: .6em auto; width: min(100%, 46em); }
+.tp9-bar { position: relative; display: flex; align-items: center; gap: .6em; height: 3.1em; padding: 0 1em; border-radius: 1.6em; background: rgba(255,255,255,.14); overflow: hidden; }
+.tp9-bar > i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); background: linear-gradient(90deg, var(--pc), color-mix(in srgb, var(--pc) 55%, #fff)); opacity: .75; transition: width .3s; border-radius: 1.6em; }
+.tp9-bar > * { position: relative; }
+.tp9-bar .tp9-av { width: 2.3em; height: 2.3em; display: inline-flex; align-items: center; justify-content: center; }
+.tp9-bar .tp9-av img, .tp9-bar .tp9-av canvas { width: 100%; height: 100%; border-radius: 50%; }
+.tp9-bar b { font-size: 1.15em; }
+.tp9-bar em { margin-left: auto; font-style: normal; font-weight: 800; }
+.tp9-bar.done { box-shadow: 0 0 0 .2em #ffd23f inset; }
+/* bufanda */
+.kn9 { text-align: center; }
+.kn9-scarf { height: 2.2em; border-radius: .5em; background: rgba(255,255,255,.18); overflow: hidden; margin: .6em 0 .2em; }
+.kn9-scarf i { display: block; height: 100%; width: 0; transition: width .1s;
+  background: repeating-linear-gradient(90deg, #ff5d5d 0 1.2em, #ffd23f 1.2em 2.4em, #4ade80 2.4em 3.6em, #60a5fa 3.6em 4.8em); }
+.kn9-n { font-size: 1.1em; margin: .2em 0; } .kn9-n b { font-size: 1.8em; }
+.kn9-e { display: flex; align-items: center; gap: .6em; font-size: .85em; font-weight: 700; }
+.kn9-e > div { flex: 1; height: .8em; border-radius: 1em; background: rgba(255,255,255,.22); overflow: hidden; }
+.kn9-e i { display: block; height: 100%; width: 100%; background: #4ade80; border-radius: 1em; }
+.kn9-st { min-height: 1.3em; margin: .3em 0 0; font-weight: 800; color: #ffe08a; }
+.kn9.tg .kn9-scarf { animation: kn9tg .3s infinite; }
+@keyframes kn9tg { 0%,100% { transform: translateX(0); } 50% { transform: translateX(.2em); } }
+/* sintonía */
+.tu9-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .5em; margin: .5em 0; }
+.tu9-tv { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 4.6em; height: 3.6em; border-radius: .6em; border: .3em solid #2b3445;
+  background: #0d1b2a; box-shadow: inset 0 0 .8em rgba(127,211,255,.35); font-size: 1em; padding: 0; }
+.tu9-tv span .ico, .tu9-tv .ico { font-size: 1.9em; }
+.tu9-row.ph .tu9-tv { width: 5.6em; height: 4.4em; touch-action: manipulation; user-select: none; -webkit-tap-highlight-color: transparent; }
+.tu9-row.ph .tu9-tv.ok { border-color: #4ade80; box-shadow: 0 0 0 .15em #4ade80, inset 0 0 .8em rgba(74,222,128,.4); }
+.tu9-tv.hit span { animation: tu9hit .18s; display: inline-block; }
+@keyframes tu9hit { 0% { opacity: .5; transform: scaleY(.6); } 100% { opacity: 1; transform: scaleY(1); } }
+.c-ng .tu9-tv { width: 7em; height: 5.4em; } .c-ng .tu9-tv .ico { font-size: 2.6em; }
+/* libreta de caras */
+.fl9-page { position: relative; margin: .5em auto; width: 11em; height: 11em; border-radius: .8em; background: #fffdf3; color: #4a3b20;
+  box-shadow: 0 .3em 0 #d9c99a, 0 .6em 1em rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; background-image: repeating-linear-gradient(0deg, transparent 0 1.3em, rgba(80,120,200,.18) 1.3em 1.35em); }
+.fl9-page small { position: absolute; top: .4em; left: 0; right: 0; text-align: center; font-weight: 700; font-size: .75em; opacity: .7; }
+.fl9-face .ico { font-size: 6em; }
+.fl9-page.turn { animation: fl9turn .16s; }
+@keyframes fl9turn { 0% { transform: perspective(30em) rotateY(-40deg); opacity: .4; } 100% { transform: none; opacity: 1; } }
+.fl9-btns { display: flex; gap: .6em; margin-top: .6em; } .fl9-btns .btn { flex: 1; }
+.fl9-pass { touch-action: manipulation; user-select: none; -webkit-tap-highlight-color: transparent; background: linear-gradient(180deg, #ffffff, #dfe9ff) !important; color: #1d3f8a !important; }
+.fl9-tv .ico { font-size: 1.5em; }
+/* mapa de capitales */
+.mp9-map { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: .9em; overflow: hidden; margin: .5em 0;
+  background: radial-gradient(circle at 30% 30%, #9fdcff, #4fa8e8 70%, #2f7fc4); box-shadow: inset 0 0 0 .2em rgba(255,255,255,.35); }
+.mp9-map::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 12.5% 12.5%; }
+.mp9-map.tv { aspect-ratio: 16 / 8; width: min(100%, 60em); margin: .5em auto; }
+.mp9-reg { position: absolute; right: .6em; bottom: .4em; font-weight: 800; font-size: .8em; color: rgba(255,255,255,.75); letter-spacing: .05em; text-transform: uppercase; }
+.mp9-pin { position: absolute; transform: translate(-50%, -50%); padding: .35em .6em; border-radius: 1em; border: 0; background: #fff8e1; color: #6b3b00; font-weight: 800; font-size: .78em;
+  white-space: nowrap; box-shadow: 0 .2em 0 #c98f00, 0 .4em .7em rgba(0,0,0,.25); touch-action: manipulation; }
+.mp9-pin::before { content: ''; position: absolute; left: 50%; bottom: -.45em; width: .5em; height: .5em; margin-left: -.25em; background: inherit; transform: rotate(45deg); z-index: -1; }
+.mp9-map.tv .mp9-pin { font-size: 1.15em; }
+.mp9-pin.sel { background: #ffd23f; }
+.mp9-pin.ok { background: #4ade80; color: #08361c; box-shadow: 0 .2em 0 #15803d, 0 0 0 .25em rgba(74,222,128,.45); }
+.mp9-pin.bad { background: #ff8a7a; color: #4a0b05; }
+
+/* escenario 3D en la tele y verdura 3D en el móvil */
+.st3-host { position: relative; width: 100%; height: 31em; border-radius: 1em; overflow: hidden; margin: .4em 0; background: #1a1240; box-shadow: inset 0 0 0 .2em rgba(255,255,255,.18); }
+.st3-host.rev { height: 19em; }
+.st3-cv { display: block; }
+.st3-over { position: absolute; left: 0; right: 0; top: 38%; text-align: center; font-size: 3em; font-weight: 900; color: #fff; text-shadow: 0 .08em 0 #b3142d, 0 .2em .5em rgba(0,0,0,.5); z-index: 2; pointer-events: none; animation: st3pulse 1s infinite alternate; }
+@keyframes st3pulse { from { transform: scale(1); } to { transform: scale(1.06); } }
+.ch9-3d { position: relative; height: 9.5em; display: flex; align-items: center; justify-content: center; }
+.ch9-3d canvas { position: absolute; inset: 0; }
+.ch9-3d.on .ch9-veg { display: none; }
+</style>
 </head>
 <body class="dev-on">
   <div id="tv-viewport"><div id="stage" aria-label="Tablero de juego"></div></div>
@@ -1030,7 +1228,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       chance: 0.6,           // probabilidad de que una casilla de reto dé un minijuego en vez de una pregunta
       reward: 2,             // casillas que avanza quien gana
       perfect: 1,            // casilla extra por un cronómetro casi perfecto
-      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 8, blur: 30 }
+      weights: { clock: 18, moon: 18, relay: 14, sync: 14, describe: 14, chain: 10, drawPair: 8, blur: 30, bomb: 12, buddy: 10, sneak: 10, simon: 12, moles: 14, count: 12, gifts: 12, faces: 12, stopw: 10, fruit: 14, chop: 12, knit: 12, tune: 10, flip: 12, map: 12 }
     },
     boardSize: 121,
     goalDistance: 120,       // meta en la cima de la isla (casilla 120; antes hay que pasar la puerta del 6)
@@ -1038,7 +1236,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     tutorial: true,          // Octavio explica las normas al empezar (se puede saltar si votan todos)
     maxPlayers: 8,
     startCoins: 0,           // (las monedas ya no existen: los premios y castigos son casillas)
-    catchUp: { gap: 10, bonus: 2 },
+    catchUp: { gap: Infinity, bonus: 0 },
     duel: { stake: 2, seconds: 20 },              // duelo: casillas que gana el ganador y pierde el perdedor; segundos para acertar
     failSteps: 1,            // casillas que retrocede quien falla un reto
     rollAllMs: 15000,        // TURNOS A LA VEZ: segundos para que todos tiren; quien no tire, tira el juego por él
@@ -3072,7 +3270,10 @@ body.phase-lobby #cam .tvc { height: 956px; }
        chain    — Cadena (pareja): palabras encadenadas por turnos (empieza por la última letra).
        drawPair — Dibujo en pareja: 3 trazos, solo tu pareja adivina.
        El tiempo de los cronómetros se mide EN EL MÓVIL (el retraso de internet no cuenta). */
-    const MINI_NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', drawPair: 'Dibujo en pareja', blur: 'Foto borrosa' };
+    const MINI_NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', drawPair: 'Dibujo en pareja', blur: 'Foto borrosa',
+      bomb: 'Bomba que pasa', buddy: 'Adivina al compañero', sneak: '¿Quién hace trampa?', simon: 'Simón de colores', moles: 'Topos', count: 'Cuenta de viajeros',
+      gifts: 'Regalos con trampa', faces: 'Rompecabezas de caras', stopw: 'Cronómetro de parada', fruit: 'Recolector de frutas',
+      chop: 'Corta verduras', knit: 'Tejer bufanda', tune: 'Sintonía', flip: 'Libreta de caras', map: 'Mapa de capitales' };
     /* Foto borrosa: [artículo de Wikipedia (inglés) del que sale la foto, nombre, emoji de reserva si no carga la foto] */
     const BLUR_ITEMS = [
       ['Banana', 'Plátano', '🍌'], ['Pineapple', 'Piña', '🍍'], ['Bicycle', 'Bicicleta', '🚲'], ['Umbrella', 'Paraguas', '☂️'], ['Teapot', 'Tetera', '🫖'],
@@ -3098,18 +3299,624 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const on = others.filter(p => online(p.id) && !p.bot), on2 = others.filter(p => online(p.id));
       return pick(on.length ? on : on2.length ? on2 : others).id;
     }
+    /* ================= MINIJUEGOS v8 (inspirados en Wii Party) =================
+       Cada uno: start(pd, kids) · act(pd, actor, a, op) · deadline(pd) · view(pd, viewer, sec) · close(pd, R, name) → resultado */
+    const NG = {};
+    const FRUITS8 = [['🍎', 'la manzana'], ['🍌', 'el plátano'], ['🍇', 'las uvas'], ['🍓', 'la fresa'], ['🍒', 'las cerezas'], ['🍐', 'la pera'], ['🍋', 'el limón'],
+      ['🥝', 'el kiwi'], ['🍑', 'el melocotón'], ['🍍', 'la piña'], ['🍉', 'la sandía'], ['🥥', 'el coco'], ['🫐', 'los arándanos'], ['🍊', 'la naranja']];
+    const ANIMALS8 = ['🐸', '🐔', '🐷', '🐑', '🐰', '🦆', '🐱', '🐶', '🐭', '🐻', '🐼', '🦊'];
+    const BUDDY8 = [
+      ['¿Qué prefiere {n}?', 'Playa', 'Montaña', 'Piscina', 'Sofá'], ['¿Qué comería {n} ahora mismo?', 'Pizza', 'Hamburguesa', 'Paella', 'Sushi'],
+      ['¿Qué superpoder elegiría {n}?', 'Volar', 'Ser invisible', 'Teletransporte', 'Leer mentes'], ['Si {n} fuera un animal, sería…', 'Gato', 'Perro', 'Mono', 'Perezoso'],
+      ['¿A qué hora se levantaría {n} si pudiera?', 'Antes de las 8', 'De 8 a 10', 'De 10 a 12', 'Después de comer'], ['¿Qué haría {n} con 1000 €?', 'Ahorrarlos', 'Un viaje', 'Ropa', 'Comida'],
+      ['¿Qué le da más miedo a {n}?', 'Arañas', 'Alturas', 'Oscuridad', 'Payasos'], ['¿Qué postre elige {n}?', 'Helado', 'Chocolate', 'Tarta', 'Fruta'],
+      ['¿Qué película pondría {n}?', 'Comedia', 'Terror', 'Acción', 'Dibujos'], ['¿Cuál es la estación favorita de {n}?', 'Primavera', 'Verano', 'Otoño', 'Invierno'],
+      ['¿Qué mascota soñada tendría {n}?', 'Perro', 'Gato', 'Caballo', 'Dragón'], ['¿Cómo celebraría {n} su cumpleaños?', 'Fiesta grande', 'Cena tranquila', 'De viaje', 'Ni lo celebra'],
+      ['¿A dónde viajaría {n}?', 'París', 'Japón', 'Nueva York', 'El Caribe'], ['¿Qué bebe {n} con la comida?', 'Agua', 'Refresco', 'Zumo', 'Batido'],
+      ['¿Qué deporte prefiere {n}?', 'Fútbol', 'Baloncesto', 'Tenis', 'Ninguno'], ['¿Qué se llevaría {n} a una isla desierta?', 'El móvil', 'Un libro', 'Comida', 'Música'],
+      ['¿Cómo está {n} por las mañanas?', 'Alegre', 'Gruñón', 'Zombi', 'Hambriento'], ['¿Cuál es el color favorito de {n}?', 'Rojo', 'Azul', 'Verde', 'Negro'],
+      ['¿Qué instrumento tocaría {n}?', 'Guitarra', 'Piano', 'Batería', 'Ninguno'], ['¿Qué desayuna {n}?', 'Tostadas', 'Cereales', 'Churros', 'Nada'],
+      ['¿Cuál sería el trabajo soñado de {n}?', 'Youtuber', 'Futbolista', 'Médico', 'Astronauta'], ['¿Qué hace {n} un domingo de lluvia?', 'Dormir', 'Ver pelis', 'Jugar', 'Cocinar'],
+      ['¿Qué comida odia {n}?', 'Verduras', 'Pescado', 'Picante', 'Ninguna'], ['¿A qué videojuego jugaría {n}?', 'Fútbol', 'Aventuras', 'Carreras', 'Puzles'],
+      ['¿Dónde viviría {n}?', 'Ciudad grande', 'Pueblo', 'Campo', 'Playa'], ['Si {n} fuera famoso, sería…', 'Cantante', 'Actor', 'Deportista', 'Influencer'],
+      ['¿Qué hace {n} cuando pierde?', 'Se ríe', 'Se enfada', 'Pide revancha', 'Dice que es trampa'], ['¿Qué tiempo prefiere {n}?', 'Sol', 'Lluvia', 'Nieve', 'Nublado'],
+      ['¿En qué tienda se perdería {n}?', 'Ropa', 'Tecnología', 'Juguetes', 'Comida'], ['¿A qué época viajaría {n}?', 'Dinosaurios', 'Romanos', 'Piratas', 'El futuro'],
+      ['En una película, {n} sería…', 'El héroe', 'El villano', 'El gracioso', 'El listo'], ['¿Qué fruta elige {n}?', 'Fresa', 'Plátano', 'Sandía', 'Manzana'],
+      ['¿Cómo viajaría {n}?', 'Coche', 'Avión', 'Barco', 'Bici'], ['¿Qué haría {n} si viera un ratón?', 'Gritar', 'Salir corriendo', 'Cogerlo', 'Nada'],
+      ['¿Qué música pone {n}?', 'Pop', 'Reguetón', 'Rock', 'Clásica'], ['¿Qué helado pide {n}?', 'Chocolate', 'Vainilla', 'Fresa', 'Limón'],
+      ['¿Cuánto tarda {n} en arreglarse?', '5 minutos', '15 minutos', 'Media hora', 'Una hora'], ['¿Qué juego de mesa elige {n}?', 'Parchís', 'Monopoly', 'Cartas', 'Este'],
+      ['¿Qué haría {n} con un día libre?', 'Dormir', 'Salir con amigos', 'Videojuegos', 'Deporte'], ['¿Qué miraría primero {n} en el móvil?', 'Mensajes', 'Vídeos', 'Juegos', 'Fotos']
+    ];
+    function ngPhase(pd, phase, ms) { const t = now(); pd.phase = phase; pd.startedAt = t; pd.total = ms; pd.deadline = t + ms; pd.seq++; }
+    const ngTop = (pd, pts) => { const mx = Math.max(0, ...pd.ids.map(id => pts[id] || 0)); return mx > 0 ? pd.ids.filter(id => (pts[id] || 0) === mx) : []; };
+    const ngAll = pd => { const on = pd.ids.filter(online); return on.length > 0 && on.every(id => pd.res[id]); };
+    const ngIdx = (a, n) => { const i = Number(a && a.i); return Number.isInteger(i) && i >= 0 && i < n ? i : null; };
+    const seg8 = ms => (ms / 1000).toFixed(1).replace('.', ',') + ' s';
+
+    /* ---------- 1. BOMBA QUE PASA: quien la tiene busca el emoji que se pide para pasarla; a quien le explote, retrocede ---------- */
+    const BOMB8 = FRUITS8.map(f => f[0]);
+    function bombTask(pd) { const E = shuffle(BOMB8).slice(0, 6); pd.task = { want: pick(E), opts: E }; }
+    NG.bomb = { icon: '⚡', min: 2,
+      start(pd, kids) {
+        const on = pd.ids.filter(online);
+        pd.holder = pick(on.length ? on : pd.ids); pd.prev = null; pd.passes = 0; pd.byPass = {}; pd.lockUntil = 0; pd.miss = null; bombTask(pd);
+        pd.phase = 'fuse'; pd.total = (kids ? rint(15, 22) : rint(12, 24)) * 1000;
+      },
+      act(pd, actor, a, op) {
+        if (op !== 'tap') return err('Acción no válida.');
+        if (actor !== pd.holder) return err('¡No tienes la bomba!');
+        if (now() < pd.lockUntil) return err('¡Espera un segundo!');
+        const i = ngIdx(a, pd.task.opts.length); if (i == null) return err('Opción no válida.');
+        if (pd.task.opts[i] !== pd.task.want) { pd.lockUntil = now() + 1200; pd.miss = actor; pd.seq++; return; }
+        let others = pd.ids.filter(id => id !== actor && id !== pd.prev && online(id));
+        if (!others.length) others = pd.ids.filter(id => id !== actor);
+        if (!others.length) return err('No hay a quién pasarla.');
+        pd.prev = actor; pd.byPass[actor] = (pd.byPass[actor] || 0) + 1; pd.passes++; pd.holder = pick(others); pd.lockUntil = 0; pd.miss = null; bombTask(pd); pd.seq++;
+      },
+      close(pd, R, name) {
+        const L = pd.holder, win = pd.ids.filter(id => id !== L), gain = {};
+        win.forEach(id => { gain[id] = 1; });
+        const lp = P(L); if (lp) adv(lp, -1);
+        return { icon: '💥', win, gain, lose: [L], title: '¡BOOM! Le explota a ' + name(L), text: 'Los demás +1 · ' + name(L) + ' −1', ms: 6500,
+          rows: pd.ids.map(id => ({ id, txt: id === L ? '¡BOOM! −1 casilla' : '+1 · ' + (pd.byPass[id] || 0) + ' pases', win: id !== L, bad: id === L })) };
+      }
+    };
+
+    /* ---------- 2. ADIVINA AL COMPAÑERO: el que cae responde sobre sí mismo; los demás adivinan qué ha elegido ---------- */
+    NG.buddy = { icon: '👥', min: 3,
+      start(pd) {
+        const q = pick(BUDDY8), n = (P(pd.playerId) || {}).name || '?';
+        pd.buddy = pd.playerId; pd.q = { text: q[0].replace('{n}', n), opts: q.slice(1) }; pd.phase = 'play'; pd.total = 20000;
+      },
+      act(pd, actor, a, op) {
+        if (op !== 'pick') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has elegido.');
+        const i = ngIdx(a, pd.q.opts.length); if (i == null) return err('Opción no válida.');
+        pd.res[actor] = { i }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const b = pd.res[pd.buddy], ok = b ? b.i : null, win = [], gain = {}, opt = i => (i == null ? '—' : pd.q.opts[i]);
+        if (ok != null) pd.ids.forEach(id => { if (id !== pd.buddy && pd.res[id] && pd.res[id].i === ok) { win.push(id); gain[id] = R; } });
+        const nOk = win.length;
+        if (nOk) { win.push(pd.buddy); gain[pd.buddy] = 1; }
+        return { icon: '👥', win, gain, big: ok != null ? opt(ok) : '',
+          title: ok == null ? name(pd.buddy) + ' no eligió nada' : nOk ? '¡' + nOk + (nOk === 1 ? ' lo ha adivinado!' : ' lo han adivinado!') : '¡Nadie conoce a ' + name(pd.buddy) + '!',
+          text: ok == null ? '' : name(pd.buddy) + ' eligió: ' + opt(ok) + (nOk ? ' · aciertan ' + cas(R) + ', ' + name(pd.buddy) + ' +1' : ''), ms: 7500,
+          rows: pd.ids.map(id => ({ id, txt: (id === pd.buddy ? '(responde) ' : '') + opt(pd.res[id] ? pd.res[id].i : null) + (id !== pd.buddy && ok != null && pd.res[id] && pd.res[id].i === ok ? ' ✔' : ''), win: win.includes(id) })) };
+      }
+    };
+
+    /* ---------- 3. ¿QUIÉN HACE TRAMPA?: todos hacen una cuenta; uno ve la respuesta en secreto. Después se vota quién era ---------- */
+    function sneakQ(kids) {
+      const t = kids ? rint(0, 1) : rint(0, 3); let a, b, c, txt, ans;
+      if (t === 0) { a = rint(kids ? 3 : 25, kids ? 15 : 90); b = rint(kids ? 2 : 15, kids ? 12 : 70); txt = a + ' + ' + b; ans = a + b; }
+      else if (t === 1) { a = rint(kids ? 2 : 6, kids ? 6 : 15); b = rint(kids ? 2 : 6, kids ? 6 : 15); txt = a + ' × ' + b; ans = a * b; }
+      else if (t === 2) { a = rint(60, 99); b = rint(20, 50); txt = a + ' − ' + b; ans = a - b; }
+      else { a = rint(4, 12); b = rint(4, 12); c = rint(5, 30); txt = a + ' × ' + b + ' + ' + c; ans = a * b + c; }
+      const set = new Set([ans]); let g = 0;
+      while (set.size < 4 && g++ < 200) { const x = ans + rint(1, kids ? 4 : 8) * (rnd() < 0.5 ? -1 : 1); if (x > 0) set.add(x); }
+      const opts = shuffle([...set]);
+      return { text: '¿Cuánto es ' + txt + '?', opts: opts.map(String), ok: opts.indexOf(ans) };
+    }
+    NG.sneak = { icon: '🎭', min: 3,
+      start(pd, kids) {
+        const q = sneakQ(kids); pd.q = { text: q.text, opts: q.opts }; pd.secret = { ok: q.ok, sneak: pick(pd.ids) }; pd.ans = {};
+        pd.phase = 'play'; pd.total = 12000;
+      },
+      toVote(pd) { pd.ans = pd.res; pd.res = {}; ngPhase(pd, 'vote', 14000); },
+      deadline(pd) { if (pd.phase === 'play') return NG.sneak.toVote(pd); return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (pd.phase === 'play') {
+          if (op !== 'pick') return err('Acción no válida.');
+          if (pd.res[actor]) return err('Ya has contestado.');
+          const i = ngIdx(a, pd.q.opts.length); if (i == null) return err('Opción no válida.');
+          pd.res[actor] = { i, at: now() - pd.startedAt }; pd.seq++;
+          if (ngAll(pd)) NG.sneak.toVote(pd);
+          return;
+        }
+        if (op !== 'vote') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has votado.');
+        const tg = String(a.target || '');
+        if (tg === actor || !pd.ids.includes(tg)) return err('No puedes votar a esa persona.');
+        pd.res[actor] = { t: tg }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      view(pd, viewer, sec, full) {
+        if (pd.phase === 'play' && viewer === sec.sneak) { pd.iAmSneak = true; pd.okI = sec.ok; }
+        if (pd.phase === 'vote') {
+          pd.okI = sec.ok; pd.iAmSneak = viewer === sec.sneak;
+          pd.list = pd.ids.map(id => { const r = (pd.ans || {})[id]; return { id, ok: !!r && r.i === sec.ok, at: r ? r.at : null }; });
+        }
+        if (!full) delete pd.ans;
+      },
+      close(pd, R, name) {
+        const sn = pd.secret.sneak, ok = pd.secret.ok, votes = {};
+        pd.ids.forEach(id => { const r = pd.res[id]; if (r && r.t) votes[r.t] = (votes[r.t] || 0) + 1; });
+        const mx = Math.max(0, ...Object.values(votes)), top = Object.keys(votes).filter(k => votes[k] === mx), caught = mx > 0 && top.length === 1 && top[0] === sn;
+        const win = [], gain = {}, lose = {};
+        const snOk = !!(pd.ans && pd.ans[sn] && pd.ans[sn].i === ok);          // el tramposo solo gana si además acierta
+        if (caught) pd.ids.forEach(id => { if (id !== sn && pd.res[id] && pd.res[id].t === sn) { win.push(id); gain[id] = R; } });
+        else if (snOk) { win.push(sn); gain[sn] = R + 1; } else lose[sn] = 2;
+        pd.ids.forEach(id => { if (id !== sn && pd.ans && pd.ans[id] && pd.ans[id].i === ok && !win.includes(id)) { win.push(id); gain[id] = 1; } });
+        return { icon: '🎭', win, gain, lose, big: pd.q.opts[ok],
+          title: caught ? '¡Pillado! ' + name(sn) + ' era el tramposo' : snOk ? '¡' + name(sn) + ' era el tramposo y nadie le pilló!' : name(sn) + ' era el tramposo… ¡y ni así acertó!',
+          text: caught ? (win.length ? 'Los que le votaron ' + cas(R) : '') : snOk ? name(sn) + ' ' + cas(R + 1) : name(sn) + ' ' + cas(-2), ms: 8500,
+          rows: pd.ids.map(id => {
+            const r = (pd.ans || {})[id], v2 = pd.res[id];
+            return { id, win: win.includes(id), bad: id === sn && caught,
+              txt: (id === sn ? 'TRAMPOSO · ' : '') + (r ? (r.i === ok ? '✔ ' + seg8(r.at) : '✘') : '—') + ' · votó a ' + (v2 && v2.t ? name(v2.t) : 'nadie') + (votes[id] ? ' · ' + votes[id] + (votes[id] === 1 ? ' voto' : ' votos') : '') };
+          }) };
+      }
+    };
+
+    /* ---------- 4. SIMON DE COLORES (cooperativo): la tele enciende una secuencia; todos la repiten en el móvil; si uno falla, se acaba ---------- */
+    NG.simon = { icon: '🎨', min: 1,
+      showMs: pd => pd.len * pd.step8 + 900,
+      inMs: pd => 3000 + pd.len * 900,
+      start(pd, kids) {
+        pd.len = kids ? 2 : 3; pd.step8 = kids ? 760 : 620; pd.round = 1; pd.cleared = 0; pd.endAt = now() + 30000;
+        pd.secret = { seq: Array.from({ length: pd.len }, () => rint(0, 3)) };
+        pd.phase = 'show'; pd.total = NG.simon.showMs(pd);
+      },
+      next(pd) {
+        pd.cleared++;
+        if (now() + NG.simon.showMs(Object.assign({}, pd, { len: pd.len + 1 })) + NG.simon.inMs(Object.assign({}, pd, { len: pd.len + 1 })) > pd.endAt + 1500) return miniClose(pd);
+        pd.len++; pd.round++; pd.secret.seq.push(rint(0, 3)); pd.res = {};
+        ngPhase(pd, 'show', NG.simon.showMs(pd));
+      },
+      deadline(pd) {
+        if (pd.phase === 'show') { pd.res = {}; return ngPhase(pd, 'input', NG.simon.inMs(pd)); }
+        const on = pd.ids.filter(online), ok = on.length > 0 && on.every(id => pd.res[id] && pd.res[id].ok);
+        if (ok) return NG.simon.next(pd);
+        pd.failBy = on.filter(id => !(pd.res[id] && pd.res[id].ok)); pd.slow = true;
+        return miniClose(pd);
+      },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'input') return err('¡Mira la tele!');
+        if (op !== 'seq') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has enviado.');
+        const arr = Array.isArray(a.arr) ? a.arr.slice(0, 30).map(Number) : [];
+        const ok = arr.length === pd.len && arr.every((x, i) => x === pd.secret.seq[i]);
+        pd.res[actor] = { ok }; pd.seq++;
+        if (!ok) { pd.failBy = [actor]; return miniClose(pd); }
+        if (ngAll(pd)) return NG.simon.next(pd);
+      },
+      view(pd, viewer, sec) { if (pd.phase === 'show') pd.show = (sec.seq || []).slice(); },
+      close(pd, R, name) {
+        const c = pd.cleared, g = Math.min(3, c), win = g ? pd.ids.slice() : [], gain = {}, f = pd.failBy || [];
+        win.forEach(id => { gain[id] = g; });
+        return { icon: '🎨', win, gain, title: c ? '¡' + c + (c === 1 ? ' ronda superada!' : ' rondas superadas!') : 'Fallo en la primera ronda',
+          text: (f.length ? (pd.slow ? 'No llegó a tiempo: ' : 'Se equivocó: ') + f.map(name).join(', ') + ' · ' : '') + (g ? 'Todos ' + cas(g) : 'Nadie avanza'), ms: 6500,
+          rows: pd.ids.map(id => ({ id, txt: f.includes(id) ? '✘ falló' : '✔', bad: f.includes(id), win: !f.includes(id) && g > 0 })) };
+      }
+    };
+
+    /* ---------- 5. TOPOS: sale un topo a la vez en todos los móviles; gana el punto el que reacciona antes (lo mide cada móvil) ---------- */
+    NG.moles = { icon: '👆', min: 1,
+      start(pd, kids) {
+        pd.cells = kids ? 9 : 12; pd.rounds = kids ? 5 : 6; pd.k = 0; pd.pts = {}; pd.cell = -1; pd.last = null; pd.upMs = kids ? 3200 : 2500;
+        pd.phase = 'wait'; pd.total = 2200;
+      },
+      deadline(pd) {
+        if (pd.phase === 'wait') { let c, g = 0; do { c = rint(0, pd.cells - 1); } while (c === pd.cell && g++ < 20); pd.cell = c; pd.res = {}; pd.first = null; return ngPhase(pd, 'up', pd.upMs); }
+        return NG.moles.resolve(pd);
+      },
+      resolve(pd) {
+        const hits = Object.keys(pd.res).filter(id => pd.res[id].rt != null).sort((a, b) => pd.res[a].rt - pd.res[b].rt), w = hits[0] || null;
+        if (w) pd.pts[w] = (pd.pts[w] || 0) + 1;
+        pd.last = { cell: pd.cell, w, rt: w ? pd.res[w].rt : null }; pd.k++;
+        if (pd.k >= pd.rounds) return miniClose(pd);
+        ngPhase(pd, 'wait', rint(900, 2000));
+      },
+      act(pd, actor, a, op) {
+        if (op !== 'whack') return err('Acción no válida.');
+        if (pd.phase !== 'up') return err('¡Todavía no ha salido!');
+        if (pd.res[actor]) return err('Ya has golpeado.');
+        const c = Number(a.c); if (!Number.isInteger(c) || c < 0 || c >= pd.cells) return err('Casilla no válida.');
+        if (c !== pd.cell) pd.res[actor] = { miss: true };
+        else {
+          pd.res[actor] = { rt: Math.max(60, Math.min(pd.upMs, Math.round(Number(a.rt) || pd.upMs))) };
+          if (!pd.first) { pd.first = now(); pd.deadline = Math.min(pd.deadline, now() + 450); }   // medio segundo para que lleguen los demás toques
+        }
+        pd.seq++;
+        if (ngAll(pd)) return NG.moles.resolve(pd);
+      },
+      close(pd, R, name) {
+        const win = ngTop(pd, pd.pts), gain = {}; win.forEach(id => { gain[id] = R; });
+        return { icon: '👆', win, gain, title: win.length ? '¡' + win.map(name).join(' y ') + (win.length > 1 ? ' ganan' : ' gana') + ' a los topos!' : 'Los topos se escapan',
+          text: win.length ? cas(R) : 'Nadie dio a ningún topo', ms: 6500,
+          rows: pd.ids.slice().sort((a, b) => (pd.pts[b] || 0) - (pd.pts[a] || 0)).map(id => ({ id, txt: (pd.pts[id] || 0) + ((pd.pts[id] || 0) === 1 ? ' topo' : ' topos'), win: win.includes(id) })) };
+      }
+    };
+
+    /* ---------- 6. CUENTA DE VIAJEROS: entran y salen animales de la casa; ¿cuántos quedan dentro? ---------- */
+    NG.count = { icon: '👀', min: 1,
+      start(pd, kids) {
+        const n = kids ? 5 : 7, gap = kids ? 1800 : 1450; let inside = 0; pd.ev = [];
+        for (let i = 0; i < n; i++) {
+          const out = i > 0 && inside > 0 && rnd() < 0.42, k = out ? rint(1, Math.min(3, inside)) : rint(1, kids ? 3 : 4);
+          inside += out ? -k : k; pd.ev.push({ t: 700 + i * gap, n: k, out, e: pick(ANIMALS8) });
+        }
+        pd.secret = { ans: inside }; pd.gap = gap; pd.phase = 'show'; pd.total = 700 + n * gap + 900;
+      },
+      deadline(pd) { if (pd.phase === 'show') { pd.res = {}; return ngPhase(pd, 'play', 10000); } return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return err('¡Mira la tele y cuenta!');
+        if (op !== 'num') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has contestado.');
+        const n = parseInt(String(a.n == null ? '' : a.n).replace(/\D/g, ''), 10);
+        if (!isFinite(n) || n < 0 || n > 99) return err('Escribe un número.');
+        pd.res[actor] = { n }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const ans = pd.secret.ans, rows = pd.ids.map(id => ({ id, n: pd.res[id] ? pd.res[id].n : null })).map(r => Object.assign(r, { d: r.n == null ? Infinity : Math.abs(r.n - ans) }));
+        const best = Math.min(...rows.map(r => r.d)), win = best === Infinity ? [] : rows.filter(r => r.d === best).map(r => r.id), gain = {};
+        win.forEach(id => { gain[id] = R + (best === 0 ? S.mini.perfect : 0); });
+        return { icon: '👀', win, gain, big: String(ans), title: 'Quedaban ' + ans + ' dentro',
+          text: win.length ? win.map(name).join(' y ') + ' ' + cas(gain[win[0]]) + (best === 0 ? ' (¡exacto!)' : '') : 'Nadie contestó', ms: 7000,
+          rows: rows.sort((a, b) => a.d - b.d).map(r => ({ id: r.id, txt: r.n == null ? '—' : r.n + (r.d === 0 ? ' ✔' : ' (' + (r.n > ans ? '+' : '−') + r.d + ')'), win: win.includes(r.id) })) };
+      }
+    };
+
+    /* ---------- 7. REGALOS CON TRAMPA: el diamante entra en un regalo, se mezclan… ¿en cuál está? ---------- */
+    NG.gifts = { icon: '🎁', min: 1,
+      start(pd, kids) {
+        const n = kids ? 3 : 4, sw = kids ? 6 : 9, sp = kids ? 760 : 540;
+        pd.n = n; pd.sp = sp; pd.p0 = rint(0, n - 1); pd.sw = [];
+        for (let i = 0; i < sw; i++) { const a = rint(0, n - 1); let b; do { b = rint(0, n - 1); } while (b === a); pd.sw.push([a, b]); }
+        let pos = pd.p0; pd.sw.forEach(([a, b]) => { if (pos === a) pos = b; else if (pos === b) pos = a; });
+        pd.secret = { fin: pos }; pd.phase = 'show'; pd.total = 1700 + sw * sp + 500;
+      },
+      deadline(pd) { if (pd.phase === 'show') { pd.res = {}; return ngPhase(pd, 'play', 8000); } return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return err('¡Sigue el diamante en la tele!');
+        if (op !== 'pick') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has elegido.');
+        const i = ngIdx(a, pd.n); if (i == null) return err('Opción no válida.');
+        pd.res[actor] = { i }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const fin = pd.secret.fin, win = pd.ids.filter(id => pd.res[id] && pd.res[id].i === fin), gain = {};
+        win.forEach(id => { gain[id] = R; });
+        return { icon: '🎁', win, gain, fin, title: win.length ? '¡' + win.map(name).join(', ') + (win.length > 1 ? ' lo encuentran!' : ' lo encuentra!') : '¡Nadie encontró el diamante!',
+          text: 'Estaba en el regalo ' + (fin + 1) + (win.length ? ' · ' + cas(R) : ''), ms: 7000,
+          rows: pd.ids.map(id => ({ id, txt: pd.res[id] ? 'Regalo ' + (pd.res[id].i + 1) + (pd.res[id].i === fin ? ' ✔' : ' ✘') : '—', win: win.includes(id) })) };
+      }
+    };
+
+    /* ---------- 8. ROMPECABEZAS DE CARAS: la cara de un personaje en 9 piezas; el primero que la arma gana ---------- */
+    NG.faces = { icon: '🧩', min: 1,
+      start(pd, kids) {
+        const f = pick(state.players); let perm, g = 0;
+        do { perm = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8]); } while (perm.filter((x, i) => x !== i).length < (kids ? 5 : 7) && g++ < 50);
+        pd.face = { id: f.id, look: f.look || '', color: f.color }; pd.perm = perm; pd.prog = {}; pd.fin = {};
+        pd.phase = 'play'; pd.total = kids ? 30000 : 28000;
+      },
+      act(pd, actor, a, op) {
+        if (pd.fin[actor] != null) return err('Ya lo has terminado.');
+        if (op === 'prog') { const n = Math.max(0, Math.min(9, Number(a.n) | 0)); if (pd.prog[actor] !== n) { pd.prog[actor] = n; pd.seq++; } return; }
+        if (op !== 'done') return err('Acción no válida.');
+        const arr = Array.isArray(a.arr) ? a.arr.map(Number) : [];
+        if (arr.length !== 9 || !arr.every((x, i) => x === i)) return err('El puzle no está bien.');
+        pd.fin[actor] = now() - pd.startedAt; pd.res[actor] = { at: pd.fin[actor] }; pd.prog[actor] = 9; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const ord = pd.ids.filter(id => pd.fin[id] != null).sort((a, b) => pd.fin[a] - pd.fin[b]), win = [], gain = {};
+        if (ord[0]) { win.push(ord[0]); gain[ord[0]] = R; }
+        if (ord[1] && pd.ids.length > 2) { win.push(ord[1]); gain[ord[1]] = 1; }
+        return { icon: '🧩', win, gain, title: ord[0] ? '¡' + name(ord[0]) + ' arma la cara primero!' : 'Nadie terminó el puzle',
+          text: ord[0] ? name(ord[0]) + ' ' + cas(R) + (ord[1] && pd.ids.length > 2 ? ' · ' + name(ord[1]) + ' +1' : '') : 'Era la cara de ' + name(pd.face.id), ms: 7000,
+          rows: pd.ids.slice().sort((a, b) => (pd.fin[a] == null ? 1e9 - (pd.prog[a] || 0) : pd.fin[a]) - (pd.fin[b] == null ? 1e9 - (pd.prog[b] || 0) : pd.fin[b]))
+            .map(id => ({ id, txt: pd.fin[id] != null ? '✔ ' + seg8(pd.fin[id]) : (pd.prog[id] || 0) + '/9 piezas', win: win.includes(id) })) };
+      }
+    };
+
+    /* ---------- 9. CRONÓMETRO DE PARADA: el número corre en el móvil (cambiando de velocidad); hay que pararlo en el objetivo ---------- */
+    const spVal = (ms, w) => { const s = ms / 1000; return s + w.a * (Math.sin(w.w * s + w.ph) - Math.sin(w.ph)) / w.w; };
+    NG.stopw = { icon: '⏱', min: 1,
+      start(pd, kids) {
+        pd.goal8 = kids ? rint(4, 7) : rint(5, 9) + rint(1, 99) / 100;
+        pd.wave = { a: kids ? 0.35 : 0.6, w: 1.3 + rnd() * 1.1, ph: rnd() * 6.28 };
+        pd.phase = 'ready'; pd.total = 3200;
+      },
+      deadline(pd) {
+        if (pd.phase === 'ready') { let ms = 0; while (spVal(ms, pd.wave) < pd.goal8 + 2.5 && ms < 25000) ms += 50; pd.res = {}; return ngPhase(pd, 'run', ms); }
+        return miniClose(pd);
+      },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'run') return err('¡Todavía no!');
+        if (op !== 'stop') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya lo has parado.');
+        const ms = Math.round(Number(a.ms)); if (!isFinite(ms) || ms < 0 || ms > pd.total + 3000) return err('Tiempo no válido.');
+        pd.res[actor] = { ms, val: Math.round(spVal(ms, pd.wave) * 100) / 100 }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const g = pd.goal8, rows = pd.ids.map(id => ({ id, val: pd.res[id] ? pd.res[id].val : null })).map(r => Object.assign(r, { d: r.val == null ? Infinity : Math.abs(r.val - g) }));
+        const best = Math.min(...rows.map(r => r.d)), win = best === Infinity ? [] : rows.filter(r => r.d === best).map(r => r.id), gain = {};
+        win.forEach(id => { gain[id] = R + (best <= 0.02 ? S.mini.perfect : 0); });
+        const f2 = x => x.toFixed(2).replace('.', ',');
+        return { icon: '⏱', win, gain, big: f2(g), title: win.length ? '¡' + win.map(name).join(' y ') + (best <= 0.02 ? ' lo clava!' : ' se acerca más!') : 'Nadie paró el número',
+          text: win.length ? cas(gain[win[0]]) : '', ms: 7000,
+          rows: rows.sort((a, b) => a.d - b.d).map(r => ({ id: r.id, txt: r.val == null ? '—' : f2(r.val) + ' (' + (r.val >= g ? '+' : '−') + f2(r.d) + ')', win: win.includes(r.id) })) };
+      }
+    };
+
+    /* ---------- 10. RECOLECTOR DE FRUTAS: memoriza el árbol; luego, ¿dónde estaba cada fruta? (3 preguntas) ---------- */
+    NG.fruit = { icon: '🍎', min: 1,
+      start(pd, kids) {
+        const n = kids ? 6 : 9, fr = shuffle(FRUITS8).slice(0, n);
+        pd.n = n; pd.cols = 3; pd.secret = { grid: fr.map(f => f[0]) }; pd.names = fr.map(f => f[1]);
+        pd.qs = shuffle(fr.map((f, i) => i)).slice(0, 3); pd.qk = 0; pd.pts = {}; pd.tms = {};
+        pd.phase = 'show'; pd.total = kids ? 6000 : 5000;
+      },
+      ask(pd) { const c = pd.qs[pd.qk]; pd.askE = pd.secret.grid[c]; pd.askN = pd.names[c]; pd.res = {}; pd.okc = null; ngPhase(pd, 'ask', 6000); },
+      flash(pd) {
+        const c = pd.qs[pd.qk]; pd.okc = c; pd.lastOk = pd.ids.filter(id => pd.res[id] && pd.res[id].c === c);
+        pd.lastOk.forEach(id => { pd.pts[id] = (pd.pts[id] || 0) + 1; pd.tms[id] = (pd.tms[id] || 0) + pd.res[id].at; });
+        pd.lastPick = {}; pd.ids.forEach(id => { if (pd.res[id]) pd.lastPick[id] = pd.res[id].c; });
+        ngPhase(pd, 'flash', 1700);
+      },
+      deadline(pd) {
+        if (pd.phase === 'show') return NG.fruit.ask(pd);
+        if (pd.phase === 'ask') return NG.fruit.flash(pd);
+        pd.qk++;
+        if (pd.qk >= pd.qs.length) return miniClose(pd);
+        return NG.fruit.ask(pd);
+      },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'ask') return err('¡Mira el árbol!');
+        if (op !== 'cell') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has elegido.');
+        const c = Number(a.c); if (!Number.isInteger(c) || c < 0 || c >= pd.n) return err('Casilla no válida.');
+        pd.res[actor] = { c, at: now() - pd.startedAt }; pd.seq++;
+        if (ngAll(pd)) NG.fruit.flash(pd);
+      },
+      view(pd, viewer, sec) {
+        if (pd.phase === 'show' || pd.phase === 'reveal') pd.grid = (sec.grid || []).slice();
+        if (pd.phase === 'flash') pd.okE = (sec.grid || [])[pd.okc];
+      },
+      close(pd, R, name) {
+        let win = ngTop(pd, pd.pts);
+        if (win.length > 1) { const m = Math.min(...win.map(id => pd.tms[id] || 0)); win = win.filter(id => (pd.tms[id] || 0) === m); }
+        const gain = {}; win.forEach(id => { gain[id] = R; });
+        return { icon: '🍎', win, gain, title: win.length ? '¡' + win.map(name).join(' y ') + ' tiene la mejor memoria!' : 'Nadie se acordó de las frutas',
+          text: win.length ? cas(R) : '', ms: 7000,
+          rows: pd.ids.slice().sort((a, b) => (pd.pts[b] || 0) - (pd.pts[a] || 0) || (pd.tms[a] || 0) - (pd.tms[b] || 0)).map(id => ({ id, txt: (pd.pts[id] || 0) + '/3 frutas', win: win.includes(id) })) };
+      }
+    };
+
+    /* ---------- ELEGIR MINIJUEGO: el que va último (por mucho) elige entre 3 al azar ---------- */
+    let pick8Off = false;
+    NG.pick = { icon: '🎯', min: 1,
+      start() {},
+      go(pd, i) {
+        if (pd.phase !== 'choose') return;
+        pd.phase = 'going'; pd.seq++;
+        const order = [pd.opts[i]].concat(pd.opts.filter((k, j) => j !== i));
+        pick8Off = true;
+        try {
+          for (const k of order) if (startMini(pd.playerId, pd.origin, k)) return;
+          if (startMini(pd.playerId, pd.origin)) return;
+        } finally { pick8Off = false; }
+        state.pending = null; startChallenge(pd.playerId, { origin: 'tile', kind: 'choice' });
+      },
+      deadline(pd) { return NG.pick.go(pd, Math.floor(rnd() * pd.opts.length)); },
+      act(pd, actor, a, op) {
+        if (op !== 'choose') return err('Acción no válida.');
+        if (actor !== pd.chooser) return err('Elige ' + ((P(pd.chooser) || {}).name || 'otro jugador') + '.');
+        const i = ngIdx(a, pd.opts.length); if (i == null) return err('Opción no válida.');
+        return NG.pick.go(pd, i);
+      },
+      close(pd, R, name) { return { icon: '🎯', win: [], gain: {}, title: 'Minijuego elegido', text: '', ms: 1500, rows: [] }; }
+    };
+    function pick8Try(pid, origin, kinds, W) {
+      if (pick8Off || (origin !== 'tile' && origin !== 'devpick') || state.players.length < 2 || kinds.length < 2) return false;
+      const ds = state.players.map(p => p.dist), lo = Math.min(...ds), hi = Math.max(...ds);
+      if (origin !== 'devpick' && hi - lo < (S.mini.pickGap || 10)) return false;
+      const last = state.players.find(p => p.dist === lo); if (!last) return false;
+      const left = kinds.slice(), opts = [];
+      while (opts.length < 3 && left.length) { const k = weightedPick(left, x => W[x]); opts.push(k); left.splice(left.indexOf(k), 1); }
+      const t0 = now(), pd = { type: 'mini', kind: 'pick', origin, playerId: pid, ids: state.players.map(p => p.id), phase: 'choose', startedAt: t0, res: {}, secret: {}, reward: S.mini.reward, seq: 0,
+        chooser: last.id, opts, total: 12000 };
+      pd.deadline = t0 + pd.total; state.turn.step = 'resolving'; state.pending = pd;
+      announce({ kind: 'collective', icon: '🎯', title: '¡' + last.name + ' elige el minijuego!', text: 'Va el último: elige en su móvil entre 3 minijuegos.' });
+      log('🎯 ' + last.name + ' va el último y elige el minijuego.', { kind: 'event' });
+      return true;
+    }
+
+
+    /* ================= v9: 5 minijuegos más (Corta verduras, Tejer bufanda, Sintonía, Libreta de caras, Mapa de capitales) ================= */
+    const fin9 = (pd, id) => (pd.fin[id] != null ? pd.fin[id] : 1e12);
+    function rank9(pd, R) {                      // por tiempo: el 1.º gana R y, con 3 o más, el 2.º +1
+      const done = pd.ids.filter(id => pd.fin[id] != null).sort((a, b) => pd.fin[a] - pd.fin[b]), win = [], gain = {};
+      if (done[0]) { win.push(done[0]); gain[done[0]] = R; }
+      if (done[1] && pd.ids.length >= 3) { win.push(done[1]); gain[done[1]] = 1; }
+      return { done, win, gain };
+    }
+    const gainTxt9 = (win, gain, name) => win.map(id => name(id) + ' ' + cas(gain[id])).join(' · ');
+    const R9 = {                                 // minijuegos por rondas: 3, 2 y 1 puntos por orden de acierto
+      show(pd) {
+        const ok = pd.ids.filter(id => pd.res[id] && pd.res[id].ok).sort((a, b) => pd.res[a].at - pd.res[b].at);
+        ok.forEach((id, i) => { pd.pts[id] = (pd.pts[id] || 0) + Math.max(1, 3 - i); });
+        pd.lastOk = ok; pd.lastPts = ok.map((id, i) => Math.max(1, 3 - i));
+        ngPhase(pd, 'show', 2800);
+      },
+      next(pd, G) {
+        if (pd.round >= pd.rounds) return miniClose(pd);
+        pd.round++; pd.res = {}; pd.lastOk = []; G.round(pd); ngPhase(pd, 'play', pd.playMs);
+      },
+      close(pd, R, name, icon, what) {
+        const win = ngTop(pd, pd.pts), gain = {}; win.forEach(id => { gain[id] = R; });
+        return { icon, win, gain, title: win.length ? '¡' + win.map(name).join(' y ') + (win.length > 1 ? ' ganan ' : ' gana ') + what + '!' : 'Nadie ha sumado puntos',
+          text: win.length ? cas(R) : 'Nadie avanza', ms: 6500,
+          rows: pd.ids.slice().sort((a, b) => (pd.pts[b] || 0) - (pd.pts[a] || 0)).map(id => ({ id, win: win.includes(id), txt: (pd.pts[id] || 0) + ' puntos' })) };
+      }
+    };
+
+    /* ---------- CORTA VERDURAS: toques sin parar; el primero que la corta entera gana ---------- */
+    const VEG9 = ['🥕', '🥒', '🍆', '🥦', '🌽', '🥔', '🧅', '🍅'];
+    NG.chop = { icon: '🔪', min: 1,
+      start(pd, kids) { pd.gid9 = now(); pd.goal9 = kids ? 25 : 35; pd.veg = pick(VEG9); pd.prog = {}; pd.fin = {}; pd.phase = 'ready'; pd.total = 2500; },
+      deadline(pd) { if (pd.phase === 'ready') return ngPhase(pd, 'play', 20000); return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return op === 'prog' ? undefined : err('¡Espera a la señal!');
+        if (pd.fin[actor] != null) return op === 'prog' ? undefined : err('Ya has terminado.');
+        if (op === 'prog') { const n = Math.max(0, Math.min(pd.goal9 - 1, Number(a.n) | 0)); if (n > (pd.prog[actor] || 0)) { pd.prog[actor] = n; pd.seq++; } return; }
+        if (op !== 'done') return err('Acción no válida.');
+        const real = now() - pd.startedAt, ms = Math.round(Number(a.ms));
+        pd.fin[actor] = Number.isFinite(ms) && ms >= pd.goal9 * 45 && ms <= real + 300 ? ms : real;   // el tiempo lo mide el móvil (justo para todos)
+        pd.prog[actor] = pd.goal9; pd.res[actor] = { at: pd.fin[actor] }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const { done, win, gain } = rank9(pd, R);
+        return { icon: '🔪', win, gain, title: done.length ? '¡' + name(done[0]) + ' corta más rápido que nadie!' : 'Nadie terminó de cortar', text: win.length ? gainTxt9(win, gain, name) : 'Nadie avanza', ms: 6500,
+          rows: pd.ids.slice().sort((a, b) => fin9(pd, a) - fin9(pd, b) || (pd.prog[b] || 0) - (pd.prog[a] || 0))
+            .map(id => ({ id, win: win.includes(id), txt: pd.fin[id] != null ? '✔ ' + seg8(pd.fin[id]) : Math.round((pd.prog[id] || 0) / pd.goal9 * 100) + ' %' })) };
+      }
+    };
+
+    /* ---------- TEJER BUFANDA: cada toque teje 1 cm, pero gasta energía; sin energía se enreda la lana ---------- */
+    NG.knit = { icon: '🧶', min: 1,
+      start(pd, kids) { pd.gid9 = now(); pd.kidsK = !!kids; pd.cm = {}; pd.tg = {}; pd.phase = 'ready'; pd.total = 2500; },
+      deadline(pd) { if (pd.phase === 'ready') return ngPhase(pd, 'play', 15000); return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (op === 'tg') { if (pd.phase === 'play') { pd.tg[actor] = now() + (pd.kidsK ? 1300 : 1800); pd.seq++; } return; }
+        if (op !== 'prog') return err('Acción no válida.');
+        if (pd.phase !== 'play') return;
+        const cap = Math.round((now() - pd.startedAt) / 1000 * 9) + 14;   // nadie teje más de 9 por segundo
+        const n = Math.max(0, Math.min(cap, Number(a.n) | 0));
+        if (n > (pd.cm[actor] || 0)) { pd.cm[actor] = n; pd.res[actor] = { n }; pd.seq++; }
+      },
+      close(pd, R, name) {
+        const c = id => pd.cm[id] || 0, L = pd.ids.slice().sort((a, b) => c(b) - c(a)), win = [], gain = {};
+        if (c(L[0]) > 0) {
+          L.filter(id => c(id) === c(L[0])).forEach(id => { win.push(id); gain[id] = R; });
+          const sec = L.find(id => c(id) > 0 && c(id) < c(L[0]));
+          if (sec && win.length === 1 && pd.ids.length >= 3) { win.push(sec); gain[sec] = 1; }
+        }
+        const top = win.filter(id => gain[id] === R);
+        return { icon: '🧶', win, gain, big: c(L[0]) ? c(L[0]) + ' cm' : '',
+          title: top.length ? '¡' + top.map(name).join(' y ') + (top.length > 1 ? ' tejen' : ' teje') + ' la bufanda más larga!' : 'Nadie ha tejido nada',
+          text: win.length ? gainTxt9(win, gain, name) : 'Nadie avanza', ms: 6500, rows: L.map(id => ({ id, win: win.includes(id), txt: c(id) + ' cm' })) };
+      }
+    };
+
+    /* ---------- SINTONÍA: cada pantalla cambia de canal al tocarla; hay que dejarlas igual que en la tele ---------- */
+    const CH9 = ['⚽', '🐶', '🍕', '🎸', '🚀', '🐟', '🎈', '🌵'];
+    NG.tune = { icon: '📺', min: 1,
+      start(pd, kids) {
+        pd.nch = kids ? 4 : 6; pd.chans = shuffle(CH9.slice()).slice(0, pd.nch); pd.ns = kids ? 3 : 5; pd.target = []; pd.init = [];
+        const bag = shuffle(Array.from({ length: pd.nch }, (_, i) => i));
+        for (let i = 0; i < pd.ns; i++) { const t = bag[i % pd.nch]; let s; do { s = rint(0, pd.nch - 1); } while (s === t); pd.target.push(t); pd.init.push(s); }
+        pd.prog = {}; pd.fin = {}; pd.phase = 'ready'; pd.total = 2000;
+      },
+      deadline(pd) { if (pd.phase === 'ready') return ngPhase(pd, 'play', 25000); return miniClose(pd); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return op === 'prog' ? undefined : err('¡Espera a la señal!');
+        if (pd.fin[actor] != null) return op === 'prog' ? undefined : err('Ya has terminado.');
+        if (op === 'prog') { const n = Math.max(0, Math.min(pd.ns - 1, Number(a.n) | 0)); if (n !== (pd.prog[actor] || 0)) { pd.prog[actor] = n; pd.seq++; } return; }
+        if (op !== 'done') return err('Acción no válida.');
+        const arr = Array.isArray(a.arr) ? a.arr.map(Number) : [];
+        if (arr.length !== pd.ns || !arr.every((x, i) => x === pd.target[i])) return err('Todavía no coinciden todas las pantallas.');
+        pd.fin[actor] = now() - pd.startedAt; pd.prog[actor] = pd.ns; pd.res[actor] = { at: pd.fin[actor] }; pd.seq++;
+        if (ngAll(pd)) miniClose(pd);
+      },
+      close(pd, R, name) {
+        const { done, win, gain } = rank9(pd, R);
+        return { icon: '📺', win, gain, title: done.length ? '¡' + name(done[0]) + ' sintoniza antes que nadie!' : 'Nadie consiguió sintonizar', text: win.length ? gainTxt9(win, gain, name) : 'Nadie avanza', ms: 6500,
+          rows: pd.ids.slice().sort((a, b) => fin9(pd, a) - fin9(pd, b) || (pd.prog[b] || 0) - (pd.prog[a] || 0))
+            .map(id => ({ id, win: win.includes(id), txt: pd.fin[id] != null ? '✔ ' + seg8(pd.fin[id]) : (pd.prog[id] || 0) + ' de ' + pd.ns + ' pantallas' })) };
+      }
+    };
+
+    /* ---------- LIBRETA DE CARAS: 3 rondas; pasa páginas hasta encontrar la cara de la tele ---------- */
+    const FACE9 = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐙', '🦄', '🐲'];
+    NG.flip = { icon: '📒', min: 1,
+      start(pd, kids) { pd.kidsF = !!kids; pd.rounds = 3; pd.round = 1; pd.pts = {}; pd.lastOk = []; pd.pages = kids ? 6 : 9; pd.playMs = kids ? 14000 : 11000; NG.flip.round(pd); pd.phase = 'play'; pd.total = pd.playMs; },
+      round(pd) {
+        const pool = shuffle(FACE9.slice()), t = pool[0], books = {};
+        pd.ids.forEach(id => { const o = shuffle(pool.slice(1)).slice(0, pd.pages - 1); o.splice(rint(2, pd.pages - 1), 0, t); books[id] = o; });
+        pd.face = t; pd.secret = { books };
+      },
+      deadline(pd) { if (pd.phase === 'play') return R9.show(pd); return R9.next(pd, NG.flip); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return err('Espera a la siguiente ronda.');
+        if (op !== 'found') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has contestado en esta ronda.');
+        const b = (pd.secret.books || {})[actor], i = ngIdx(a, b ? b.length : 0); if (i == null) return err('Página no válida.');
+        pd.res[actor] = b[i] === pd.face ? { ok: true, at: now() - pd.startedAt } : { ok: false }; pd.seq++;
+        if (ngAll(pd)) R9.show(pd);
+      },
+      view(pd, viewer, sec) { if (sec && sec.books && sec.books[viewer]) pd.book = sec.books[viewer].slice(); },
+      close(pd, R, name) { return R9.close(pd, R, name, '📒', 'la libreta de caras'); }
+    };
+
+    /* ---------- MAPA DE CAPITALES: 3 rondas; sale una capital y hay que tocar su país en el mapa ---------- */
+    const MAP9 = {               // [país, capital, latitud, longitud, para niños]
+      eu: { b: [-11, 36, 35, 66], c: [['España', 'Madrid', 40, -4, 1], ['Portugal', 'Lisboa', 39.6, -8.2, 1], ['Francia', 'París', 46.5, 2.5, 1], ['Italia', 'Roma', 42.5, 12.5, 1],
+        ['Alemania', 'Berlín', 51, 10.4, 1], ['Reino Unido', 'Londres', 53, -1.8, 1], ['Irlanda', 'Dublín', 53.2, -8], ['Países Bajos', 'Ámsterdam', 52.3, 5.6], ['Bélgica', 'Bruselas', 50.6, 4.6],
+        ['Suiza', 'Berna', 46.8, 8.2], ['Austria', 'Viena', 47.6, 14.5], ['Polonia', 'Varsovia', 52, 19.4], ['Grecia', 'Atenas', 39.3, 22, 1], ['Suecia', 'Estocolmo', 62, 15.5, 1],
+        ['Noruega', 'Oslo', 61.5, 9, 1], ['Finlandia', 'Helsinki', 64, 26], ['Dinamarca', 'Copenhague', 56, 9.5], ['Chequia', 'Praga', 49.8, 15.5], ['Hungría', 'Budapest', 47.2, 19.4],
+        ['Rumanía', 'Bucarest', 45.9, 24.9], ['Croacia', 'Zagreb', 45.1, 15.2], ['Ucrania', 'Kiev', 49, 31.4], ['Turquía', 'Ankara', 39, 33]] },
+      am: { b: [-125, -35, -45, 60], c: [['Estados Unidos', 'Washington', 39, -98], ['Canadá', 'Ottawa', 57, -100], ['México', 'Ciudad de México', 23.5, -102], ['Cuba', 'La Habana', 21.6, -79],
+        ['Colombia', 'Bogotá', 4, -73], ['Venezuela', 'Caracas', 7, -66], ['Perú', 'Lima', -9.5, -75], ['Brasil', 'Brasilia', -10, -52], ['Argentina', 'Buenos Aires', -35, -65],
+        ['Chile', 'Santiago', -30, -71], ['Ecuador', 'Quito', -1.5, -78.5], ['Uruguay', 'Montevideo', -33, -56], ['Paraguay', 'Asunción', -23.4, -58.4], ['Costa Rica', 'San José', 10, -84], ['Jamaica', 'Kingston', 18.1, -77.3]] },
+      wo: { b: [-20, 150, -35, 65], c: [['Japón', 'Tokio', 36, 138], ['China', 'Pekín', 35, 103], ['India', 'Nueva Delhi', 22, 79], ['Rusia', 'Moscú', 60, 90], ['Australia', 'Canberra', -25, 134],
+        ['Egipto', 'El Cairo', 26.5, 30], ['Marruecos', 'Rabat', 31.8, -6.5], ['Sudáfrica', 'Pretoria', -29, 24.5], ['Arabia Saudí', 'Riad', 24, 45], ['Indonesia', 'Yakarta', -2.5, 118],
+        ['Tailandia', 'Bangkok', 15, 101], ['Corea del Sur', 'Seúl', 36.5, 128], ['Kenia', 'Nairobi', 0.5, 38], ['Nigeria', 'Abuya', 9.5, 8], ['Irán', 'Teherán', 32.5, 54], ['Filipinas', 'Manila', 12.5, 122], ['Argelia', 'Argel', 28, 2.6]] }
+    };
+    NG.map = { icon: '🗺️', min: 1,
+      start(pd, kids) {
+        pd.kidsM = !!kids; pd.rounds = 3; pd.round = 1; pd.pts = {}; pd.lastOk = []; pd.playMs = kids ? 14000 : 11000;
+        pd.regs = kids ? ['eu', 'eu', 'eu'] : shuffle(['eu', 'am', 'wo']); pd.usedM = [];
+        NG.map.round(pd); pd.phase = 'play'; pd.total = pd.playMs;
+      },
+      round(pd) {
+        const reg = pd.regs[pd.round - 1], rg = MAP9[reg], b = rg.b, want = pd.kidsM ? 4 : 6, opts = [];
+        const pool = shuffle(rg.c.filter(c => (!pd.kidsM || c[4]) && !pd.usedM.includes(c[0])));
+        for (const c of pool) {
+          if (opts.length >= want) break;
+          const x = 8 + 84 * (c[3] - b[0]) / (b[1] - b[0]), y = 8 + 84 * (b[3] - c[2]) / (b[3] - b[2]);
+          if (opts.some(o => Math.abs(o.x - x) < 27 && Math.abs(o.y - y) < 10)) continue;   // que no se monten los nombres
+          opts.push({ n: c[0], cap: c[1], x: Math.round(x), y: Math.round(y) });
+        }
+        const ok = rint(0, opts.length - 1); pd.usedM.push(opts[ok].n);
+        pd.q = { cap: opts[ok].cap, reg, opts: opts.map(o => ({ n: o.n, x: o.x, y: o.y })) }; pd.secret = { ok };
+      },
+      deadline(pd) { if (pd.phase === 'play') return R9.show(pd); return R9.next(pd, NG.map); },
+      act(pd, actor, a, op) {
+        if (pd.phase !== 'play') return err('Espera a la siguiente ronda.');
+        if (op !== 'pick') return err('Acción no válida.');
+        if (pd.res[actor]) return err('Ya has contestado en esta ronda.');
+        const i = ngIdx(a, pd.q.opts.length); if (i == null) return err('País no válido.');
+        pd.res[actor] = { i, ok: i === pd.secret.ok, at: now() - pd.startedAt }; pd.seq++;
+        if (ngAll(pd)) R9.show(pd);
+      },
+      view(pd, viewer, sec) { if (pd.phase === 'show' && sec) pd.okI = sec.ok; },
+      close(pd, R, name) { return R9.close(pd, R, name, '🗺️', 'el mapa de capitales'); }
+    };
+
     function startMini(pid, origin, forced, only) {
       const me = P(pid); if (!me || state.players.length < 2) return false;
       const W = S.mini.weights, humanOk = !me.bot && state.players.some(p => p.id !== pid && !p.bot);
-      const kinds = Object.keys(W).filter(k => W[k] > 0 && (!MINI_HUMAN[k] || humanOk));
+      const nOk = k => !NG[k] || (only && only.length ? only.length : state.players.length) >= (NG[k].min || 1);
+      const kinds = Object.keys(W).filter(k => W[k] > 0 && (!MINI_HUMAN[k] || humanOk) && nOk(k));
+      if (!forced && !(only && only.length) && pick8Try(pid, origin, kinds, W)) return true;
       const kind = forced && W[forced] != null && (W[forced] > 0 || origin === 'dev') && (!MINI_HUMAN[forced] || humanOk) ? forced : (kinds.length ? weightedPick(kinds, k => W[k]) : null);
-      if (!kind || (forced && kind !== forced && origin !== 'dev')) return false;
+      if (!kind || (forced && kind !== forced && origin !== 'dev') || !nOk(kind)) return false;
       const t0 = now(), kids = jgMode === 'kids';
       let ids = only && only.length ? only.filter(id => P(id)) : state.players.map(p => p.id);
       if (MINI_PAIR[kind]) { const mate = miniPartner(pid, !!MINI_HUMAN[kind]); if (!mate) return false; ids = [pid, mate]; }
       if (kind === 'drawPair') { startChallenge(pid, { origin, kind: 'draw', pair: ids[1] }); return true; }
       const pd = { type: 'mini', kind, origin, playerId: pid, ids, phase: 'play', startedAt: t0, res: {}, secret: {}, reward: S.mini.reward, seq: 0 };
-      if (kind === 'clock') {
+      if (NG[kind]) NG[kind].start(pd, kids);
+      else if (kind === 'clock') {
         const tg = kids ? rint(5, 10) : rint(8, 18) + (rnd() < 0.4 ? 0.5 : 0);
         pd.target = Math.round(tg * 1000); pd.total = Math.min(30000, pd.target + 12000);
       } else if (kind === 'relay') {
@@ -3137,7 +3944,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       state.turn.step = 'resolving';
       state.pending = pd;
       const names = ids.map(id => P(id).name).join(' y ');
-      announce({ kind: 'collective', icon: { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '📷' }[kind], title: '¡' + MINI_NAME[kind] + '!',
+      announce({ kind: 'collective', icon: { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '🎥' }[kind] || (NG[kind] && NG[kind].icon), title: '¡' + MINI_NAME[kind] + '!',
         text: MINI_PAIR[kind] ? 'Reto en pareja: ' + names + '.' : only ? 'Juegan ' + names + ' desde el móvil.' : '¡Jugáis todos desde el móvil!' });
       log('🎲 Minijuego: ' + MINI_NAME[kind] + (MINI_PAIR[kind] || only ? ' (' + names + ')' : ' (todos)') + '.', { kind: 'event' });
       const vk = { relay: 'pareja', sync: 'sync', describe: 'describe', chain: 'chain', moon: 'luna' }[kind];
@@ -3151,6 +3958,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       const t = now();
       pd.phase = 'reveal'; pd.out = out; pd.startedAt = t; pd.total = out.ms || 7000; pd.deadline = t + pd.total; pd.seq++;
       if (!pd.duel) {
+        Object.keys(out.lose || {}).forEach(id => { const p = P(id); if (p) adv(p, -out.lose[id]); });
         (out.win || []).forEach(id => { const p = P(id); if (p) { adv(p, out.gain[id] || 0); p.stats.won++; p.stats.minis++; winStreak(p); } });
         pd.ids.forEach(id => { if (!(out.win || []).includes(id)) { const p = P(id); if (p) breakStreak(p); } });
       }
@@ -3160,6 +3968,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     function miniClose(pd) {
       if (pd.phase === 'reveal') return;
       const R = pd.reward, name = id => (P(id) || { name: '?' }).name;
+      if (NG[pd.kind]) return miniReveal(pd, NG[pd.kind].close(pd, R, name));
       if (pd.kind === 'clock') {
         const rows = pd.ids.map(id => ({ id, ms: pd.res[id] ? pd.res[id].ms : null }))
           .map(r => Object.assign(r, { diff: r.ms == null ? Infinity : Math.abs(r.ms - pd.target) }))
@@ -3241,6 +4050,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     function miniDeadline(pd) {
       const t = now();
       if (pd.phase === 'reveal') return finishInteraction(pd.origin);
+      if (NG[pd.kind] && NG[pd.kind].deadline) return NG[pd.kind].deadline(pd);
       if (pd.kind === 'relay' && pd.step === 0) {          // el primero no paró: se pasa igualmente al segundo (sin tiempo = fallo)
         pd.step = 1; pd.startedAt = t; pd.total = Math.min(30000, pd.target + 10000); pd.deadline = t + pd.total; pd.seq++;
         if (!pd.res[pd.ids[0]]) return miniClose(pd);
@@ -3254,6 +4064,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       if (!pd || pd.type !== 'mini' || pd.phase === 'reveal') return err('Ahora no hay minijuego.');
       if (!pd.ids.includes(actor)) return err('No participas en este minijuego.');
       const op = a && a.op;
+      if (NG[pd.kind]) return NG[pd.kind].act(pd, actor, a || {}, op);
       if (pd.kind === 'clock' || pd.kind === 'relay') {
         if (op !== 'clock') return err('Acción no válida.');
         if (pd.kind === 'relay' && pd.ids[pd.step] !== actor) return err('Todavía no es tu parte.');
@@ -3331,6 +4142,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
       }
       if (pd.res[viewer] && pd.res[viewer].text != null) pd.myText = pd.res[viewer].text;
       if (pd.kind === 'blur' && pd.res[viewer]) pd.myPick = pd.res[viewer].i;
+      if (NG[pd.kind]) { pd.mine = pd.res && pd.res[viewer] ? Object.assign({}, pd.res[viewer]) : null; if (NG[pd.kind].view) NG[pd.kind].view(pd, viewer, sec, full); }
       if (!full) { delete pd.res; delete pd.flags; }
       return pd;
     }
@@ -3958,7 +4770,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
     const needIdle = () => (isIdle() ? null : err('Hay una interacción en marcha. Ciérrala o usa «Saltar interacción».'));
     D.devMini = (a) => {                          // probar un minijuego concreto
       const e = needIdle(); if (e) return e;
-      if (!startMini(state.turn.playerId, 'dev', a && a.kind)) return err('No se puede con estos jugadores (hacen falta 2 personas para algunos).');
+      if (!startMini(state.turn.playerId, a && a.kind === 'pick' ? 'devpick' : 'dev', a && a.kind === 'pick' ? undefined : a && a.kind)) return err('No se puede con estos jugadores (hacen falta 2 personas para algunos).');
     };
 
     D.devGiveItem = (a) => {
@@ -4895,7 +5707,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
         sig = JSON.stringify(['play', v.phase, v.turn && v.turn.number, v.turn && v.turn.step, v.turn && v.turn.playerId,
           pd && [pd.type, pd.kind, pd.status, pd.phase, pd.q && pd.q.id, pd.startedAt, pd.hidden, pd.hintText, pd.excluded, pd.eliminated, pd.answered && pd.answered[pid], pd.playerId, pd.curseId, pd.myWord, pd.guesses && pd.guesses[pid], pd.mods],
           m.roll, m.answer, m.pass, m.spin, m.shield, m.drawing, m.guess, m.memoryInput, m.collective, m.shopDone, m.items.hint && m.items.hint.ok, p.items.hint, p.items.shield, p.name, p.avatar, v.jackpot, memSeq.length,
-          v.ranking && v.ranking[0].id, v.jgMode, pd && pd.type === 'mini' && TE.MiniUI ? [pd.seq, pd.step, TE.MiniUI.localSig(pid, pd)] : null, !pd ? v.players.map(x => x.dist) : null, v.players.map(x => x.id + (x.bot ? 'b' : '')),
+          v.ranking && v.ranking[0].id, v.jgMode, pd && pd.type === 'mini' && TE.MiniUI ? [TE.MiniUI.phSeq ? TE.MiniUI.phSeq(pd) : pd.seq, pd.step, TE.MiniUI.localSig(pid, pd)] : null, !pd ? v.players.map(x => x.dist) : null, v.players.map(x => x.id + (x.bot ? 'b' : '')),
           v.rolls ? [v.rolls.id, Object.keys(v.rolls.done).length, !!v.rolls.done[pid]] : null, pd && pd.type === 'rush' ? [pd.seq, pd.phase] : null, m.rush, v.intro ? [v.intro.seq, v.intro.votes] : null]);
       } else if (tab === 'bag') {
         sig = JSON.stringify(['bag', p.items, p.cards, m.card, m.items, m.targets, pickCard, v.phase]);
@@ -4910,6 +5722,7 @@ body.phase-lobby #cam .tvc { height: 956px; }
           const ni = main.querySelector('input.txt');
           if (ni && val) { ni.value = val; if (foc) ni.focus(); }
           afterPlay(v, pd);
+          if (TE.MiniUI && TE.MiniUI.mount) TE.MiniUI.mount(main, pid, v, send);
         }
       } else if (tab === 'play' && pd && pd.type === 'challenge' && pd.kind === 'draw') { /* el lienzo no se reconstruye */ }
       first = false;
@@ -8348,7 +9161,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
   'use strict';
   const TE = (window.TE = window.TE || {}); const U = TE.UI, esc = U.esc;
   const NAME = { clock: 'Cronómetro a ciegas', relay: 'Relevo de cronómetro', moon: 'La Luna', sync: 'Dúo mental', describe: 'Descríbelo', chain: 'Cadena de palabras', blur: 'Foto borrosa' };
-  const ICON = { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '📷' };
+  const ICON = { clock: '⏱️', relay: '⏱️', moon: '🌙', sync: '🧠', describe: '🗣️', chain: '🔗', blur: '🎥' };
   /* Foto borrosa: la tele pide la foto del artículo de Wikipedia; si no llega, se usa el emoji grande (también se emborrona). */
   const BLUR_CACHE = {};
   function blurUrl(t) {
@@ -8449,16 +9262,521 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
   const key = (pid, pd) => pid + '|' + pd.startedAt + '|' + (pd.step || 0) + '|' + pd.kind;
   function localSig(pid, pd) { const k = LS[key(pid, pd)]; return k ? (k.stopped ? 's' : 'r') : '-'; }
 
+  /* ================= minijuegos v8: móvil y tele ================= */
+  const X = e => '<span class="ico e8">' + e + '</span>';            // emoji tal cual (el filtro de iconos no lo toca)
+  const nowU = () => (U.now ? U.now() : Date.now());
+  const elOf = pd => Math.max(0, nowU() - pd.startedAt);
+  const segT = ms => (ms / 1000).toFixed(1).replace('.', ',') + ' s';
+  const f2 = x => Number(x).toFixed(2).replace('.', ',');
+  const ava = (v, id, cls) => '<span class="ng-av ' + (cls || '') + '" style="--pc:' + pl(v, id).color + '">' + (pl(v, id).avatar || '') + '</span>';
+  const card = (pd, inner, cls) => '<div class="ph-card ng-card ' + (cls || '') + '">' + head(pd, true) + inner + '</div>';
+  const center = (pd, big, h, p, extra) => '<div class="ph-card center ng-card">' + head(pd, true) + '<div class="big">' + big + '</div><h2>' + h + '</h2>' + (p ? '<p>' + p + '</p>' : '') + (extra || '') + '</div>';
+  const grid8 = (n, cols, cell, cls) => { let h = '<div class="ng-grid ' + (cls || '') + '" style="--cols:' + cols + '">'; for (let i = 0; i < n; i++) h += cell(i); return h + '</div>'; };
+  const wrapTV = (top, inner) => '<div class="c-mini c-wide c-ng">' + top + inner + '</div>';
+  function rowsTV(v, rows) { return '<ol class="mg-tvlist ng-rows">' + rows.map(r => '<li class="' + (r.win ? 'win' : r.bad ? 'lose' : '') + '">' + ava(v, r.id) + '<b>' + nm(v, r.id) + '</b><span>' + esc(r.txt || '') + '</span></li>').join('') + '</ol>'; }
+  function rowsPh(v, rows) { return '<div class="mg-list">' + rows.map(r => '<div class="mg-row' + (r.win ? ' win' : r.bad ? ' lose' : '') + '"><b>' + nm(v, r.id) + '</b>' + esc(r.txt || '') + '</div>').join('') + '</div>'; }
+  function chips8(v, pd) { return '<div class="chips">' + pd.ids.map(id => { const p = pl(v, id), d = pd.done && pd.done[id]; return '<span class="pchip ' + (d ? 'live' : 'wait') + '" style="--pc:' + p.color + '">' + p.avatar + ' ' + esc(p.name) + ' <em>' + (d ? '✓' : '…') + '</em></span>'; }).join('') + '</div>'; }
+  const opts4 = (pd, opts, op, hl) => '<div class="bl-opts">' + opts.map((o, i) => '<button type="button" class="btn bl-opt' + (hl === i ? ' ng-hl' : '') + '" data-act="mini" data-op="' + op + '" data-i="' + i + '">' + esc(o) + '</button>').join('') + '</div>';
+  const optsTV = opts => '<div class="bl-opts tv">' + opts.map(o => '<span>' + esc(o) + '</span>').join('') + '</div>';
+  const vib = p => { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) { /* nada */ } };
+  Object.assign(NAME, { bomb: 'Bomba que pasa', buddy: 'Adivina al compañero', sneak: '¿Quién hace trampa?', simon: 'Simón de colores', moles: 'Topos', count: 'Cuenta de viajeros',
+    gifts: 'Regalos con trampa', faces: 'Rompecabezas de caras', stopw: 'Cronómetro de parada', fruit: 'Recolector de frutas' });
+  Object.assign(ICON, { bomb: '⚡', buddy: '👥', sneak: '🎭', simon: '🎨', moles: '👆', count: '👀', gifts: '🎁', faces: '🧩', stopw: '⏱', fruit: '🍎' });
+  Object.assign(HOW, {
+    bomb: 'Quien tiene la bomba busca en su móvil la fruta que se pide para pasarla. ¡Al que le explote, retrocede!',
+    buddy: 'Contesta sobre sí mismo en secreto. Los que adivinen lo que ha elegido, avanzan.',
+    sneak: 'Uno de vosotros ve la respuesta en secreto. Después votaréis quién hacía trampa.',
+    simon: 'Repetid la secuencia de colores. Si uno falla, perdéis todos.',
+    moles: 'Sale un topo en todos los móviles a la vez: ¡el más rápido se lo lleva!',
+    count: 'Contad los animales que entran y salen de la casa.',
+    gifts: 'Seguid el diamante: ¿en qué regalo acaba?',
+    faces: 'Armad la cara en el móvil cambiando piezas de sitio. ¡El primero gana!',
+    stopw: 'El número corre en vuestro móvil, a veces rápido y a veces lento. ¡Paradlo en el objetivo!',
+    fruit: 'Memorizad el árbol y luego tocad la hoja donde estaba cada fruta.'
+  });
+  const NGU = {};
+
+  /* ---------- Bomba que pasa ---------- */
+  NGU.bomb = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      const h = pd.holder;
+      if (pid !== h) return center(pd, X('💣'), 'La bomba la tiene ' + nm(v, h), '¡Prepárate! Si te llega, pulsa rápido la fruta que te pide para pasarla.');
+      return '<div class="ph-card ng-card ng-bombme">' + head(pd, true) + '<h2 class="q">¡TIENES LA BOMBA!</h2><p class="ng-want">Pulsa ' + X(pd.task.want) + ' para pasarla</p>' +
+        (pd.miss === pid ? '<p class="note ng-bad">✘ ¡Ese no! Un segundo de castigo…</p>' : '') +
+        grid8(pd.task.opts.length, 3, i => '<button type="button" class="btn ng-cell" data-act="mini" data-op="b8" data-i="' + i + '">' + X(pd.task.opts[i]) + '</button>') + '</div>';
+    },
+    tv(v, pd, top) {
+      return wrapTV(top, '<div class="ng-bomb"><div class="ng-bomb-e">' + X('💣') + '<i class="ng-spark"></i></div><div class="ng-holder">' + ava(v, pd.holder, 'xl') + '<b>' + nm(v, pd.holder) + '</b><small>tiene la bomba</small></div></div>' +
+        '<p class="hint-line">' + HOW.bomb + '</p><p class="hint-line">Pases: ' + pd.passes + '</p>');
+    },
+    click(b, op, pid, pd, send) { if (op === 'b8') send('mini', { op: 'tap', i: Number(b.dataset.i) }); }
+  };
+
+  /* ---------- Adivina al compañero ---------- */
+  NGU.buddy = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      const me = pid === pd.buddy;
+      if (pd.mine) return center(pd, X('🤔'), 'Elegido: «' + esc(pd.q.opts[pd.mine.i]) + '»', me ? 'Ahora los demás intentan adivinarlo.' : 'Esperando a los demás…', c.tm);
+      return card(pd, c.tm + '<p class="mg-how">' + (me ? 'Es sobre TI: contesta la verdad. Los demás intentarán adivinarlo.' : '¿Qué crees que contestará ' + nm(v, pd.buddy) + '?') + '</p><h2 class="q">' + esc(pd.q.text) + '</h2>' + opts4(pd, pd.q.opts, 'bu8'));
+    },
+    tv(v, pd, top) {
+      return wrapTV(top, U.timerHTML(pd) + '<div class="ng-holder">' + ava(v, pd.buddy, 'xl') + '<small>contesta sobre sí mismo</small></div><h2 class="c-question">' + esc(pd.q.text) + '</h2>' + optsTV(pd.q.opts) +
+        '<p class="hint-line">' + HOW.buddy + '</p>' + chips8(v, pd));
+    },
+    click(b, op, pid, pd, send) { if (op === 'bu8') send('mini', { op: 'pick', i: Number(b.dataset.i) }); }
+  };
+
+  /* ---------- ¿Quién hace trampa? ---------- */
+  NGU.sneak = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'vote') {
+        if (pd.mine) return center(pd, X('🕵️'), 'Has votado a ' + nm(v, pd.mine.t), 'Esperando a los demás…', c.tm);
+        return card(pd, c.tm + '<h2 class="q">¿Quién es el tramposo?</h2><p class="mg-how">' + (pd.iAmSneak ? 'Eres tú… ¡vota a otro para disimular!' : 'Fíjate en quién acertó y lo rápido que fue.') + '</p><div class="mg-list">' +
+          pd.list.filter(r => r.id !== pid).map(r => '<button type="button" class="btn ng-vote" data-act="mini" data-op="sv8" data-t="' + r.id + '">' + ava(v, r.id) + '<b>' + nm(v, r.id) + '</b><span>' + (r.at == null ? '—' : r.ok ? '✔ ' + segT(r.at) : '✘') + '</span></button>').join('') + '</div>');
+      }
+      if (pd.mine) return center(pd, X('✍️'), 'Respuesta enviada', 'Cuando contestéis todos, tocará descubrir al tramposo.', c.tm);
+      return card(pd, c.tm + (pd.iAmSneak ? '<div class="ng-sneak">' + X('🤫') + ' <b>¡Eres el TRAMPOSO!</b> La respuesta es <b>' + esc(pd.q.opts[pd.okI]) + '</b>. Acierta… pero que no se note.</div>' : '<p class="mg-how">Uno de vosotros sabe la respuesta en secreto. ¡Contesta rápido y bien!</p>') +
+        '<h2 class="q">' + esc(pd.q.text) + '</h2>' + opts4(pd, pd.q.opts, 'sp8', pd.iAmSneak ? pd.okI : null));
+    },
+    tv(v, pd, top) {
+      if (pd.phase === 'vote') return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question">¿Quién es el tramposo?</h2><p class="hint-line">La respuesta era ' + esc(pd.q.opts[pd.okI]) + ' · votad desde el móvil</p>' +
+        rowsTV(v, pd.list.map(r => ({ id: r.id, txt: r.at == null ? 'sin contestar' : r.ok ? '✔ en ' + segT(r.at) : '✘ falló' }))) + chips8(v, pd));
+      return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question">' + esc(pd.q.text) + '</h2>' + optsTV(pd.q.opts) + '<p class="hint-line">' + HOW.sneak + '</p>' + chips8(v, pd));
+    },
+    click(b, op, pid, pd, send) { if (op === 'sp8') send('mini', { op: 'pick', i: Number(b.dataset.i) }); else if (op === 'sv8') send('mini', { op: 'vote', target: b.dataset.t }); }
+  };
+
+  /* ---------- Simón de colores ---------- */
+  const SIMC = ['#ff4d5e', '#3b82f6', '#22c55e', '#facc15'];
+  NGU.simon = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'show') return center(pd, X('👀'), '¡Mira la tele!', 'Memoriza los ' + pd.len + ' colores que se encienden.');
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { arr: [] });
+      if (pd.mine || k.sent) return center(pd, X(pd.mine && !pd.mine.ok ? '😬' : '✅'), pd.mine && !pd.mine.ok ? '¡Uy! Te has equivocado' : '¡Enviado!', 'Esperando a los demás…');
+      return card(pd, '<h2 class="q">Repite los ' + pd.len + ' colores</h2><div class="sm-dots">' + Array.from({ length: pd.len }, (_, i) => '<i style="--c:' + (i < k.arr.length ? SIMC[k.arr[i]] : 'transparent') + '"></i>').join('') + '</div>' +
+        '<div class="sm-pads">' + SIMC.map((col, i) => '<button type="button" class="sm-pad" style="--c:' + col + '" data-act="mini" data-op="sm8" data-i="' + i + '" aria-label="color ' + (i + 1) + '"></button>').join('') + '</div>');
+    },
+    tv(v, pd, top) {
+      const el = elOf(pd);
+      const pads = SIMC.map((col, p) => '<div class="sm-pad tv" style="--c:' + col + '">' + (pd.phase === 'show' ? (pd.show || []).map((x, i) => x === p ? '<i class="sm-lit" style="animation-duration:' + Math.round(pd.step8 * 0.8) + 'ms;animation-delay:' + Math.round(450 + i * pd.step8 - el) + 'ms"></i>' : '').join('') : '') + '</div>').join('');
+      return wrapTV(top, '<h2 class="c-question small">' + (pd.phase === 'show' ? 'Ronda ' + pd.round + ': ¡memorizad ' + pd.len + ' colores!' : '¡Ahora repetidla en el móvil!') + '</h2><div class="sm-board">' + pads + '</div>' +
+        '<p class="hint-line">' + HOW.simon + ' · Rondas superadas: ' + pd.cleared + '</p>' + (pd.phase === 'input' ? chips8(v, pd) : ''));
+    },
+    click(b, op, pid, pd, send) {
+      if (op !== 'sm8' || pd.phase !== 'input') return;
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { arr: [] }); if (k.sent) return;
+      k.arr.push(Number(b.dataset.i)); vib(12);
+      if (k.arr.length >= pd.len) { k.sent = true; send('mini', { op: 'seq', arr: k.arr.slice() }); }
+    }
+  };
+
+  /* ---------- Topos ---------- */
+  NGU.moles = {
+    grid(pd, cell) { return grid8(pd.cells, pd.cells === 12 ? 4 : 3, cell, 'mo-grid'); },
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      const pts = (pd.pts || {})[pid] || 0, info = '<p class="mg-how">Topo ' + Math.min(pd.rounds, pd.k + 1) + ' de ' + pd.rounds + ' · tus topos: <b>' + pts + '</b></p>';
+      if (pd.phase !== 'up') {
+        const L = pd.last;
+        return card(pd, info + '<h2 class="q">' + (L ? (L.w ? (L.w === pid ? '¡Tuyo! ' + X('🔨') : '¡' + nm(v, L.w) + ' fue más rápido!') : '¡Se escapó!') : '¡Atento! Va a salir un topo…') + '</h2>' + NGU.moles.grid(pd, () => '<span class="mo-hole"></span>'));
+      }
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { t0: performance.now(), hit: null });
+      return card(pd, info + '<h2 class="q">¡DALE AL TOPO!</h2>' + NGU.moles.grid(pd, i => '<button type="button" class="mo-hole' + (k.hit === i ? ' hit' : '') + '" data-act="mini" data-op="mo8" data-c="' + i + '">' +
+        (i === pd.cell ? '<span class="mo-mole">' + X(k.hit === i ? '😵' : '🐹') + '</span>' : '') + (k.hit === i ? '<span class="mo-ham">' + X('🔨') + '</span>' : '') + '</button>'));
+    },
+    tv(v, pd, top) {
+      const L = pd.last, P8 = pd.pts || {}, sc = pd.ids.slice().sort((a, b) => (P8[b] || 0) - (P8[a] || 0));
+      return wrapTV(top, '<h2 class="c-question small">' + (pd.phase === 'up' ? '¡DALE AL TOPO!' : L ? (L.w ? '¡' + nm(v, L.w) + ' en ' + segT(L.rt) + '!' : '¡Se escapó!') : '¡Atentos a los móviles!') + '</h2>' +
+        NGU.moles.grid(pd, i => '<span class="mo-hole">' + (pd.phase === 'up' && i === pd.cell ? '<span class="mo-mole">' + X('🐹') + '</span>' : '') + '</span>') +
+        '<div class="chips">' + sc.map(id => { const p = pl(v, id); return '<span class="pchip live" style="--pc:' + p.color + '">' + p.avatar + ' ' + esc(p.name) + ' <em>' + (P8[id] || 0) + '</em></span>'; }).join('') + '</div>' +
+        '<p class="hint-line">' + HOW.moles + ' · topo ' + Math.min(pd.rounds, pd.k + 1) + '/' + pd.rounds + '</p>');
+    },
+    click(b, op, pid, pd, send) {
+      if (op !== 'mo8' || pd.phase !== 'up') return;
+      const k = LS[key(pid, pd)]; if (!k || k.hit != null) return;
+      const c = Number(b.dataset.c); k.hit = c;
+      send('mini', { op: 'whack', c, rt: Math.round(performance.now() - k.t0) });
+      vib(c === pd.cell ? 25 : [10, 40, 10]);
+    }
+  };
+
+  /* ---------- Cuenta de viajeros ---------- */
+  NGU.count = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'show') return center(pd, X('🏠'), '¡Cuenta en la tele!', 'Entran y salen animales de la casa. ¿Cuántos quedarán DENTRO?');
+      if (pd.mine) return center(pd, X('🔢'), 'Has dicho: ' + pd.mine.n, 'Esperando a los demás…', c.tm);
+      return card(pd, c.tm + '<h2 class="q">¿Cuántos quedan dentro de la casa?</h2><form class="ph-form" data-form="mini"><input class="txt" type="number" inputmode="numeric" min="0" max="99" autocomplete="off" placeholder="Número" aria-label="Número"><button class="btn good" type="submit">Enviar</button></form>');
+    },
+    tv(v, pd, top) {
+      if (pd.phase !== 'show') return wrapTV(top, U.timerHTML(pd) + '<div class="ct-scene"><div class="ct-house">' + X('🏠') + '<b>?</b></div></div><h2 class="c-question">¿Cuántos quedan dentro?</h2>' + chips8(v, pd));
+      const el = elOf(pd);
+      const evs = pd.ev.map(e => '<div class="ct-ev ' + (e.out ? 'out' : 'in') + '" style="animation-delay:' + Math.round(e.t - el) + 'ms">' + Array.from({ length: e.n }, () => X(e.e)).join('') + '</div>').join('');
+      return wrapTV(top, '<h2 class="c-question small">¡Contad cuántos quedan DENTRO!</h2><div class="ct-scene"><div class="ct-house">' + X('🏠') + '</div>' + evs + '</div><p class="hint-line">' + HOW.count + '</p>');
+    }
+  };
+
+  /* ---------- Regalos con trampa ---------- */
+  const GW = 230;
+  const gX = (pd, s) => -((pd.n - 1) * GW) / 2 + s * GW;
+  function giftAnim(pd) {
+    const T = pd.total, pre = 1700, Pc = t => (t / T * 100).toFixed(2) + '%', tr = (x, y) => '{transform:translate(' + Math.round(x) + 'px,' + (y || 0) + 'px)}';
+    const slot = Array.from({ length: pd.n }, (_, b) => b);
+    const fr = slot.map(b => ['0%' + tr(gX(pd, b)), Pc(pre) + tr(gX(pd, b))]);
+    pd.sw.forEach(([a, c], s) => {
+      const t0 = pre + s * pd.sp, t1 = t0 + pd.sp * 0.92, tm = (t0 + t1) / 2, ba = slot.indexOf(a), bc = slot.indexOf(c);
+      [[ba, a, c, -1], [bc, c, a, 1]].forEach(([b, from, to, up]) => { fr[b].push(Pc(t0) + tr(gX(pd, from)), Pc(tm) + tr((gX(pd, from) + gX(pd, to)) / 2, up * 70), Pc(t1) + tr(gX(pd, to))); });
+      slot[ba] = c; slot[bc] = a;
+    });
+    fr.forEach((f, b) => f.push('100%' + tr(gX(pd, slot[b]))));
+    const id = 'g8x' + pd.startedAt;
+    return { css: fr.map((f, b) => '@keyframes ' + id + 'b' + b + '{' + f.join('') + '}').join(''), id };
+  }
+  function giftStatic(pd, gem) {
+    return '<div class="gf-stage">' + Array.from({ length: pd.n }, (_, s) => '<div class="gf-box' + (gem === s ? ' win' : '') + '" style="transform:translate(' + gX(pd, s) + 'px,0)">' + X('🎁') +
+      (gem === s ? '<span class="gf-gem stay">' + X('💎') + '</span>' : '') + '<b class="gf-n">' + (s + 1) + '</b></div>').join('') + '</div>';
+  }
+  NGU.gifts = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'show') return center(pd, X('💎'), '¡Sigue el diamante en la tele!', 'Entra en un regalo y se mezclan. ¡No lo pierdas de vista!');
+      if (pd.mine) return center(pd, X('🎁'), 'Has elegido el regalo ' + (pd.mine.i + 1), 'Esperando a los demás…', c.tm);
+      return card(pd, c.tm + '<h2 class="q">¿En qué regalo está el diamante?</h2><div class="gf-opts">' + Array.from({ length: pd.n }, (_, i) => '<button type="button" class="btn gf-opt" data-act="mini" data-op="gf8" data-i="' + i + '">' + X('🎁') + '<b>' + (i + 1) + '</b></button>').join('') + '</div>');
+    },
+    tv(v, pd, top) {
+      if (pd.phase !== 'show') return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question">¿En qué regalo está el diamante?</h2>' + giftStatic(pd, null) + chips8(v, pd));
+      const A = giftAnim(pd), el = elOf(pd);
+      return wrapTV(top, '<style>' + A.css + '</style><h2 class="c-question small">¡Seguid el diamante!</h2><div class="gf-stage">' + Array.from({ length: pd.n }, (_, b) =>
+        '<div class="gf-box" style="animation:' + A.id + 'b' + b + ' ' + pd.total + 'ms linear ' + (-el) + 'ms both">' + X('🎁') + (b === pd.p0 ? '<span class="gf-gem" style="animation-delay:' + (-el) + 'ms">' + X('💎') + '</span>' : '') + '</div>').join('') +
+        '</div><p class="hint-line">' + HOW.gifts + '</p>');
+    },
+    rev(v, pd, o) { return o.fin != null ? giftStatic(pd, o.fin) : ''; },
+    click(b, op, pid, pd, send) { if (op === 'gf8') send('mini', { op: 'pick', i: Number(b.dataset.i) }); }
+  };
+
+  /* ---------- Rompecabezas de caras ---------- */
+  function faceUrl(look) { try { return TE.AvatarKit && look ? TE.AvatarKit.portrait(look) : null; } catch (e) { return null; } }
+  NGU.faces = {
+    tile(pd, p, url) {
+      const pos = ((p % 3) * 50) + '% ' + (Math.floor(p / 3) * 50) + '%';
+      return url ? 'background-image:url(' + url + '),linear-gradient(135deg,' + pd.face.color + ',#fff7d6 55%,#7fd3ff);background-size:300% 300%,300% 300%;background-position:' + pos + ',' + pos : '';
+    },
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if ((pd.fin || {})[pid] != null) return center(pd, X('🧩'), '¡Terminado en ' + segT(pd.fin[pid]) + '!', 'Mira en la tele quién va más rápido.', c.tm);
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { arr: pd.perm.slice(), sel: null }), url = faceUrl(pd.face.look);
+      return card(pd, c.tm + '<h2 class="q">Arma la cara de ' + nm(v, pd.face.id) + '</h2><p class="mg-how">Toca dos piezas para cambiarlas de sitio.</p>' +
+        grid8(9, 3, i => { const p = k.arr[i]; return '<button type="button" class="fz-t' + (k.sel === i ? ' sel' : '') + (p === i ? ' ok' : '') + '" style="' + NGU.faces.tile(pd, p, url) + '" data-act="mini" data-op="fz8" data-i="' + i + '">' + (url ? '' : '<b>' + (p + 1) + '</b>') + '</button>'; }, 'fz-grid'));
+    },
+    tv(v, pd, top) {
+      const PR = pd.prog || {}, FN = pd.fin || {};
+      return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question small">¡Armad la cara de ' + nm(v, pd.face.id) + '!</h2><div class="fz-tv"><div class="fz-face" style="--pc:' + pd.face.color + '">' + (pl(v, pd.face.id).avatar || '') + '</div><div class="fz-bars">' +
+        pd.ids.map(id => { const p = pl(v, id), n = PR[id] || 0, f = FN[id]; return '<div class="fz-bar' + (f != null ? ' done' : '') + '" style="--pc:' + p.color + ';--w:' + (n / 9 * 100).toFixed(0) + '%"><i></i>' + p.avatar + '<b>' + esc(p.name) + '</b><em>' + (f != null ? '✔ ' + segT(f) : n + '/9') + '</em></div>'; }).join('') +
+        '</div></div><p class="hint-line">' + HOW.faces + '</p>');
+    },
+    click(b, op, pid, pd, send) {
+      if (op !== 'fz8') return; const k = LS[key(pid, pd)]; if (!k) return;
+      const i = Number(b.dataset.i);
+      if (k.sel == null) { k.sel = i; vib(8); return; }
+      if (k.sel !== i) { const t = k.arr[k.sel]; k.arr[k.sel] = k.arr[i]; k.arr[i] = t; vib(15); }
+      k.sel = null;
+      const n = k.arr.filter((x, j) => x === j).length;
+      if (n === 9) send('mini', { op: 'done', arr: k.arr.slice() }); else send('mini', { op: 'prog', n });
+    }
+  };
+
+  /* ---------- Cronómetro de parada ---------- */
+  const spV = (ms, w) => { const s = ms / 1000; return s + w.a * (Math.sin(w.w * s + w.ph) - Math.sin(w.ph)) / w.w; };
+  (function spLoop() {
+    try { document.querySelectorAll('.sp8n[data-st]').forEach(el => { const w = { a: +el.dataset.a, w: +el.dataset.w, ph: +el.dataset.ph }; el.textContent = f2(Math.max(0, spV(nowU() - Number(el.dataset.st), w))); }); } catch (e) { /* nada */ }
+    requestAnimationFrame(spLoop);
+  })();
+  NGU.stopw = {
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      const tg = '<div class="sp8-goal"><small>PARA EN</small><b>' + f2(pd.goal8) + '</b></div>';
+      if (pd.phase === 'ready') return card(pd, tg + '<h2 class="q">¡Preparados…!</h2><p class="mg-how">El número va a correr: a veces rápido y a veces lento. ¡Páralo justo en el objetivo!</p>');
+      const k = LS[key(pid, pd)];
+      if (pd.mine || (k && k.v != null)) return card(pd, tg + '<div class="sp8-num stop">' + f2(pd.mine ? pd.mine.val : k.v) + '</div><p class="mg-how">¡Parado! Esperando a los demás…</p>');
+      return card(pd, tg + '<div class="sp8-num"><span class="sp8n" data-st="' + pd.startedAt + '" data-a="' + pd.wave.a + '" data-w="' + pd.wave.w + '" data-ph="' + pd.wave.ph + '">0,00</span></div><button type="button" class="sw-btn stop" data-act="mini" data-op="st8"><span>PARA</span></button>');
+    },
+    tv(v, pd, top) {
+      return wrapTV(top, '<div class="sp8-goal tv"><small>OBJETIVO</small><b>' + f2(pd.goal8) + '</b></div><p class="hint-line">' + (pd.phase === 'ready' ? '¡Preparados en el móvil…!' : HOW.stopw) + '</p>' + (pd.phase === 'run' ? chips8(v, pd) : ''));
+    },
+    click(b, op, pid, pd, send) {
+      if (op !== 'st8' || pd.phase !== 'run') return;
+      const kk = key(pid, pd); if (LS[kk] && LS[kk].v != null) return;
+      const ms = Math.max(0, Math.round(nowU() - pd.startedAt)); LS[kk] = { v: Math.round(spV(ms, pd.wave) * 100) / 100 };
+      send('mini', { op: 'stop', ms }); vib([20, 30, 20]);
+    }
+  };
+
+  /* ---------- Recolector de frutas ---------- */
+  NGU.fruit = {
+    tree(pd, cell) { return '<div class="fr-tree"><div class="fr-crown">' + grid8(pd.n, pd.cols, cell, 'fr-grid') + '</div><div class="fr-trunk"></div></div>'; },
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'show') return center(pd, X('🌳'), '¡Memoriza el árbol de la tele!', 'Fíjate bien dónde está cada fruta: en unos segundos se taparán con hojas.');
+      if (pd.phase === 'flash') { const ok = (pd.lastOk || []).includes(pid); return center(pd, X(ok ? '✅' : '❌'), ok ? '¡Bien! +1' : 'No era esa hoja', 'Mira en la tele dónde estaba ' + X(pd.okE || '')); }
+      const info = '<p class="mg-how">Pregunta ' + Math.min(3, pd.qk + 1) + ' de 3 · aciertos: <b>' + ((pd.pts || {})[pid] || 0) + '</b></p>';
+      if (pd.mine) return card(pd, info + '<h2 class="q">Elegido. Esperando…</h2>' + grid8(pd.n, pd.cols, i => '<span class="fr-leaf' + (pd.mine.c === i ? ' sel' : '') + '">' + X('🍃') + '</span>', 'fr-grid ph'));
+      return card(pd, c.tm + info + '<h2 class="q">¿Dónde estaba ' + esc(pd.askN || '') + '? ' + X(pd.askE || '') + '</h2>' + grid8(pd.n, pd.cols, i => '<button type="button" class="fr-leaf" data-act="mini" data-op="fr8" data-c="' + i + '">' + X('🍃') + '</button>', 'fr-grid ph'));
+    },
+    tv(v, pd, top) {
+      let body, h;
+      if (pd.phase === 'show') { h = '¡Memorizad dónde está cada fruta!'; body = NGU.fruit.tree(pd, i => '<span class="fr-cell">' + X((pd.grid || [])[i] || '') + '</span>'); }
+      else if (pd.phase === 'flash') { h = 'Aquí estaba ' + X(pd.okE || '') + ' · aciertan: ' + esc((pd.lastOk || []).map(id => pl(v, id).name).join(', ') || 'nadie'); body = NGU.fruit.tree(pd, i => '<span class="fr-cell' + (i === pd.okc ? ' ok' : '') + '">' + X(i === pd.okc ? pd.okE : '🍃') + '</span>'); }
+      else { h = '¿Dónde estaba ' + esc(pd.askN || '') + '? ' + X(pd.askE || ''); body = NGU.fruit.tree(pd, () => '<span class="fr-cell">' + X('🍃') + '</span>'); }
+      return wrapTV(top, (pd.phase !== 'flash' ? U.timerHTML(pd) : '') + '<h2 class="c-question small">' + h + '</h2>' + body + (pd.phase === 'ask' ? chips8(v, pd) : '<p class="hint-line">' + HOW.fruit + '</p>'));
+    },
+    click(b, op, pid, pd, send) { if (op === 'fr8') send('mini', { op: 'cell', c: Number(b.dataset.c) }); }
+  };
+
+  /* ---------- Elegir minijuego ---------- */
+  Object.assign(NAME, { pick: 'Elige minijuego' }); Object.assign(ICON, { pick: '🎯' });
+  Object.assign(HOW, { pick: 'El que va último elige el próximo minijuego entre 3.' });
+  NGU.pick = {
+    phone(v, pd, pid, c) {
+      const ch = nm(v, pd.chooser);
+      if (pd.phase !== 'choose') return center(pd, X('🎯'), '¡Elegido!', 'Empieza enseguida…', c.tm);
+      if (pid !== pd.chooser) return center(pd, X('🎯'), ch + ' elige el minijuego', 'Va el último y puede escoger entre: ' + pd.opts.map(k => NAME[k] || k).join(', ') + '.', c.tm);
+      return card(pd, c.tm + '<h2 class="q">¡Vas el último! Elige minijuego</h2><div class="mg-list">' + pd.opts.map((k, i) =>
+        '<button type="button" class="btn ng-pick8" data-act="mini" data-op="pk8" data-i="' + i + '">' + X(ICON[k] || '🎲') + ' <b>' + esc(NAME[k] || k) + '</b><small>' + esc(HOW[k] || '') + '</small></button>').join('') + '</div>');
+    },
+    tv(v, pd, top) {
+      return wrapTV(top, U.timerHTML(pd) + '<div class="ng-holder">' + ava(v, pd.chooser, 'xl') + '<small>va el último</small></div><h2 class="c-question">' + esc(nm(v, pd.chooser)) + ' elige el minijuego</h2>' +
+        '<div class="ng-pick8tv">' + pd.opts.map(k => '<div>' + X(ICON[k] || '🎲') + '<b>' + esc(NAME[k] || k) + '</b><small>' + esc(HOW[k] || '') + '</small></div>').join('') + '</div>');
+    },
+    click(b, op, pid, pd, send) { if (op === 'pk8') send('mini', { op: 'choose', i: Number(b.dataset.i) }); }
+  };
+
+
+  /* ================= v9: 5 minijuegos más: móvil y tele ================= */
+  Object.assign(NAME, { chop: 'Corta verduras', knit: 'Tejer bufanda', tune: 'Sintonía', flip: 'Libreta de caras', map: 'Mapa de capitales' });
+  Object.assign(ICON, { chop: '🔪', knit: '🧶', tune: '📺', flip: '📒', map: '🗺️' });
+  Object.assign(HOW, {
+    chop: '¡Toca sin parar para cortar tu verdura! El primero en terminar gana.',
+    knit: 'Toca para tejer, pero sin pasarte: si se acaba la energía, se te enreda la lana.',
+    tune: 'Toca cada pantalla para cambiar de canal hasta que quede igual que en la tele.',
+    flip: 'Pasa las páginas de tu libreta y pulsa «¡Es esta!» cuando veas la cara de la tele. 3 rondas.',
+    map: 'Sale una capital: toca su país en el mapa. 3 rondas; el más rápido suma más.'
+  });
+  // envío con freno (como mucho cada 350 ms) y con un último envío pendiente
+  function thr9(k, fn, ms) {
+    const t = nowU(), gap = ms || 350; clearTimeout(k.tt);
+    if (t - (k.ls || 0) >= gap) { k.ls = t; fn(); } else k.tt = setTimeout(() => { k.ls = nowU(); fn(); }, gap - (t - k.ls));
+  }
+  const live9 = pd => nowU() < pd.deadline - 60;
+  const ready9 = (pd, icon, txt) => center(pd, X(icon), '¡Preparados…!', txt);
+  const bars9 = (v, pd, f, lab, done) => '<div class="tp9-bars">' + pd.ids.map(id => {
+    const p = pl(v, id), w = Math.max(0, Math.min(100, f(id) * 100));
+    return '<div class="tp9-bar' + (done && done(id) ? ' done' : '') + '" style="--pc:' + p.color + ';--w:' + w.toFixed(0) + '%"><i></i><span class="tp9-av">' + (p.avatar || '') + '</span><b>' + esc(p.name) + '</b><em>' + lab(id) + '</em></div>';
+  }).join('') + '</div>';
+  const roundInfo9 = (pd, pid) => '<p class="mg-how">Ronda ' + pd.round + ' de ' + pd.rounds + (pid ? ' · tus puntos: <b>' + ((pd.pts || {})[pid] || 0) + '</b>' : '') + '</p>';
+  const lastOk9 = (v, pd) => (pd.lastOk || []).length ? pd.lastOk.map((id, i) => nm(v, id) + ' +' + ((pd.lastPts || [])[i] || 1)).join(' · ') : 'nadie';
+
+  /* ---------- Corta verduras ---------- */
+  NGU.chop = { quiet: true,
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'ready') return ready9(pd, pd.veg, 'Cuando empiece, toca el botón sin parar para cortar tu verdura.');
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { n: 0 });
+      if (pd.mine || k.done != null) return center(pd, X('🔪'), '¡Cortada en ' + segT(pd.mine ? pd.mine.at : k.done) + '!', 'Mira en la tele cómo van los demás.', c.tm);
+      return card(pd, c.tm + '<div class="ch9-3d"><div class="ch9-veg" style="--s:' + (1 - k.n / pd.goal9 * .7).toFixed(2) + '">' + X(pd.veg) + '</div></div>' +
+        '<div class="tp9-prog"><div class="tp9-fill" style="width:' + (k.n / pd.goal9 * 100).toFixed(0) + '%"></div></div><p class="mg-how ch9-n">' + k.n + ' / ' + pd.goal9 + '</p>' +
+        '<button type="button" class="tp9-btn" data-tap8="1">' + X('🔪') + '<b>¡CORTA!</b></button>');
+    },
+    tap(el, pid, pd, send, root) {
+      const k = LS[key(pid, pd)]; if (!k || k.done != null || pd.phase !== 'play' || !live9(pd)) return;
+      k.n++; vib(6);
+      if (k.v3) k.v3.cut(k.n, pd.goal9);
+      const veg = root.querySelector('.ch9-veg'), bar = root.querySelector('.tp9-fill'), n = root.querySelector('.ch9-n');
+      if (veg) { veg.style.setProperty('--s', (1 - k.n / pd.goal9 * .7).toFixed(2)); veg.classList.remove('hit'); void veg.offsetWidth; veg.classList.add('hit'); }
+      if (bar) bar.style.width = (k.n / pd.goal9 * 100).toFixed(0) + '%';
+      if (n) n.textContent = k.n + ' / ' + pd.goal9;
+      if (k.n >= pd.goal9) { clearTimeout(k.tt); k.done = Math.round(nowU() - pd.startedAt); send('mini', { op: 'done', ms: k.done }); vib([30, 40, 30]); return; }
+      thr9(k, () => { if (k.done == null && live9(pd)) send('mini', { op: 'prog', n: k.n }); });
+    },
+    rev(v, pd) { return window.TE.Stage9 && window.TE.Stage9.chop(v, pd) ? '<div class="st3-host rev"></div>' : ''; },
+    tv(v, pd, top) {
+      if (window.TE.Stage9 && window.TE.Stage9.chop(v, pd)) {
+        const over = pd.phase === 'ready' ? '<div class="st3-over">¡Preparados para cortar…!</div>' : '';
+        return wrapTV(top, (pd.phase === 'ready' ? '' : U.timerHTML(pd)) + '<div class="st3-host">' + over + '</div><p class="hint-line">' + HOW.chop + '</p>');
+      }
+      if (pd.phase === 'ready') return wrapTV(top, '<div class="ng-big9">' + X(pd.veg) + '</div><h2 class="c-question">¡Preparados para cortar…!</h2><p class="hint-line">' + HOW.chop + '</p>');
+      return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question small">¡A cortar ' + X(pd.veg) + '!</h2>' +
+        bars9(v, pd, id => (pd.prog[id] || 0) / pd.goal9, id => pd.fin[id] != null ? '✔ ' + segT(pd.fin[id]) : (pd.prog[id] || 0) + ' / ' + pd.goal9, id => pd.fin[id] != null) +
+        '<p class="hint-line">' + HOW.chop + '</p>');
+    }
+  };
+
+  /* ---------- Tejer bufanda ---------- */
+  const KN9 = pd => (pd.kidsK ? { cost: 6, reg: 30, tangle: 1300 } : { cost: 8, reg: 34, tangle: 1800 });
+  const en9 = (k, pd, t) => Math.min(100, k.e + Math.max(0, t - k.et) / 1000 * KN9(pd).reg);
+  NGU.knit = { quiet: true,
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'ready') return ready9(pd, '🧶', 'Toca para tejer. ¡Ojo! Si tocas demasiado rápido se acaba la energía y se te enreda la lana.');
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { n: 0, e: 100, et: nowU(), tg: 0 });
+      return card(pd, c.tm + '<div class="kn9" data-k="' + esc(kk) + '"><div class="kn9-scarf"><i style="width:' + Math.min(100, k.n / 80 * 100).toFixed(0) + '%"></i></div>' +
+        '<p class="kn9-n"><b>' + k.n + '</b> cm</p><div class="kn9-e"><span>Energía</span><div><i></i></div></div><p class="kn9-st">&nbsp;</p></div>' +
+        '<button type="button" class="tp9-btn knit" data-tap8="1">' + X('🧶') + '<b>¡TEJE!</b></button>');
+    },
+    tap(el, pid, pd, send, root) {
+      const k = LS[key(pid, pd)], t = nowU(); if (!k || pd.phase !== 'play' || !live9(pd)) return;
+      if (t < k.tg) { vib(40); return; }
+      const P9 = KN9(pd), e = en9(k, pd, t) - P9.cost;
+      if (e <= 0) { k.tg = t + P9.tangle; k.e = 0; k.et = k.tg; vib([60, 40, 60]); send('mini', { op: 'tg' }); return; }
+      k.e = e; k.et = t; k.n++; vib(5);
+      const sc = root.querySelector('.kn9-scarf i'), n = root.querySelector('.kn9-n b');
+      if (sc) sc.style.width = Math.min(100, k.n / 80 * 100).toFixed(0) + '%';
+      if (n) n.textContent = k.n;
+      thr9(k, () => { if (live9(pd)) send('mini', { op: 'prog', n: k.n }); }, 300);
+    },
+    paint(el) {
+      const k = LS[el.dataset.k]; if (!k) return;
+      const pd = k.pd9, t = nowU(), tg = t < k.tg, e = tg ? 0 : (pd ? en9(k, pd, t) : k.e);
+      const bar = el.querySelector('.kn9-e i'), st = el.querySelector('.kn9-st');
+      if (bar) { bar.style.width = e.toFixed(0) + '%'; bar.style.background = e < 30 ? '#ff6b5e' : e < 60 ? '#ffd23f' : '#4ade80'; }
+      el.classList.toggle('tg', tg);
+      if (st) st.textContent = tg ? '¡Se te ha enredado la lana! Espera…' : e < 30 ? '¡Cuidado, poca energía!' : ' ';
+    },
+    rev(v, pd) { return window.TE.Stage9 && window.TE.Stage9.knit(v, pd) ? '<div class="st3-host rev"></div>' : ''; },
+    tv(v, pd, top) {
+      if (window.TE.Stage9 && window.TE.Stage9.knit(v, pd)) {
+        const over = pd.phase === 'ready' ? '<div class="st3-over">¡Preparados para tejer…!</div>' : '';
+        return wrapTV(top, (pd.phase === 'ready' ? '' : U.timerHTML(pd)) + '<div class="st3-host">' + over + '</div><p class="hint-line">' + HOW.knit + '</p>');
+      }
+      if (pd.phase === 'ready') return wrapTV(top, '<div class="ng-big9">' + X('🧶') + '</div><h2 class="c-question">¡Preparados para tejer…!</h2><p class="hint-line">' + HOW.knit + '</p>');
+      const mx = Math.max(60, ...pd.ids.map(id => pd.cm[id] || 0));
+      return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question small">¿Quién teje la bufanda más larga? ' + X('🧶') + '</h2>' +
+        '<div class="kn9-tv">' + bars9(v, pd, id => (pd.cm[id] || 0) / mx, id => (pd.cm[id] || 0) + ' cm') + '</div><p class="hint-line">' + HOW.knit + '</p>');
+    }
+  };
+
+  /* ---------- Sintonía ---------- */
+  NGU.tune = { quiet: true,
+    screens(pd, arr, btn) {
+      return '<div class="tu9-row' + (btn ? ' ph' : '') + '">' + arr.map((x, i) => btn
+        ? '<button type="button" class="tu9-tv' + (x === pd.target[i] ? ' ok' : '') + '" data-tap8="1" data-i="' + i + '"><span>' + X(pd.chans[x]) + '</span></button>'
+        : '<span class="tu9-tv"><span>' + X(pd.chans[x]) + '</span></span>').join('') + '</div>';
+    },
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'ready') return ready9(pd, '📺', 'Toca cada pantalla para cambiar de canal hasta que queden igual que las de la tele.');
+      const kk = key(pid, pd), k = LS[kk] || (LS[kk] = { arr: pd.init.slice() });
+      if (pd.mine || k.done) return center(pd, X('📺'), '¡Sintonizado' + (pd.mine ? ' en ' + segT(pd.mine.at) : '') + '!', 'Mira en la tele cómo van los demás.', c.tm);
+      return card(pd, c.tm + '<p class="mg-how">Así tienen que quedar (míralo también en la tele):</p>' + NGU.tune.screens(pd, pd.target, false) +
+        '<p class="mg-how">Tus pantallas: toca para cambiar de canal</p>' + NGU.tune.screens(pd, k.arr, true));
+    },
+    tap(el, pid, pd, send, root) {
+      const k = LS[key(pid, pd)]; if (!k || k.done || pd.phase !== 'play' || !live9(pd)) return;
+      const i = Number(el.dataset.i); if (!(i >= 0 && i < pd.ns)) return;
+      k.arr[i] = (k.arr[i] + 1) % pd.nch; vib(8);
+      el.innerHTML = '<span>' + X(pd.chans[k.arr[i]]) + '</span>'; el.classList.toggle('ok', k.arr[i] === pd.target[i]);
+      el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit');
+      const n = k.arr.filter((x, j) => x === pd.target[j]).length;
+      if (n === pd.ns) { clearTimeout(k.tt); k.done = true; send('mini', { op: 'done', arr: k.arr.slice() }); vib([30, 40, 30]); return; }
+      thr9(k, () => { if (!k.done && live9(pd)) send('mini', { op: 'prog', n }); });
+    },
+    tv(v, pd, top) {
+      if (pd.phase === 'ready') return wrapTV(top, '<h2 class="c-question">¡Preparados para sintonizar…!</h2>' + NGU.tune.screens(pd, pd.target, false) + '<p class="hint-line">' + HOW.tune + '</p>');
+      return wrapTV(top, U.timerHTML(pd) + '<h2 class="c-question small">Dejad vuestras pantallas así:</h2>' + NGU.tune.screens(pd, pd.target, false) +
+        bars9(v, pd, id => (pd.prog[id] || 0) / pd.ns, id => pd.fin[id] != null ? '✔ ' + segT(pd.fin[id]) : (pd.prog[id] || 0) + ' de ' + pd.ns, id => pd.fin[id] != null));
+    }
+  };
+
+  /* ---------- Libreta de caras ---------- */
+  NGU.flip = { quiet: true,
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      if (pd.phase === 'show') {
+        const i = (pd.lastOk || []).indexOf(pid);
+        return center(pd, X(pd.face), i >= 0 ? '¡La encontraste! +' + ((pd.lastPts || [])[i] || 1) : 'Esta vez no', roundInfo9(pd, pid).replace(/<\/?p[^>]*>/g, ''));
+      }
+      if (pd.mine) return center(pd, X(pd.mine.ok ? '✅' : '❌'), pd.mine.ok ? '¡Encontrada!' : 'No era esa…', 'Espera a la siguiente ronda.', c.tm);
+      const book = pd.book || [], kk = key(pid, pd), k = LS[kk] || (LS[kk] = { p: 0 });
+      return card(pd, c.tm + roundInfo9(pd, pid) + '<h2 class="q">' + (pd.kidsF ? 'Busca esta cara: ' + X(pd.face) : '¡Busca la cara que sale en la tele!') + '</h2>' +
+        '<div class="fl9-page"><small class="fl9-pn">Página ' + (k.p + 1) + ' de ' + book.length + '</small><span class="fl9-face">' + X(book[k.p] || '') + '</span></div>' +
+        '<div class="fl9-btns"><button type="button" class="btn fl9-pass" data-tap8="1">Pasar página ▶</button><button type="button" class="btn big go fl9-ok" data-act="mini" data-op="fl8">¡Es esta!</button></div>');
+    },
+    tap(el, pid, pd, send, root) {
+      const k = LS[key(pid, pd)], book = pd.book || []; if (!k || !book.length || pd.phase !== 'play') return;
+      k.p = (k.p + 1) % book.length; vib(6);
+      const f = root.querySelector('.fl9-face'), pn = root.querySelector('.fl9-pn'), pg = root.querySelector('.fl9-page');
+      if (f) f.innerHTML = X(book[k.p]);
+      if (pn) pn.textContent = 'Página ' + (k.p + 1) + ' de ' + book.length;
+      if (pg) { pg.classList.remove('turn'); void pg.offsetWidth; pg.classList.add('turn'); }
+    },
+    click(b, op, pid, pd, send) { if (op !== 'fl8') return; const k = LS[key(pid, pd)]; send('mini', { op: 'found', i: k ? k.p : 0 }); },
+    tv(v, pd, top) {
+      if (pd.phase === 'show') return wrapTV(top, '<div class="ng-big9">' + X(pd.face) + '</div><h2 class="c-question small">La encuentran: ' + esc(lastOk9(v, pd)) + '</h2>' + roundInfo9(pd));
+      return wrapTV(top, U.timerHTML(pd) + roundInfo9(pd) + '<h2 class="c-question small">¡Buscad esta cara en vuestra libreta!</h2><div class="ng-big9 fl9-tv">' + X(pd.face) + '</div>' + chips8(v, pd));
+    }
+  };
+
+  /* ---------- Mapa de capitales ---------- */
+  const REG9 = { eu: 'Europa', am: 'América', wo: 'El mundo' };
+  NGU.map = { quiet: true,
+    map(pd, cell, tv) { return '<div class="mp9-map mp9-' + pd.q.reg + (tv ? ' tv' : '') + '"><span class="mp9-reg">' + REG9[pd.q.reg] + '</span>' + pd.q.opts.map(cell).join('') + '</div>'; },
+    q(pd) { return '¿De qué país es la capital <b>' + esc(pd.q.cap) + '</b>?'; },
+    phone(v, pd, pid, c) {
+      if (!c.inG) return c.watch;
+      const mine = pd.mine, pos = o => 'left:' + o.x + '%;top:' + o.y + '%';
+      if (pd.phase === 'show') {
+        const i = (pd.lastOk || []).indexOf(pid);
+        return card(pd, roundInfo9(pd, pid) + '<h2 class="q">' + (i >= 0 ? '¡Bien! +' + ((pd.lastPts || [])[i] || 1) : 'Esta vez no') + '</h2>' +
+          NGU.map.map(pd, (o, j) => '<span class="mp9-pin' + (j === pd.okI ? ' ok' : mine && mine.i === j ? ' bad' : '') + '" style="' + pos(o) + '">' + esc(o.n) + '</span>'));
+      }
+      if (mine) return card(pd, c.tm + roundInfo9(pd, pid) + '<h2 class="q">Elegido. Esperando a los demás…</h2>' +
+        NGU.map.map(pd, (o, j) => '<span class="mp9-pin' + (mine.i === j ? ' sel' : '') + '" style="' + pos(o) + '">' + esc(o.n) + '</span>'));
+      return card(pd, c.tm + roundInfo9(pd, pid) + '<h2 class="q">' + NGU.map.q(pd) + '</h2>' +
+        NGU.map.map(pd, (o, j) => '<button type="button" class="mp9-pin" style="' + pos(o) + '" data-act="mini" data-op="mp8" data-i="' + j + '">' + esc(o.n) + '</button>'));
+    },
+    click(b, op, pid, pd, send) { if (op === 'mp8') send('mini', { op: 'pick', i: Number(b.dataset.i) }); },
+    tv(v, pd, top) {
+      const pos = o => 'left:' + o.x + '%;top:' + o.y + '%';
+      if (pd.phase === 'show') return wrapTV(top, roundInfo9(pd) + '<h2 class="c-question small">' + esc(pd.q.cap) + ' es la capital de <b>' + esc(pd.q.opts[pd.okI] ? pd.q.opts[pd.okI].n : '?') + '</b> · aciertan: ' + esc(lastOk9(v, pd)) + '</h2>' +
+        NGU.map.map(pd, (o, j) => '<span class="mp9-pin' + (j === pd.okI ? ' ok' : '') + '" style="' + pos(o) + '">' + esc(o.n) + '</span>', true));
+      return wrapTV(top, U.timerHTML(pd) + roundInfo9(pd) + '<h2 class="c-question small">' + NGU.map.q(pd) + '</h2>' +
+        NGU.map.map(pd, o => '<span class="mp9-pin" style="' + pos(o) + '">' + esc(o.n) + '</span>', true) + chips8(v, pd));
+    }
+  };
+
+  // toques al instante (al apretar el dedo) para los minijuegos de tocar rápido
+  function mount9(root, pid, v, send) {
+    const pd = v && v.pending; if (!pd || pd.type !== 'mini' || !NGU[pd.kind] || !NGU[pd.kind].tap) return;
+    if (pd.kind === 'knit') { const k = LS[key(pid, pd)]; if (k) k.pd9 = pd; }
+    if (pd.kind === 'chop') {
+      const k = LS[key(pid, pd)], host = root.querySelector('.ch9-3d');
+      if (k && host && window.TE.Stage9) { const v3 = window.TE.Stage9.vegPhone(host, pd.veg); if (v3) { k.v3 = v3; host.classList.add('on'); v3.cut(k.n, pd.goal9); } }
+    }
+    root.querySelectorAll('[data-tap8]').forEach(el => {
+      el.addEventListener('pointerdown', ev => { ev.preventDefault(); try { NGU[pd.kind].tap(el, pid, pd, send, root); } catch (e) { console.error(e); } }, { passive: false });
+    });
+  }
+  // en estos minijuegos el móvil no se redibuja cada vez que otro avanza (así no se pierden toques)
+  function phSeq9(pd) { const G = NGU[pd.kind]; return G && G.quiet ? [pd.phase, pd.round || 0, pd.mine ? 1 : 0, pd.startedAt].join('|') : pd.seq; }
+  (function loop9() {
+    try { const el = document.querySelector('.kn9[data-k]'); if (el) NGU.knit.paint(el); } catch (e) { /* nada */ }
+    requestAnimationFrame(loop9);
+  })();
+
   /* ---------- MÓVIL ---------- */
   const label = pd => (pd.duel ? '⚔️ Duelo · ' : ICON[pd.kind] + ' ') + NAME[pd.kind];
-  const prize = pd => (pd.duel ? '⚔️ ±' + pd.reward + ' casillas' : '+' + pd.reward + ' casillas');
+  const prize = pd => (pd.kind === 'pick' ? 'el último elige' : pd.duel ? '⚔️ ±' + pd.reward + ' casillas' : '+' + pd.reward + ' casillas');
   function head(pd, mine) {
     return '<div class="ph-q-head"><span class="cat" style="--cat:' + (pd.duel ? '#ef4444' : '#9b6bff') + '">' + label(pd) + '</span>' + (mine ? '<span class="rw">' + prize(pd) + '</span>' : '') + '</div>';
   }
   function reveal(v, pd) {
     const o = pd.out || {}, win = o.win || [];
     let body = '';
-    if (pd.kind === 'clock') body = '<div class="mg-list">' + (o.rows || []).map((r, i) => '<div class="mg-row' + (win.includes(r.id) ? ' win' : '') + '">' + (i + 1) + '. <b>' + nm(v, r.id) + '</b>' + seg(r.ms) + '</div>').join('') + '</div><p class="mg-how">Objetivo: ' + tgt(pd.target) + '</p>';
+    if (NGU[pd.kind]) body = (o.big ? '<div class="mg-word">' + esc(o.big) + '</div>' : '') + rowsPh(v, o.rows || []);
+    else if (pd.kind === 'clock') body = '<div class="mg-list">' + (o.rows || []).map((r, i) => '<div class="mg-row' + (win.includes(r.id) ? ' win' : '') + '">' + (i + 1) + '. <b>' + nm(v, r.id) + '</b>' + seg(r.ms) + '</div>').join('') + '</div><p class="mg-how">Objetivo: ' + tgt(pd.target) + '</p>';
     else if (pd.kind === 'relay') body = '<div class="mg-list"><div class="mg-row"><b>' + nm(v, pd.ids[0]) + '</b>' + seg(o.parts[0]) + '</div><div class="mg-row"><b>' + nm(v, pd.ids[1]) + '</b>' + seg(o.parts[1]) + '</div><div class="mg-row' + (win.length ? ' win' : '') + '"><b>Total</b>' + seg(o.sum) + '</div></div><p class="mg-how">Objetivo: ' + tgt(pd.target) + '</p>';
     else if (pd.kind === 'moon') body = '<div class="mg-list">' + (o.rows || []).map(r => '<div class="mg-row' + (win.includes(r.id) ? ' win' : r.valid ? '' : ' bad') + '"><b>' + nm(v, r.id) + '</b>' + (r.text ? esc(r.text) : '—') + (win.includes(r.id) ? ' 🌙' : r.valid && r.count > 1 ? ' ×' + r.count : '') + '</div>').join('') + '</div>';
     else if (pd.kind === 'sync') body = '<div class="mg-list"><div class="mg-row"><b>' + nm(v, pd.ids[0]) + '</b>' + esc(o.answers[0] || '—') + '</div><div class="mg-row"><b>' + nm(v, pd.ids[1]) + '</b>' + esc(o.answers[1] || '—') + '</div></div>';
@@ -8480,6 +9798,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
     if (pd.phase === 'reveal') return reveal(v, pd);
     const inG = pd.ids.includes(pid), names = pd.ids.map(id => nm(v, id)).join(' y '), tm = U.timerHTML(pd, 'ph');
     const watch = '<div class="ph-card center"><div class="big">' + ICON[pd.kind] + '</div><h2>' + NAME[pd.kind] + '</h2><p>Juegan ' + names + '. ¡Mira la pantalla!</p></div>';
+    if (NGU[pd.kind]) return NGU[pd.kind].phone(v, pd, pid, { inG, watch, tm });
     if (pd.kind === 'clock') {
       if (!inG) return pd.duel ? '<div class="ph-card center"><div class="big">⚔️</div><h2>¡Duelo!</h2><p>' + names.replace(' y ', ' contra ') + '. ¡Mira la pantalla!</p></div>' : watch;
       if (pd.done[pid]) { const left = pd.ids.filter(id => !pd.done[id]).length; return '<div class="ph-card mg-card">' + head(pd, true) + '<div class="sw">' + dial(pd, 'done', left ? 'Faltan ' + left + ' por parar' : 'Calculando…') + '</div></div>'; }
@@ -8529,6 +9848,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
   function click(b, pid, v, send) {
     const pd = v && v.pending; if (!pd || pd.type !== 'mini') return;
     const op = b.dataset.op, k = key(pid, pd);
+    if (NGU[pd.kind] && NGU[pd.kind].click) { NGU[pd.kind].click(b, op, pid, pd, send); return; }
     if (op === 'start') { LS[k] = { t0: performance.now() }; if (navigator.vibrate) try { navigator.vibrate(15); } catch (e) { /* nada */ } }
     else if (op === 'stop') {
       const s = LS[k]; if (!s || s.stopped) return;
@@ -8543,6 +9863,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
   }
   function submit(val, v, send) {
     const pd = v && v.pending; if (!pd || pd.type !== 'mini' || !val) return null;
+    if (pd.kind === 'count') return send('mini', { op: 'num', n: val });
     return send('mini', { op: pd.kind === 'describe' ? 'guess' : 'word', text: val });
   }
 
@@ -8556,7 +9877,8 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
     if (pd.phase === 'reveal') {
       const o = pd.out || {}, win = o.win || [];
       let body = '';
-      if (pd.kind === 'clock') body = '<ol class="mg-tvlist">' + (o.rows || []).map((r, i) => '<li class="' + (win.includes(r.id) ? 'win' : '') + '">' + (i === 0 && win.length ? '🏆' : (i + 1) + '.') + ' <b>' + nm(v, r.id) + '</b>' + seg(r.ms) + (r.diff != null ? ' <small>(' + (r.ms >= pd.target ? '+' : '−') + seg(r.diff) + ')</small>' : '') + '</li>').join('') + '</ol>';
+      if (NGU[pd.kind]) body = (o.big ? '<div class="mg-big ng-bigtxt">' + esc(o.big) + '</div>' : '') + (NGU[pd.kind].rev ? NGU[pd.kind].rev(v, pd, o) : '') + rowsTV(v, o.rows || []);
+      else if (pd.kind === 'clock') body = '<ol class="mg-tvlist">' + (o.rows || []).map((r, i) => '<li class="' + (win.includes(r.id) ? 'win' : '') + '">' + (i === 0 && win.length ? '🏆' : (i + 1) + '.') + ' <b>' + nm(v, r.id) + '</b>' + seg(r.ms) + (r.diff != null ? ' <small>(' + (r.ms >= pd.target ? '+' : '−') + seg(r.diff) + ')</small>' : '') + '</li>').join('') + '</ol>';
       if (pd.kind === 'clock' && pd.duel && o.slow) {          // duelo muy ajustado: repetición a cámara lenta
         const rs = (o.rows || []).filter(r => r.ms != null).slice(0, 2), mx = Math.max(pd.target, ...rs.map(r => r.ms)) * 1.12;
         const sl = (pd.target - 2000) / mx * 100, w = x => Math.max(0, (x / mx * 100 - sl) / (100 - sl) * 100);   // se amplían los últimos 2 segundos
@@ -8570,8 +9892,9 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
       else if (pd.kind === 'describe') body = '<div class="mg-big">' + esc(o.word || '') + '</div>';
       else if (pd.kind === 'chain') body = '<div class="mg-tvchain">' + (o.words || []).map(w => '<span>' + esc(w) + '</span>').join('') + '</div>';
       else if (pd.kind === 'blur' && pd.img) body = blurPic(pd, true) + '<div class="mg-big">' + esc(o.word || '') + '</div>';
-      return '<div class="c-mini">' + top + '<h2 class="c-question">' + esc(o.title || '') + '</h2><p class="hint-line">' + esc(o.text || '') + (pd.target ? ' · objetivo ' + tgt(pd.target) : '') + '</p>' + body + '</div>';
+      return '<div class="c-mini' + (NGU[pd.kind] ? ' c-wide c-ng' : '') + '">' + top + '<h2 class="c-question">' + esc(o.title || '') + '</h2><p class="hint-line">' + esc(o.text || '') + (pd.target ? ' · objetivo ' + tgt(pd.target) : '') + '</p>' + body + '</div>';
     }
+    if (NGU[pd.kind]) return NGU[pd.kind].tv(v, pd, top);
     if (pd.kind === 'clock') return '<div class="c-mini">' + top + '<div class="mg-big">' + tgt(pd.target) + '</div><p class="hint-line">' + HOW.clock + '</p>' + chips(v, pd) + '</div>';
     if (pd.kind === 'relay') {
       const who = nm(v, pd.ids[pd.step]);
@@ -8596,7 +9919,7 @@ body.phase-ended #cam .tvc { width: 1440px !important; height: 980px !important;
     }
     return '<div class="c-mini">' + top + '</div>';
   }
-  TE.MiniUI = { phone, tv, click, submit, localSig, NAME };
+  TE.MiniUI = { phone, tv, click, submit, localSig, NAME, mount: mount9, phSeq: phSeq9 };
 })();
 </script>
 
@@ -9748,6 +11071,48 @@ return { SYSTEM, TASKS, extractJson, str, num, list, TONES };
           if (pd.kind === 'blur' && !R[b.id]) { const wait = 4000 + r() * 14000; once('mb:' + key, wait, () => {
             const sec = pd.secret || {}, ok = r() < 0.25 + wait / 26000, wr = pd.opts.map((_, i) => i).filter(i => i !== sec.ok);
             act(b.id, { type: 'mini', op: 'pick', i: ok && sec.ok != null ? sec.ok : wr[Math.floor(r() * wr.length)] }); }); }
+          /* --- minijuegos v8 --- */
+          const C8 = (once.c8 = once.c8 || {}), keep8 = (k, f) => (k in C8 ? C8[k] : (C8[k] = f()));
+          /* --- minijuegos v9 --- */
+          if (pd.kind === 'chop' && pd.phase === 'play' && (pd.fin || {})[b.id] == null) { const T = keep8('ch:' + key, () => 5500 + r() * 9000);
+            [0.33, 0.66].forEach((f, j) => once('cp' + j + ':' + key, T * f, () => act(b.id, { type: 'mini', op: 'prog', n: Math.floor(pd.goal9 * f) })));
+            once('cd:' + key, T, () => act(b.id, { type: 'mini', op: 'done', ms: Math.round(T) })); }
+          if (pd.kind === 'knit' && pd.phase === 'play') { const C = keep8('kn:' + key, () => 40 + r() * 30);
+            for (let j = 1; j <= 10; j++) once('kn' + j + ':' + key, j * 1400, () => act(b.id, { type: 'mini', op: 'prog', n: Math.round(C * j / 10) }));
+            if (C < 52) once('kt:' + key, 4000 + r() * 6000, () => act(b.id, { type: 'mini', op: 'tg' })); }
+          if (pd.kind === 'tune' && pd.phase === 'play' && (pd.fin || {})[b.id] == null) { const T = keep8('tu:' + key, () => 5000 + r() * 14000);
+            once('tp:' + key, T / 2, () => act(b.id, { type: 'mini', op: 'prog', n: Math.floor(pd.ns / 2) }));
+            once('td:' + key, T, () => act(b.id, { type: 'mini', op: 'done', arr: pd.target.slice() })); }
+          if (pd.kind === 'flip' && pd.phase === 'play' && !R[b.id]) once('fl:' + key, 2000 + r() * 7000, () => {
+            const bk = (pd.secret.books || {})[b.id] || [], ok = r() < 0.85; act(b.id, { type: 'mini', op: 'found', i: ok ? Math.max(0, bk.indexOf(pd.face)) : 0 }); });
+          if (pd.kind === 'map' && pd.phase === 'play' && !R[b.id]) once('mp:' + key, 2000 + r() * 7000, () => {
+            const n = pd.q.opts.length, ok = r() < 0.7; act(b.id, { type: 'mini', op: 'pick', i: ok ? pd.secret.ok : Math.floor(r() * n) }); });
+          if (pd.kind === 'pick' && pd.phase === 'choose' && pd.chooser === b.id) once('pk:' + key, 1500 + r() * 2500, () => act(b.id, { type: 'mini', op: 'choose', i: Math.floor(r() * pd.opts.length) }));
+          if (pd.kind === 'bomb' && pd.holder === b.id && pd.task) once('bb:' + key + ':' + pd.seq, pd.miss === b.id ? 1400 + r() * 900 : 700 + r() * 1700, () => {
+            const i = pd.task.opts.indexOf(pd.task.want), j = r() < 0.85 ? i : (i + 1) % pd.task.opts.length; act(b.id, { type: 'mini', op: 'tap', i: j }); });
+          if (pd.kind === 'buddy' && !R[b.id]) once('bu:' + key, 2500 + r() * 8000, () => act(b.id, { type: 'mini', op: 'pick', i: Math.floor(r() * pd.q.opts.length) }));
+          if (pd.kind === 'sneak' && pd.phase === 'play' && !R[b.id]) { const sn = pd.secret.sneak === b.id;
+            once('sn:' + key, sn ? 2500 + r() * 3000 : 2500 + r() * 7000, () => { const k = pd.secret.ok, ok = sn || r() < 0.6; act(b.id, { type: 'mini', op: 'pick', i: ok ? k : (k + 1 + Math.floor(r() * 3)) % 4 }); }); }
+          if (pd.kind === 'sneak' && pd.phase === 'vote' && !R[b.id]) once('sv:' + key, 2000 + r() * 6000, () => {
+            const A = pd.ans || {}, oth = pd.ids.filter(id => id !== b.id), good = oth.filter(id => A[id] && A[id].i === pd.secret.ok).sort((x, y) => A[x].at - A[y].at);
+            act(b.id, { type: 'mini', op: 'vote', target: good.length && r() < 0.6 ? good[0] : oth[Math.floor(r() * oth.length)] }); });
+          if (pd.kind === 'simon' && pd.phase === 'input' && !R[b.id]) once('si:' + key, 1200 + pd.len * 450 + r() * 800, () => {
+            const s = pd.secret.seq.slice(0, pd.len); if (r() > Math.max(0.35, 0.97 - 0.08 * (pd.len - 2))) { const i = Math.floor(r() * s.length); s[i] = (s[i] + 1) % 4; }
+            act(b.id, { type: 'mini', op: 'seq', arr: s }); });
+          if (pd.kind === 'moles' && pd.phase === 'up' && !R[b.id]) { const rt = keep8('mo:' + key, () => 380 + r() * 900);
+            once('mo:' + key, rt, () => act(b.id, { type: 'mini', op: 'whack', c: r() < 0.9 ? pd.cell : (pd.cell + 1) % pd.cells, rt: Math.round(rt + 90) })); }
+          if (pd.kind === 'count' && pd.phase === 'play' && !R[b.id]) once('ct:' + key, 2000 + r() * 6000, () => {
+            const d = r() < 0.45 ? 0 : (r() < 0.5 ? -1 : 1) * (1 + Math.floor(r() * 2)); act(b.id, { type: 'mini', op: 'num', n: Math.max(0, pd.secret.ans + d) }); });
+          if (pd.kind === 'gifts' && pd.phase === 'play' && !R[b.id]) once('gf:' + key, 1500 + r() * 5000, () => act(b.id, { type: 'mini', op: 'pick', i: r() < 0.5 ? pd.secret.fin : Math.floor(r() * pd.n) }));
+          if (pd.kind === 'faces' && pd.phase === 'play' && !(pd.fin || {})[b.id]) { const T = 9000 + r() * 17000;
+            [0.3, 0.55, 0.8].forEach((f, j) => once('fp' + j + ':' + key, T * f, () => act(b.id, { type: 'mini', op: 'prog', n: 2 + j * 2 })));
+            once('fd:' + key, T, () => act(b.id, { type: 'mini', op: 'done', arr: [0, 1, 2, 3, 4, 5, 6, 7, 8] })); }
+          if (pd.kind === 'stopw' && pd.phase === 'run' && !R[b.id]) {
+            const m2 = keep8('sw:' + key, () => { const W = pd.wave, val = ms => { const s = ms / 1000; return s + W.a * (Math.sin(W.w * s + W.ph) - Math.sin(W.ph)) / W.w; };
+              let ms = 0; while (val(ms) < pd.goal8 && ms < 25000) ms += 20; return Math.max(200, Math.round(ms + (r() - 0.5) * 2 * (120 + r() * 380))); });
+            once('sw:' + key, m2, () => act(b.id, { type: 'mini', op: 'stop', ms: m2 })); }
+          if (pd.kind === 'fruit' && pd.phase === 'ask' && !R[b.id]) once('fr:' + key, 1500 + r() * 3500, () => {
+            const c = pd.qs[pd.qk]; act(b.id, { type: 'mini', op: 'cell', c: r() < 0.55 ? c : (c + 1 + Math.floor(r() * (pd.n - 1))) % pd.n }); });
         } else if (pd.type === 'shop' && pd.playerId === b.id) {
           once('shop:' + key, delay(b, 1.1), () => act(b.id, { type: 'shopDone' }));
         }
@@ -12067,5 +13432,347 @@ return {
 })();
 </script>
 <!--octavio:end-->
+<script id="stage9">
+/* ===== Escenario 3D de los minijuegos (tele) y verdura 3D (móvil) =====
+   TE.Stage9.chop(v, pd)  → la tele pasa el estado; el escenario se dibuja en el hueco .st3-host
+   TE.Stage9.vegPhone(el, veg) → verdura 3D pequeña en el móvil; devuelve { cut(n, total) } */
+(function () {
+  'use strict';
+  const TE = (window.TE = window.TE || {});
+  const TAU = Math.PI * 2;
+  const TH = () => window.THREE;
+
+  /* ---------- verduras hechas de rodajas (perfil a lo largo del eje x) ---------- */
+  const bell = t => Math.sqrt(Math.max(0, 1 - Math.pow(2 * t - 1, 2)));
+  const capE = (t, k) => Math.pow(Math.min(1, t * k, (1 - t) * k), 0.5);
+  const VEG = {
+    '🥕': { L: 1.5, r: t => 0.05 + 0.15 * Math.pow(1 - t, 0.9), c: () => 0xf07a1a, top: 'leaves' },
+    '🥒': { L: 1.5, r: t => 0.15 * capE(t, 7), c: () => 0x2f7d32 },
+    '🍆': { L: 1.4, r: t => (0.09 + 0.17 * Math.pow(t, 1.3)) * capE(t, 9), c: t => (t < 0.12 ? 0x3f8f3a : 0x5b2a86) },
+    '🥦': { L: 1.3, r: t => (t < 0.45 ? 0.08 : 0.33 * Math.sqrt(Math.max(0.05, Math.sin(Math.PI * (t - 0.45) / 0.55)))), c: t => (t < 0.45 ? 0x9ccc65 : 0x2e7d32) },
+    '🌽': { L: 1.5, r: t => 0.16 * capE(t, 6), c: () => 0xf6c945, top: 'husk' },
+    '🥔': { L: 0.95, r: t => 0.27 * bell(t) + 0.02, c: () => 0xb5835a },
+    '🧅': { L: 0.75, r: t => 0.31 * bell(t) + 0.02, c: () => 0xd9a35a },
+    '🍅': { L: 0.75, r: t => 0.32 * bell(t) + 0.02, c: () => 0xe53935, top: 'stem' }
+  };
+  const SEG = 14;
+  function vegModel(T, veg) {
+    const P = VEG[veg] || VEG['🥕'], g = new T.Group(), segs = [], dx = P.L / SEG, mats = {};
+    const mat = c => mats[c] || (mats[c] = new T.MeshStandardMaterial({ color: c, roughness: 0.55 }));
+    let rMax = 0;
+    for (let i = 0; i < SEG; i++) rMax = Math.max(rMax, P.r((i + 0.5) / SEG));
+    for (let i = 0; i < SEG; i++) {
+      const t = (i + 0.5) / SEG, r = Math.max(0.03, P.r(t));
+      const m = new T.Mesh(new T.CylinderGeometry(r, r, dx * 0.97, 18), mat(P.c(t)));
+      m.rotation.z = Math.PI / 2; m.position.set(-P.L / 2 + (i + 0.5) * dx, rMax, 0); m.castShadow = true;
+      m.userData = { r, col: P.c(t) }; g.add(m); segs.push(m);
+    }
+    const green = new T.MeshStandardMaterial({ color: 0x3f9f3a, roughness: 0.7 });
+    if (P.top === 'leaves') for (let k = 0; k < 4; k++) { const l = new T.Mesh(new T.ConeGeometry(0.05, 0.45, 6), green); l.position.set(-P.L / 2 - 0.15, rMax + 0.05, (k - 1.5) * 0.06); l.rotation.z = Math.PI / 2 + (k - 1.5) * 0.25; g.add(l); }
+    if (P.top === 'husk') for (let k = 0; k < 3; k++) { const l = new T.Mesh(new T.ConeGeometry(0.1, 0.55, 5), green); l.position.set(-P.L / 2 - 0.12, rMax + (k - 1) * 0.05, (k - 1) * 0.08); l.rotation.z = Math.PI / 2 + (k - 1) * 0.3; g.add(l); }
+    if (P.top === 'stem') { const mid = segs[SEG >> 1], s = new T.Mesh(new T.ConeGeometry(0.12, 0.1, 5), green); s.rotation.z = -Math.PI / 2; s.position.set(mid.userData.r + 0.03, 0, 0); mid.add(s); }
+    g.userData = { segs, L: P.L, rMax, dx };
+    return g;
+  }
+  // deja visibles las rodajas que quedan (se cortan desde el extremo derecho) y devuelve las que se acaban de quitar
+  function vegCut(g, n, total) {
+    const u = g.userData, keep = Math.max(0, SEG - Math.round(SEG * Math.min(1, n / total))), gone = [];
+    u.segs.forEach((m, i) => { const vis = i < keep; if (m.visible && !vis) gone.push(m); m.visible = vis; });
+    g.children.forEach(c => { if (u.segs.indexOf(c) < 0) c.visible = keep > 0; });
+    return { gone, cutX: -u.L / 2 + keep * u.dx };
+  }
+
+  /* ---------- utilidades ---------- */
+  function disposeTree(o) {
+    o.traverse(m => { if (m.geometry) m.geometry.dispose(); if (m.material) (Array.isArray(m.material) ? m.material : [m.material]).forEach(x => { if (x.map) x.map.dispose(); x.dispose(); }); });
+  }
+  function tagTex(T, text, sub, color) {
+    const c = document.createElement('canvas'); c.width = 512; c.height = 160; const g = c.getContext('2d');
+    g.fillStyle = color || '#ffd23f'; const r = 40; g.beginPath(); g.moveTo(r, 10); g.arcTo(502, 10, 502, 150, r); g.arcTo(502, 150, 10, 150, r); g.arcTo(10, 150, 10, 10, r); g.arcTo(10, 10, 502, 10, r); g.fill();
+    g.fillStyle = '#fff'; g.font = '900 64px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 6; g.fillText(text, 256, sub ? 62 : 82);
+    if (sub) { g.font = '800 44px system-ui, sans-serif'; g.fillText(sub, 256, 122); }
+    const t = new T.CanvasTexture(c); t.colorSpace = T.SRGBColorSpace || t.colorSpace; return t;
+  }
+
+  /* ================= ESCENARIO (tele) ================= */
+  const ST = { r: null, cv: null, sc: null, cam: null, key: '', pl: [], last: 0, idle: 0, data: null, conf: [] };
+  const SP = 2.35;
+  function renderer(T) {
+    if (ST.r) return ST.r;
+    const cv = document.createElement('canvas'); cv.className = 'st3-cv';
+    const r = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: false, powerPreference: 'high-performance' });
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5)); r.shadowMap.enabled = true;
+    if ('outputColorSpace' in r && T.SRGBColorSpace) r.outputColorSpace = T.SRGBColorSpace;
+    ST.r = r; ST.cv = cv; return r;
+  }
+  function clearScene() {
+    if (!ST.sc) return;
+    ST.pl.forEach(p => { if (p.av) { p.av.parent && p.av.parent.remove(p.av); try { TE.AvatarKit.dispose(p.av); } catch (e) { /* nada */ } } });
+    disposeTree(ST.sc); ST.sc = null; ST.pl = []; ST.conf = []; ST.key = '';
+  }
+  function buildStage(T, d) {
+    clearScene();
+    const sc = new T.Scene(); sc.background = new T.Color(0x1a1240); sc.fog = new T.Fog(0x1a1240, 18, 34);
+    sc.add(new T.HemisphereLight(0xcfd8ff, 0x3a2a5a, 0.85));
+    const sun = new T.DirectionalLight(0xfff1dc, 1.6); sun.position.set(3, 9, 7); sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024); const sh = sun.shadow.camera; sh.left = -12; sh.right = 12; sh.top = 8; sh.bottom = -4; sc.add(sun);
+    const n = d.players.length, W = n * SP + 1.6;
+    // suelo del escenario y telón
+    const floor = new T.Mesh(new T.CylinderGeometry(W / 2 + 4, W / 2 + 4.3, 0.4, 48, 1, false, 0, Math.PI), new T.MeshStandardMaterial({ color: 0x8a5a33, roughness: 0.7 }));
+    floor.rotation.y = -Math.PI / 2; floor.position.set(0, -0.2, -1.2); floor.receiveShadow = true; sc.add(floor);
+    const edge = new T.Mesh(new T.BoxGeometry(W + 9, 0.12, 0.25), new T.MeshStandardMaterial({ color: 0xffd23f, roughness: 0.4, metalness: 0.3 })); edge.position.set(0, 0.02, -1.15); sc.add(edge);
+    const red = new T.MeshStandardMaterial({ color: 0xb3142d, roughness: 0.85 });
+    for (let x = -W / 2 - 6; x <= W / 2 + 6; x += 0.7) { const f = new T.Mesh(new T.CylinderGeometry(0.42, 0.42, 9, 10, 1, true), red); f.position.set(x, 4.3, -4.4); sc.add(f); }
+    const val = new T.Mesh(new T.BoxGeometry(W + 14, 1.2, 0.6), new T.MeshStandardMaterial({ color: 0x8e0f24, roughness: 0.8 })); val.position.set(0, 7.2, -3.6); sc.add(val);
+    // encimera
+    const top = new T.MeshStandardMaterial({ color: 0xf3efe6, roughness: 0.45 }), front = new T.MeshStandardMaterial({ color: 0x2f78c9, roughness: 0.6 });
+    const CT = 0.82, chopK = d.kind === 'chop', counter = new T.Group(); counter.position.set(0, CT, 0.2);
+    if (chopK) {
+      sc.add(counter);
+      const ctop = new T.Mesh(new T.BoxGeometry(W, 0.12, 1.15), top); ctop.position.y = -0.06; ctop.receiveShadow = true; ctop.castShadow = true; counter.add(ctop);
+      const cbody = new T.Mesh(new T.BoxGeometry(W - 0.15, CT - 0.12, 1.0), front); cbody.position.y = -0.12 - (CT - 0.12) / 2; counter.add(cbody);
+    }
+    ST.sc = sc; ST.pl = [];
+    const AK = TE.AvatarKit;
+    d.players.forEach((p, i) => {
+      const x = (i - (n - 1) / 2) * SP, P = { id: p.id, x, shown: 0, target: 0, chop: 0, fin: null, win: false, tagKey: '' };
+      const AZ = chopK ? -0.62 : -0.15;
+      if (chopK) { const strip = new T.Mesh(new T.BoxGeometry(SP - 0.3, 0.5, 0.02), new T.MeshStandardMaterial({ color: p.color || '#ffd23f', roughness: 0.5 })); strip.position.set(x, -0.45, 0.51); counter.add(strip); }
+      // personaje
+      let av = null; try { av = AK && AK.ready() ? AK.build(p.look, { face: 256 }) : null; } catch (e) { av = null; }
+      if (av) {
+        const bb = new T.Box3().setFromObject(av), h = bb.max.y - bb.min.y || 1, s = 2.4 / h;
+        av.scale.setScalar(s); av.position.set(x, -bb.min.y * s, AZ); av.traverse(o => { if (o.isMesh) o.castShadow = true; });
+        sc.add(av); P.av = av; P.base = av.position.y;
+        const u = av.userData || {};
+      }
+      if (chopK) {
+      // tabla y verdura
+      const board = new T.Mesh(new T.BoxGeometry(1.9, 0.07, 0.72), new T.MeshStandardMaterial({ color: 0xe0b77c, roughness: 0.7 }));
+      board.position.set(x, CT + 0.035, 0.08); board.receiveShadow = true; board.castShadow = true; sc.add(board);
+      const vg = vegModel(T, d.veg); vg.scale.setScalar(0.72); vg.position.set(x - 0.05, CT + 0.07, 0.02); sc.add(vg); P.veg = vg; P.vx = x - 0.05; P.slices = [];
+      // cuchillo grande de canto: sube y baja sobre el extremo de la verdura
+      const kn = new T.Group(), steel = new T.MeshStandardMaterial({ color: 0xe9eff6, metalness: 0.3, roughness: 0.28, emissive: 0x2a3440 });
+      const blade = new T.Mesh(new T.BoxGeometry(0.035, 0.26, 0.58), steel); blade.position.set(0, 0.13, 0.08); blade.castShadow = true; kn.add(blade);
+      const tip = new T.Mesh(new T.CylinderGeometry(0.13, 0.13, 0.035, 16, 1, false, 0, Math.PI), steel); tip.rotation.z = Math.PI / 2; tip.rotation.y = 0; tip.position.set(0, 0.13, 0.37); kn.add(tip);
+      const handle = new T.Mesh(new T.BoxGeometry(0.07, 0.09, 0.32), new T.MeshStandardMaterial({ color: 0x3a2516, roughness: 0.7 })); handle.position.set(0, 0.2, -0.37); kn.add(handle);
+      kn.rotation.y = -0.75; sc.add(kn); P.knife = kn; P.vegTop = CT + 0.07 + vg.userData.rMax * 2 * 0.72; P.cutW = vg.position.x + vg.userData.L / 2 * 0.72;
+      } else knitParts(T, sc, P, p, x);
+      // cartel con el nombre
+      const sp = new T.Sprite(new T.SpriteMaterial({ map: tagTex(T, p.name, '', p.color), transparent: true, depthWrite: false }));
+      sp.scale.set(1.5, 0.47, 1); sp.position.set(x, 2.95, AZ); sc.add(sp); P.tag = sp; P.name = p.name; P.color = p.color;
+      // foco
+      const cone = new T.Mesh(new T.ConeGeometry(1.15, 6, 24, 1, true), new T.MeshBasicMaterial({ color: 0xfff3c4, transparent: true, opacity: 0.07, depthWrite: false }));
+      cone.position.set(x, 3.3, AZ + 0.12); sc.add(cone);
+      ST.pl.push(P);
+    });
+    const cam = new T.PerspectiveCamera(30, 16 / 9, 0.1, 80); ST.cam = cam; ST.W = W; ST.lookY = chopK ? 1.4 : 1.2;
+  }
+  /* ---------- Tejer bufanda: agujas, bufanda que cuelga y se amontona, ovillo y lío de lana ---------- */
+  const SCARF = 44, SEGH = 0.08, TOPY = 1.16;
+  function knitParts(T, sc, P, p, x) {
+    const col = new T.Color(p.color || '#ff5d5d'), yarn = new T.MeshStandardMaterial({ color: col, roughness: 0.95 });
+    const stripes = [yarn, new T.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95 }), new T.MeshStandardMaterial({ color: 0xffd23f, roughness: 0.95 })];
+    const wood = new T.MeshStandardMaterial({ color: 0xd9b27a, roughness: 0.5 }), nd = new T.Group();
+    const n1 = new T.Mesh(new T.CylinderGeometry(0.02, 0.012, 0.75, 8), wood), n2 = n1.clone();
+    n1.rotation.z = 0.75; n2.rotation.z = -0.75; nd.add(n1, n2);
+    [n1, n2].forEach((n, j) => { const b = new T.Mesh(new T.SphereGeometry(0.04, 10, 8), stripes[2]); b.position.y = 0.38; n.add(b); });
+    nd.position.set(x, TOPY + 0.12, 0.5); sc.add(nd); P.needles = nd;
+    P.scarf = [];
+    for (let k = 0; k < SCARF; k++) { const m = new T.Mesh(new T.BoxGeometry(0.4, SEGH * 1.02, 0.05), stripes[Math.floor(k / 3) % 3]); m.visible = false; m.castShadow = true; sc.add(m); P.scarf.push(m); }
+    const ball = new T.Mesh(new T.SphereGeometry(0.24, 20, 14), yarn); ball.position.set(x + 0.72, 0.24, 0.55); ball.castShadow = true; sc.add(ball); P.ball = ball;
+    for (let j = 0; j < 3; j++) { const w = new T.Mesh(new T.TorusGeometry(0.245, 0.012, 6, 24), stripes[1]); w.rotation.set(j * 1.1, j * 0.7, 0); ball.add(w); }
+    const thread = new T.Mesh(new T.CylinderGeometry(0.008, 0.008, 1, 5), yarn); sc.add(thread); P.thread = thread;
+    const mess = new T.Group();
+    for (let j = 0; j < 5; j++) { const t = new T.Mesh(new T.TorusGeometry(0.36 + (j % 2) * 0.05, 0.035, 8, 30), yarn); t.position.y = 0.75 + j * 0.2; t.rotation.set(Math.PI / 2 + (j - 2) * 0.25, 0, (j % 2 ? 1 : -1) * 0.3); mess.add(t); }
+    mess.position.set(x, 0, -0.15); mess.visible = false; sc.add(mess); P.mess = mess; P.st = 0;
+  }
+  function knitFrame(T, P, d, dt, now, i) {
+    const q = d.byId[P.id] || {};
+    P.target = q.n || 0; P.win = d.winners.indexOf(P.id) >= 0;
+    const tg = !!q.tg && d.phase === 'play', won = P.win && d.phase === 'reveal';
+    // cada punto nuevo es un movimiento de agujas (más rápido si va atrasado)
+    if (P.st <= 0 && P.shown < P.target) { P.st = 1; P.speed = Math.min(6, 1 + (P.target - P.shown) * 0.5); }
+    if (P.st > 0) { P.st -= dt * 7 * P.speed; if (P.st <= 0) { P.st = 0; P.shown++; } }
+    const ph = P.st > 0 ? Math.sin(P.st * Math.PI) : 0, segs = Math.min(SCARF, Math.round(P.shown / 2));
+    P.scarf.forEach((m, k) => {
+      m.visible = k < segs;
+      if (!m.visible) return;
+      const hang = k * SEGH, drop = TOPY - 0.06;
+      if (hang < drop) { m.position.set(P.x, TOPY - hang, 0.62 + hang * 0.12); m.rotation.set(0, 0, Math.sin(now * 1.5 + k * 0.3) * 0.02); }
+      else { m.position.set(P.x, 0.025, 0.62 + drop * 0.12 + (hang - drop) + 0.05); m.rotation.set(-Math.PI / 2, 0, 0); }
+    });
+    P.needles.visible = !won;
+    P.needles.rotation.z = Math.sin(now * 3) * 0.04 + ph * 0.3; P.needles.rotation.x = -0.35 + ph * 0.2;
+    const sc = Math.max(0.35, 1 - P.shown / 120); P.ball.scale.setScalar(sc); P.ball.position.y = 0.24 * sc; P.ball.rotation.y += ph * dt * 12;
+    // hilo del ovillo a las agujas
+    const a = P.ball.position, b = P.needles.position, mid = a.clone().add(b).multiplyScalar(0.5), len = a.distanceTo(b);
+    P.thread.position.copy(mid); P.thread.scale.set(1, len, 1); P.thread.lookAt(b); P.thread.rotateX(Math.PI / 2); P.thread.visible = !won;
+    P.mess.visible = tg;
+    const u = P.av && P.av.userData;
+    if (u && u.arms) {
+      if (won) {
+        P.av.position.y = P.base + Math.abs(Math.sin(now * 6)) * 0.35; P.av.rotation.z = 0;
+        u.arms.forEach((a2, j) => { a2.rotation.z = (j ? 1 : -1) * (2.5 + Math.sin(now * 8) * 0.2); a2.rotation.x = 0; });
+      } else {
+        P.av.position.y = P.base + Math.sin(now * 2 + i) * 0.015; P.av.rotation.z = tg ? Math.sin(now * 22) * 0.07 : 0;
+        const Rr = u.arms[1], L = u.arms[0];
+        Rr.rotation.z = -0.2; Rr.rotation.x = -1.3 - ph * 0.25;
+        L.rotation.z = 0.2; L.rotation.x = -1.3 + ph * 0.18;
+        if (u.head) u.head.rotation.x = tg ? Math.sin(now * 9) * 0.15 : 0.22;
+      }
+    }
+    setTag(T, P, tg ? '¡Enredado!' : d.phase === 'ready' ? '' : P.target + ' cm');
+    if (won && !P.conf) { P.conf = true; confetti(T, P.x); }
+  }
+  function fitHost(host) {
+    const r = ST.r, w = host.clientWidth || 800, h = host.clientHeight || 400;
+    if (ST.cv.width !== Math.round(w * r.getPixelRatio()) || ST.cv.height !== Math.round(h * r.getPixelRatio())) { r.setSize(w, h, false); ST.cv.style.width = w + 'px'; ST.cv.style.height = h + 'px'; fitCam(w / h); }
+  }
+  function fitCam(aspect) {
+    const cam = ST.cam, hf = 2 * Math.atan(Math.tan(cam.fov * Math.PI / 360) * aspect), half = Math.max(2.6, ST.W / 2 - 0.4);
+    const dist = Math.max(5.2, half / Math.tan(hf / 2) + 0.6, 1.8 / Math.tan(cam.fov * Math.PI / 360));
+    cam.aspect = aspect; cam.position.set(0, 2.25 + dist * 0.07, dist); cam.lookAt(0, ST.lookY || 1.4, -0.2); cam.updateProjectionMatrix();
+  }
+  function setTag(T, P, sub) {
+    const k = P.name + '|' + sub; if (P.tagKey === k) return; P.tagKey = k;
+    const old = P.tag.material.map; P.tag.material.map = tagTex(T, P.name, sub, P.color); P.tag.material.needsUpdate = true; if (old) old.dispose();
+  }
+  function spawnSlice(T, P, seg, cutX) {
+    const r = seg.userData.r * 0.72, m = new T.Mesh(new T.CylinderGeometry(r, r, 0.04, 16), seg.material);
+    const wp = new T.Vector3(); seg.getWorldPosition(wp); m.position.copy(wp); m.castShadow = true; ST.sc.add(m);
+    const CT = 0.82, k = P.slices.length, to = new T.Vector3(P.x + 0.66 + (k % 3) * 0.04, CT + 0.1 + Math.min(10, k) * 0.025, 0.12 + ((k * 37) % 7 - 3) * 0.035);
+    P.slices.push({ m, from: wp.clone(), to, t: 0, rot: (Math.random() - 0.5) * 2 });
+    if (P.slices.length > 26) { const o = P.slices.shift(); ST.sc.remove(o.m); o.m.geometry.dispose(); }
+  }
+  function confetti(T, x) {
+    const cols = [0xffd23f, 0xff8a1e, 0x2f78c9, 0x1fa79a, 0xe2566a, 0xffffff];
+    for (let i = 0; i < 70; i++) {
+      const m = new T.Mesh(new T.PlaneGeometry(0.09, 0.14), new T.MeshBasicMaterial({ color: cols[i % 6], side: T.DoubleSide }));
+      m.position.set(x + (Math.random() - 0.5) * 2.4, 4.5 + Math.random() * 2, (Math.random() - 0.5) * 1.5); ST.sc.add(m);
+      ST.conf.push({ m, vy: -1 - Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.6, rs: (Math.random() - 0.5) * 8, life: 4 });
+    }
+  }
+  function frame(t) {
+    requestAnimationFrame(frame);
+    const T = TH(), host = document.querySelector('.st3-host');
+    if (!host || !T || !ST.data) { if (ST.sc && ++ST.idle > 240) clearScene(); return; }
+    ST.idle = 0;
+    const d = ST.data, r = renderer(T);
+    if (ST.key !== d.key || !ST.sc) { buildStage(T, d); ST.key = d.key; }
+    if (ST.cv.parentNode !== host) host.appendChild(ST.cv);
+    fitHost(host);
+    const now = t / 1000, dt = Math.min(0.05, ST.last ? now - ST.last : 0.016); ST.last = now;
+    ST.pl.forEach((P, i) => {
+      if (d.kind === 'knit') return knitFrame(T, P, d, dt, now, i);
+      const q = d.byId[P.id] || {};
+      P.target = q.n || 0; P.fin = q.fin; P.win = d.winners.indexOf(P.id) >= 0;
+      // golpes de cuchillo: uno por cada rodaja que falta por enseñar (más rápido si va atrasado)
+      if (P.chop <= 0 && P.shown < P.target && d.phase !== 'ready') { P.chop = 1; P.speed = Math.min(6, 1 + (P.target - P.shown) * 0.4); }
+      if (P.chop > 0) {
+        P.chop -= dt * 6.5 * P.speed;
+        if (P.chop <= 0.45 && !P.hit) {
+          P.hit = true; P.shown++;
+          const res = vegCut(P.veg, P.shown, d.goal); res.gone.forEach(sg => spawnSlice(T, P, sg, res.cutX));
+          P.veg.position.x = P.vx + (P.veg.userData.L / 2 - res.cutX) * 0.72; P.cutW = P.veg.position.x + res.cutX * 0.72;
+        }
+        if (P.chop <= 0) { P.chop = 0; P.hit = false; }
+      }
+      const u = P.av && P.av.userData;
+      if (u && u.arms) {
+        const ph = P.chop > 0 ? Math.sin(P.chop * Math.PI) : 0;
+        if (P.win && d.phase === 'reveal') {
+          P.av.position.y = P.base + Math.abs(Math.sin(now * 6)) * 0.35;
+          u.arms.forEach((a, j) => { a.rotation.z = (j ? 1 : -1) * (2.5 + Math.sin(now * 8) * 0.2); a.rotation.x = 0; });
+        } else {
+          P.av.position.y = P.base + Math.sin(now * 2 + i) * 0.015;
+          const R = u.arms[1], L = u.arms[0];
+          R.rotation.z = 0.18; R.rotation.x = -1.05 - (1 - ph) * 0.45; // brazo derecho: acompaña al cuchillo
+          L.rotation.z = -0.3; L.rotation.x = -1.05;                  // brazo izquierdo sujeta la verdura
+          if (u.head) u.head.rotation.x = 0.25;
+        }
+      }
+      if (P.knife) {                               // cuchillo: arriba en reposo, abajo en cada golpe
+        const ph = P.chop > 0 ? Math.sin(P.chop * Math.PI) : 0, up = P.vegTop + 0.12, down = 0.82 + 0.075;
+        P.knife.position.set(P.cutW + 0.04, up - ph * (up - down), 0.02); P.knife.rotation.x = (1 - ph) * -0.25;
+        P.knife.visible = !(P.win && d.phase === 'reveal');
+      }
+      P.slices.forEach(s => {
+        if (s.t >= 1) return; s.t = Math.min(1, s.t + dt * 3);
+        s.m.position.lerpVectors(s.from, s.to, s.t); s.m.position.y += Math.sin(s.t * Math.PI) * 0.35; s.m.rotation.x = s.t * (Math.PI / 2) + s.rot * (1 - s.t);
+      });
+      const sub = P.fin != null ? '✔ ' + (P.fin / 1000).toFixed(1).replace('.', ',') + ' s' : d.phase === 'ready' ? '' : P.target + ' / ' + d.goal;
+      setTag(T, P, sub);
+      if (P.win && d.phase === 'reveal' && !P.conf) { P.conf = true; confetti(T, P.x); }
+    });
+    ST.conf = ST.conf.filter(c => { c.life -= dt; c.m.position.y += c.vy * dt; c.m.position.x += c.vx * dt; c.m.rotation.x += c.rs * dt; c.m.rotation.y += c.rs * dt * 0.7;
+      if (c.life <= 0 || c.m.position.y < 0) { ST.sc.remove(c.m); c.m.geometry.dispose(); c.m.material.dispose(); return false; } return true; });
+    r.render(ST.sc, ST.cam);
+  }
+  let started = false;
+  // coloca el lienzo en el hueco nuevo en cuanto la tele termina de redibujar (sin parpadeo)
+  function attachSoon() { Promise.resolve().then(() => { const host = document.querySelector('.st3-host'); if (host && ST.cv && ST.sc && ST.cv.parentNode !== host) { host.appendChild(ST.cv); try { fitHost(host); ST.r.render(ST.sc, ST.cam); } catch (e) { /* nada */ } } }); }
+  function chop(v, pd) {
+    if (!TH()) return false;
+    const pl = (v.players || []).filter(p => pd.ids.indexOf(p.id) >= 0);
+    const byId = {}; pd.ids.forEach(id => { byId[id] = { n: (pd.prog || {})[id] || 0, fin: (pd.fin || {})[id] }; });
+    const out = pd.out || {};
+    ST.data = { kind: 'chop', key: 'chop|' + pd.gid9 + '|' + pd.ids.join(','), veg: pd.veg, goal: pd.goal9 || 35, phase: pd.phase, players: pl.map(p => ({ id: p.id, name: p.name, color: p.color, look: p.look })),
+      byId, winners: (out.win || []).filter(id => (out.gain || {})[id] === Math.max(0, ...Object.values(out.gain || {}))) };
+    if (!started) { started = true; requestAnimationFrame(frame); }
+    attachSoon();
+    return true;
+  }
+
+  function knit(v, pd) {
+    if (!TH()) return false;
+    const pl = (v.players || []).filter(p => pd.ids.indexOf(p.id) >= 0), t = TE.UI && TE.UI.now ? TE.UI.now() : Date.now();
+    const byId = {}; pd.ids.forEach(id => { byId[id] = { n: (pd.cm || {})[id] || 0, tg: ((pd.tg || {})[id] || 0) > t }; });
+    const out = pd.out || {}, g = out.gain || {}, mx = Math.max(0, ...Object.values(g));
+    ST.data = { kind: 'knit', key: 'knit|' + pd.gid9 + '|' + pd.ids.join(','), phase: pd.phase, players: pl.map(p => ({ id: p.id, name: p.name, color: p.color, look: p.look })),
+      byId, winners: (out.win || []).filter(id => g[id] === mx) };
+    if (!started) { started = true; requestAnimationFrame(frame); }
+    attachSoon();
+    return true;
+  }
+
+  /* ================= verdura 3D en el móvil ================= */
+  function vegPhone(el, veg) {
+    const T = TH(); if (!T || !el) return null;
+    let r; try { r = new T.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return null; }
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); if ('outputColorSpace' in r && T.SRGBColorSpace) r.outputColorSpace = T.SRGBColorSpace;
+    const sc = new T.Scene(); sc.add(new T.HemisphereLight(0xffffff, 0x6b5a8a, 1.1)); const l = new T.DirectionalLight(0xffffff, 1.4); l.position.set(2, 4, 3); sc.add(l);
+    const board = new T.Mesh(new T.BoxGeometry(2.2, 0.08, 1.1), new T.MeshStandardMaterial({ color: 0xe0b77c, roughness: 0.7 })); board.position.y = -0.04; sc.add(board);
+    const vg = vegModel(T, veg); sc.add(vg); const base = vg.position.x;
+    const cam = new T.PerspectiveCamera(32, 2, 0.1, 30); cam.position.set(0, 1.6, 3.4); cam.lookAt(0, 0.15, 0);
+    const slices = []; let shown = 0, alive = true;
+    el.appendChild(r.domElement);
+    function size() { const w = el.clientWidth || 300, h = el.clientHeight || 150; r.setSize(w, h, false); r.domElement.style.width = w + 'px'; r.domElement.style.height = h + 'px'; cam.aspect = w / h; cam.updateProjectionMatrix(); }
+    size();
+    function loop(t) {
+      if (!alive) return;
+      if (!r.domElement.isConnected) { alive = false; disposeTree(sc); r.dispose(); return; }
+      requestAnimationFrame(loop);
+      vg.rotation.y = Math.sin(t / 900) * 0.18;
+      slices.forEach(s => { if (s.t < 1) { s.t = Math.min(1, s.t + 0.07); s.m.position.lerpVectors(s.a, s.b, s.t); s.m.position.y += Math.sin(s.t * Math.PI) * 0.3; s.m.rotation.x = s.t * Math.PI / 2; } });
+      r.render(sc, cam);
+    }
+    requestAnimationFrame(loop);
+    return {
+      cut(n, total) {
+        if (n <= shown) return; shown = n;
+        const res = vegCut(vg, n, total);
+        res.gone.forEach(sg => {
+          const rr = sg.userData.r, m = new T.Mesh(new T.CylinderGeometry(rr, rr, 0.05, 16), sg.material); const a = new T.Vector3(); sg.getWorldPosition(a);
+          m.position.copy(a); sc.add(m); const k = slices.length; slices.push({ m, a, b: new T.Vector3(0.75 + (k % 2) * 0.06, 0.04 + Math.min(12, k) * 0.03, ((k * 37) % 5 - 2) * 0.05), t: 0 });
+        });
+        vg.position.x = base + (vg.userData.L / 2 - res.cutX) * 0.5;
+      }
+    };
+  }
+  TE.Stage9 = { chop, knit, vegPhone, _st: ST };
+})();
+</script>
 </body>
 </html>
